@@ -1233,23 +1233,8 @@ function showError(msg){
   el.style.display='flex';
 }
 
-// ── MAIN LOAD ──────────────────────────────────────────────────────
-async function loadData(){
-  showLoading();
-  try {
-    // Busca todas as abas em paralelo usando os GIDs conhecidos
-    // GID 0 = aba principal (Financeiro/geral)
-    // A planilha tem uma única aba consolidada conforme estrutura lida
-    const [rowsMain] = await Promise.all([
-      fetchSheet('19150466')  // GID da aba principal compartilhada
-    ]);
-
-    // Parseia tudo da aba principal
-    parseFinanceiro(rowsMain);
-    parseMarketing(rowsMain);
-    parseVendasSaude(rowsMain);
-    parseVendasSeguros(rowsMain);
-    parseCX(rowsMain);
+// ── MAIN LOAD EXTRA (removed duplicate) ────────────────────────────
+if(false){
 
     // Fallbacks para arrays que ficaram vazios
     if(!LEADS_S.length) LEADS_S=[{mes:'Jan',mL:116,rL:437,sq:85,vP:11,vR:20,lq:19,lv:5,qv:24},{mes:'Fev',mL:121,rL:433,sq:65,vP:12,vR:16,lq:15,lv:4,qv:25},{mes:'Mar',mL:135,rL:549,sq:126,vP:14,vR:25,lq:23,lv:5,qv:22},{mes:'Abr',mL:163,rL:527,sq:111,vP:18,vR:27,lq:21,lv:5,qv:24},{mes:'Mai',mL:177,rL:206,sq:43,vP:18,vR:18,lq:21,lv:9,qv:42}];
@@ -1276,14 +1261,13 @@ async function loadData(){
 
   } catch(err) {
     console.error('Erro ao buscar planilha:', err);
-    // Em caso de erro (CORS, offline, etc.) usa dados fixos e avisa
     useFallbackData();
     hideLoading();
     const banner=document.getElementById('offlineBanner');
     if(banner){banner.style.display='flex';setTimeout(()=>banner.style.display='none',8000);}
     initDashboard();
   }
-}
+} // end if(false)
 
 function useFallbackData(){
   FIN_S=[{mes:'Jan',meta:87055.63,proj:97105.67,real:89358.41},{mes:'Fev',meta:136627.18,proj:93721.95,real:93291.62},{mes:'Mar',meta:109682.00,proj:145364.55,real:118488.37},{mes:'Abr',meta:83612.46,proj:113911.20,real:122363.21},{mes:'Mai',meta:96357.28,proj:126380.41,real:39602.29}];
