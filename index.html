@@ -893,9 +893,15 @@ function row0c(rows,substr){return rows.find(r=>r[0]&&r[0].trim().toLowerCase().
 function row1(rows,label){return rows.find(r=>r[1]&&r[1].trim()===label);}
 
 // ── PARSER PRINCIPAL ───────────────────────────────────────────────
+// ── FUNÇÕES AUXILIARES DE PARSING (escopo global) ─────────────────
+function brl(s){if(!s||!s.trim())return 0;return parseFloat(s.replace(/R\$\s*/g,'').replace(/\./g,'').replace(',','.').replace(/[()]/g,'').trim())||0;}
+function p(s){if(!s||!s.trim())return 0;return parseFloat(s.replace('%','').replace(',','.'))||0;}
+function n(s){if(!s||!s.trim())return 0;return parseFloat(s.replace(/\./g,'').replace(',','.'))||0;}
+function i(s){return parseInt((s||'').replace(/\./g,'').replace(/\s/g,''))||0;}
+
 function parseAll(rows){
 
-  // helper: strip BRL formatting
+  // helper: strip BRL formatting (mantidos localmente para compatibilidade)
   function brl(s){if(!s||!s.trim())return 0;return parseFloat(s.replace(/R\$\s*/g,'').replace(/\./g,'').replace(',','.').replace(/[()]/g,'').trim())||0;}
   function p(s){if(!s||!s.trim())return 0;return parseFloat(s.replace('%','').replace(',','.'))||0;}
   function n(s){if(!s||!s.trim())return 0;return parseFloat(s.replace(/\./g,'').replace(',','.'))||0;}
