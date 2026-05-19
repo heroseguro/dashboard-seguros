@@ -1516,38 +1516,6 @@ async function loadData(){
     initDashboard();
   }
 }
-    // Fallbacks para arrays críticos que ficaram vazios
-    if(!FIN_TOTAL.length)FIN_TOTAL=[{mes:'Jan',meta:102376.21,proj:113912.39,real:111043.99},{mes:'Fev',meta:152470.93,proj:111630.97,real:113209.50},{mes:'Mar',meta:126442.00,proj:167268.15,real:141116.23},{mes:'Abr',meta:102537.87,proj:134115.06,real:144553.19},{mes:'Mai',meta:117919.11,proj:146562.45,real:117085.15}];
-    if(!FIN_S.length)FIN_S=[{mes:'Jan',meta:87055.63,proj:97105.67,real:89358.41},{mes:'Fev',meta:136627.18,proj:93721.95,real:93291.62},{mes:'Mar',meta:109682.00,proj:145364.55,real:118488.37},{mes:'Abr',meta:83612.46,proj:113911.20,real:122363.21},{mes:'Mai',meta:96357.28,proj:126380.41,real:102677.98}];
-    if(!FIN_G.length)FIN_G=[{mes:'Jan',meta:15320.58,proj:16806.72,real:21685.58},{mes:'Fev',meta:15843.75,proj:17909.01,real:19917.88},{mes:'Mar',meta:16760.00,proj:21903.60,real:22627.86},{mes:'Abr',meta:18925.41,proj:20203.85,real:22189.98},{mes:'Mai',meta:21561.83,proj:20182.04,real:14407.17}];
-    if(!LEADS_S.length)LEADS_S=[{mes:'Jan',mL:116,rL:437,sq:85,vP:11,vR:20,lq:19,lv:5,qv:24},{mes:'Fev',mL:121,rL:433,sq:65,vP:12,vR:16,lq:15,lv:4,qv:25},{mes:'Mar',mL:135,rL:549,sq:126,vP:14,vR:25,lq:23,lv:5,qv:22},{mes:'Abr',mL:163,rL:527,sq:111,vP:18,vR:27,lq:21,lv:5,qv:24},{mes:'Mai',mL:177,rL:206,sq:43,vP:18,vR:18,lq:21,lv:9,qv:42}];
-    if(!VND_S.length)VND_S=[{mes:'Jan',proj:11,real:20,rMeta:87056,rReal:89358,tick:1412},{mes:'Fev',proj:12,real:16,rMeta:136627,rReal:93292,tick:2051},{mes:'Mar',proj:14,real:25,rMeta:109682,rReal:118488,tick:1243},{mes:'Abr',proj:18,real:27,rMeta:83612,rReal:122363,tick:1164},{mes:'Mai',proj:18,real:16,rMeta:96357,rReal:39602,tick:1053}];
-    if(!VND_G.length)VND_G=[{mes:'Jan',real:71,rMeta:15321,rReal:21686},{mes:'Fev',real:56,rMeta:15844,rReal:19918},{mes:'Mar',real:54,rMeta:16760,rReal:22628},{mes:'Abr',real:83,rMeta:18925,rReal:22200},{mes:'Mai',real:18,rMeta:21562,rReal:5452}];
-    if(!NIVEL.length)NIVEL=[{mes:'Janeiro',m1:27686.68,m2:25400.46,m3:18253.99,vit:10178.27,odo:776.29,prem:7062.72,premio:582145.33},{mes:'Fevereiro',m1:47520.29,m2:13209.27,m3:12777.91,vit:6653.19,odo:667.49,prem:12463.47,premio:409051.73},{mes:'Março',m1:24966.57,m2:52818.18,m3:24103.41,vit:8908.41,odo:534.58,prem:7157.22,premio:548309.73},{mes:'Abril',m1:25433.45,m2:21825.91,m3:62091.96,vit:11056.30,odo:655.13,prem:1300.46,premio:932012.27},{mes:'Maio',m1:18694.42,m2:15394.42,m3:8267.00,vit:5491.13,odo:530.73,prem:54300.28,premio:881665.70}];
-    if(!SEG_S.length)SEG_S=[{seg:'Sulamerica',val:203894,pct:39},{seg:'Amil',val:142071,pct:27},{seg:'Alice',val:79174,pct:15},{seg:'Bradesco Saúde',val:38715,pct:7},{seg:'Porto Seguro',val:28193,pct:5},{seg:'Affinity',val:11014,pct:2},{seg:'Gndi',val:7999,pct:2},{seg:'Assim Saúde',val:6337,pct:1},{seg:'Prevent Senior',val:5403,pct:1}];
-    if(!SEG_G.length)SEG_G=[{seg:'Tokio Marine',val:26736,pct:27},{seg:'Porto Seguro',val:23964,pct:24},{seg:'Icatu',val:16196,pct:16},{seg:'Sulamerica',val:14985,pct:15},{seg:'Yellum',val:4799,pct:5},{seg:'MAG',val:2125,pct:2},{seg:'Zurich',val:2029,pct:2},{seg:'Akad',val:2262,pct:2}];
-    if(!HIST_FAT.length)HIST_FAT=[{seg:'Faturamento Total',a23:690629,a24:897003,a25:891595,a26:627008,perf:0.7032},{seg:'Saúde',a23:443233,a24:563745,a25:640065,a26:526180,perf:0.8221},{seg:'Outros Seguros',a23:247396,a24:333258,a25:251530,a26:100828,perf:0.4009}];
-    if(!HIST_MAIO.length)HIST_MAIO=[{seg:'Total Maio',a23:34776,a24:73867,a25:90220,a26:117085,meta26:117919,pct:1.30},{seg:'Saúde',a23:17069,a24:43286,a25:71696,a26:102678,meta26:96357,pct:1.43},{seg:'Outros Seguros',a23:17707,a24:30581,a25:18524,a26:14407,meta26:21562,pct:0.78}];
-    if(!DET_S.length)DET_S=[{comp:'P1 Saúde',proj:3847.80,real:1736.75,pct:0.45},{comp:'P1_Estoque de Antecipação',proj:11483.76,real:4175.68,pct:0.36},{comp:'P1_Comissão Receber',proj:11516.64,real:11175.04,pct:0.97},{comp:'Estim_Conv_Fúnil',proj:3817.68,real:1606.94,pct:0.42},{comp:'Estim_Premiação Saúde',proj:44250.00,real:54300.28,pct:1.23},{comp:'Outros Seguros',proj:1970.00,real:2487.16,pct:1.26}];
-    if(!DET_G.length)DET_G=[{comp:'P2_Saúde',proj:23272.99,real:15394.42,pct:0.66},{comp:'P3_ Saúde',proj:16910.73,real:8267.00,pct:0.49},{comp:'VT_Saúde',proj:10777.56,real:5491.13,pct:0.51},{comp:'Odonto',proj:503.24,real:530.73,pct:1.05},{comp:'VT_Seguros',proj:17198.70,real:11920.01,pct:0.69}];
-    if(!VND_SEG.length)VND_SEG=[{seg:'Alice',vnd:6,vol:4418.52},{seg:'Amil',vnd:2,vol:2107.14},{seg:'Porto Seguro',vnd:4,vol:12642.60},{seg:'Bradesco',vnd:1,vol:1991.95},{seg:'Qualicorp',vnd:1,vol:607.30},{seg:'Tokio Marine',vnd:21,vol:4786.51},{seg:'Sulamerica',vnd:2,vol:4017.11},{seg:'Select',vnd:3,vol:2237.00},{seg:'Medsenior',vnd:1,vol:1818.30},{seg:'Gndi',vnd:1,vol:1362.27},{seg:'Sami Cora',vnd:1,vol:451.00}];
-    if(!VND_PROD.length)VND_PROD=[{prod:'Saúde',vnd:20,pct:45.45},{prod:'APC',vnd:16,pct:36.36},{prod:'Automóvel',vnd:3,pct:6.82},{prod:'Estagiário',vnd:3,pct:6.82},{prod:'Vida',vnd:2,pct:4.55}];
-    if(!PERF_G.length)PERF_G=[{n:'Luiz',c:'Consultor Seguros',t:90,m:[24,21,18,20,7]}];
-    if(!CICLO.length)CICLO=[{k:'Ciclo Dentro do Mês (dias)',tot:2,m:[4,4,6,5,3]},{k:'Ciclo Ponta a Ponta (dias)',tot:5,m:[11,14,10,13,10]}];
-    if(!CANAIS_S.length)CANAIS_S=[{c:'Orgânico (Site/Blog)',l:606,s:62,v:15},{c:'Resgate CRM',l:317,s:66,v:4},{c:'Simulador',l:339,s:66,v:13},{c:'Onboarding EV',l:326,s:59,v:14}];
-    if(!CANAIS_G.length)CANAIS_G=[{c:'Referrals Gerais',l:82,s:64,v:47},{c:'Checkout EV',l:93,s:93,v:93},{c:'Orgânico (Site/Blog)',l:135,s:67,v:52},{c:'Contadores',l:64,s:55,v:36}];
-    if(!APC.length)APC=[{mes:'Jan',m:22,r:23,pct:0.74},{mes:'Fev',m:27,r:14,pct:0.70},{mes:'Mar',m:36,r:23,pct:0.86},{mes:'Abr',m:47,r:33,pct:1.23},{mes:'Mai',m:62,r:1,pct:0.00}];
-    hideLoading();
-    initDashboard();
-  } catch(err){
-    console.warn('Sheets fetch failed, using fallback data:', err);
-    useFallbackData();
-    hideLoading();
-    const banner=document.getElementById('offlineBanner');
-    if(banner){banner.style.display='flex';setTimeout(()=>banner.style.display='none',8000);}
-    initDashboard();
-  }
-}
 
 function useFallbackData(){
   FIN_S=[{mes:'Jan',meta:87055.63,proj:97105.67,real:89358.41},{mes:'Fev',meta:136627.18,proj:93721.95,real:93291.62},{mes:'Mar',meta:109682.00,proj:145364.55,real:118488.37},{mes:'Abr',meta:83612.46,proj:113911.20,real:122363.21},{mes:'Mai',meta:96357.28,proj:126380.41,real:102677.98}];
