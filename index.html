@@ -104,18 +104,18 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <div class="grid grid-cols-3 gap-4">
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-meta">
       <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Meta · Maio 2026</div>
-      <div class="text-2xl font-bold nm text-slate-600 dark:text-slate-300">R$ 117.919,11</div>
+      <div id="dKpiMeta" class="text-2xl font-bold nm text-slate-600 dark:text-slate-300">—</div>
       <div class="mt-2 text-xs text-slate-400">Objetivo mensal estabelecido</div>
     </div>
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-proj">
-      <div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Projetado · Maio 2026</span><span class="chip cu">+24%</span></div>
-      <div class="text-2xl font-bold nm" style="color:#1B2738">R$ 146.562,45</div>
-      <div class="mt-2 text-xs text-slate-400">Acima da meta em <b>R$ 28.643,34</b></div>
+      <div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Projetado · Maio 2026</span><span id="dKpiProjChip" class="chip">—</span></div>
+      <div id="dKpiProj" class="text-2xl font-bold nm" style="color:#1B2738">—</div>
+      <div class="mt-2 text-xs text-slate-400" id="dKpiProjSub">—</div>
     </div>
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-real">
-      <div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Realizado · Maio 2026</span><span class="chip cd">91%</span></div>
-      <div class="text-2xl font-bold nm" style="color:#E8185A">R$ 107.344,12</div>
-      <div class="mt-2 text-xs text-slate-400">Falta <b class="text-rose-500">R$ 10.574,99</b> para a meta</div>
+      <div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Realizado · Maio 2026</span><span id="dKpiRealChip" class="chip">—</span></div>
+      <div id="dKpiReal" class="text-2xl font-bold nm" style="color:#E8185A">—</div>
+      <div id="dKpiRealSub" class="mt-2 text-xs text-slate-400">—</div>
     </div>
   </div>
 
@@ -132,62 +132,20 @@ body{font-family:'Asap',system-ui,sans-serif;}
     <div style="height:320px"><canvas id="cGeral"></canvas></div>
   </div>
 
-  <!-- Leads + SQL + Vendas de Maio -->
+  <!-- Funis Pipeline -->
   <div class="sl">Pipeline de Maio · Saúde & Seguros</div>
   <div class="grid grid-cols-2 gap-4">
-    <!-- Saúde -->
     <div class="card glass cbg border rounded-2xl p-5 rg">
       <div class="text-sm font-bold mb-1">Saúde · Funil de Maio 2026</div>
       <div class="text-xs text-slate-400 mb-4">Leads → SQLs → Vendas</div>
-      <div class="space-y-3">
-        <div class="flex items-center gap-3">
-          <div class="w-14 text-xs font-bold text-slate-500">Leads</div>
-          <div class="flex-1 h-8 rounded-lg overflow-hidden" style="background:rgba(120,120,120,0.13)"><div class="h-8 rounded-lg flex items-center px-3" style="width:100%;background:#1B2738"><span class="text-white text-sm font-bold">206</span></div></div>
-          <div class="w-10 text-right text-xs text-slate-500">100%</div>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="w-14 text-xs font-bold text-slate-500">SQLs</div>
-          <div class="flex-1 h-8 rounded-lg overflow-hidden" style="background:rgba(120,120,120,0.13)"><div class="h-8 rounded-lg flex items-center px-3" style="width:18%;background:#E8185A"><span class="text-white text-sm font-bold">33</span></div></div>
-          <div class="w-10 text-right text-xs text-slate-500">18%</div>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="w-14 text-xs font-bold text-slate-500">Vendas</div>
-          <div class="flex-1 h-8 rounded-lg overflow-hidden" style="background:rgba(120,120,120,0.13)"><div class="h-8 rounded-lg flex items-center px-3" style="width:9%;background:#10B981;min-width:48px"><span class="text-white text-sm font-bold">18</span></div></div>
-          <div class="w-10 text-right text-xs text-slate-500">9%</div>
-        </div>
-      </div>
-      <div class="grid grid-cols-3 gap-3 mt-5">
-        <div class="text-center p-3 rounded-xl" style="background:rgba(27,39,56,0.07)"><div class="text-xs text-slate-400 mb-1">%Lead→SQL</div><div class="text-lg font-bold" style="color:#1B2738">21%</div></div>
-        <div class="text-center p-3 rounded-xl" style="background:rgba(232,24,90,0.07)"><div class="text-xs text-slate-400 mb-1">%Lead→Venda</div><div class="text-lg font-bold" style="color:#E8185A">9%</div></div>
-        <div class="text-center p-3 rounded-xl" style="background:rgba(16,185,129,0.07)"><div class="text-xs text-slate-400 mb-1">%SQL→Venda</div><div class="text-lg font-bold" style="color:#10B981">48%</div></div>
-      </div>
+      <div id="dFunilS" class="space-y-3"></div>
+      <div id="dFunilSStats" class="grid grid-cols-3 gap-3 mt-5"></div>
     </div>
-    <!-- Seguros -->
     <div class="card glass cbg border rounded-2xl p-5 rg">
       <div class="text-sm font-bold mb-1">Seguros · Funil de Maio 2026</div>
       <div class="text-xs text-slate-400 mb-4">Leads → SQLs → Vendas</div>
-      <div class="space-y-3">
-        <div class="flex items-center gap-3">
-          <div class="w-14 text-xs font-bold text-slate-500">Leads</div>
-          <div class="flex-1 h-8 rounded-lg overflow-hidden" style="background:rgba(120,120,120,0.13)"><div class="h-8 rounded-lg flex items-center px-3" style="width:100%;background:#1B2738"><span class="text-white text-sm font-bold">40</span></div></div>
-          <div class="w-10 text-right text-xs text-slate-500">100%</div>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="w-14 text-xs font-bold text-slate-500">SQLs</div>
-          <div class="flex-1 h-8 rounded-lg overflow-hidden" style="background:rgba(120,120,120,0.13)"><div class="h-8 rounded-lg flex items-center px-3" style="width:60%;background:#E8185A"><span class="text-white text-sm font-bold">24</span></div></div>
-          <div class="w-10 text-right text-xs text-slate-500">60%</div>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="w-14 text-xs font-bold text-slate-500">Vendas</div>
-          <div class="flex-1 h-8 rounded-lg overflow-hidden" style="background:rgba(120,120,120,0.13)"><div class="h-8 rounded-lg flex items-center px-3" style="width:45%;background:#10B981"><span class="text-white text-sm font-bold">18</span></div></div>
-          <div class="w-10 text-right text-xs text-slate-500">45%</div>
-        </div>
-      </div>
-      <div class="grid grid-cols-3 gap-3 mt-5">
-        <div class="text-center p-3 rounded-xl" style="background:rgba(27,39,56,0.07)"><div class="text-xs text-slate-400 mb-1">%Lead→SQL</div><div class="text-lg font-bold" style="color:#1B2738">60%</div></div>
-        <div class="text-center p-3 rounded-xl" style="background:rgba(232,24,90,0.07)"><div class="text-xs text-slate-400 mb-1">%Lead→Venda</div><div class="text-lg font-bold" style="color:#E8185A">45%</div></div>
-        <div class="text-center p-3 rounded-xl" style="background:rgba(16,185,129,0.07)"><div class="text-xs text-slate-400 mb-1">%SQL→Venda</div><div class="text-lg font-bold" style="color:#10B981">75%</div></div>
-      </div>
+      <div id="dFunilG" class="space-y-3"></div>
+      <div id="dFunilGStats" class="grid grid-cols-3 gap-3 mt-5"></div>
     </div>
   </div>
 </div><!-- /consolidado -->
@@ -198,20 +156,12 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <!-- Cards globais Financeiro -->
   <div class="grid grid-cols-2 gap-4">
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-real">
-      <div class="flex items-center justify-between mb-3"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Receita Mês · Maio</span><span class="chip cd">91%</span></div>
-      <div class="flex gap-8 flex-wrap">
-        <div><div class="text-xs text-slate-400 mb-0.5">Meta</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">R$ 117.919,11</div></div>
-        <div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:#E8185A">R$ 107.344,12</div></div>
-        <div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm text-rose-500">(R$ 10.574,99)</div></div>
-      </div>
+      <div class="flex items-center justify-between mb-3"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Receita Mês · Maio</span><span id="dFinMesChip" class="chip">—</span></div>
+      <div class="flex gap-8 flex-wrap" id="dFinMesKpis">—</div>
     </div>
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-proj">
-      <div class="flex items-center justify-between mb-3"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Receita Ano · YTD</span><span class="chip cd">28%</span></div>
-      <div class="flex gap-8 flex-wrap">
-        <div><div class="text-xs text-slate-400 mb-0.5">Meta</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">R$ 2.219.073,00</div></div>
-        <div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:#E8185A">R$ 617.267,03</div></div>
-        <div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm text-rose-500">(R$ 1.601.805,97)</div></div>
-      </div>
+      <div class="flex items-center justify-between mb-3"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Receita Ano · YTD</span><span id="dFinAnoChip" class="chip">—</span></div>
+      <div class="flex gap-8 flex-wrap" id="dFinAnoKpis">—</div>
     </div>
   </div>
 
@@ -346,11 +296,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
             <th class="text-right py-2.5 px-4 text-xs font-bold" style="background:#1B2738;color:#fff">2026</th>
             <th class="text-right py-2.5 px-4 text-xs font-bold rounded-tr-lg" style="background:#E8185A;color:#fff">% Performance</th>
           </tr></thead>
-          <tbody>
-            <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="font-weight:700"><td class="py-3 px-4 text-sm">Faturamento</td><td class="text-right py-3 px-4 nm text-sm">690.629</td><td class="text-right py-3 px-4 nm text-sm">897.003</td><td class="text-right py-3 px-4 nm text-sm">891.595</td><td class="text-right py-3 px-4 nm text-sm">539.905</td><td class="text-right py-3 px-4 text-sm"><span class="chip cd">61%</span></td></tr>
-            <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)"><td class="py-3 px-4 text-sm">Saúde</td><td class="text-right py-3 px-4 nm text-sm">443.233</td><td class="text-right py-3 px-4 nm text-sm">563.745</td><td class="text-right py-3 px-4 nm text-sm">640.065</td><td class="text-right py-3 px-4 nm text-sm">448.750</td><td class="text-right py-3 px-4 text-sm"><span class="chip cd">70%</span></td></tr>
-            <tr class="tr"><td class="py-3 px-4 text-sm">Outros Seguros</td><td class="text-right py-3 px-4 nm text-sm">247.396</td><td class="text-right py-3 px-4 nm text-sm">333.258</td><td class="text-right py-3 px-4 nm text-sm">251.530</td><td class="text-right py-3 px-4 nm text-sm">91.155</td><td class="text-right py-3 px-4 text-sm"><span class="chip cd">36%</span></td></tr>
-          </tbody>
+          <tbody id="bHistFat"></tbody>
         </table>
       </div>
     </div>
@@ -369,11 +315,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
             <th class="text-right py-2.5 px-4 text-xs font-bold" style="background:#1B2738;color:#fff">Meta 2026</th>
             <th class="text-right py-2.5 px-4 text-xs font-bold rounded-tr-lg" style="background:#E8185A;color:#fff">%</th>
           </tr></thead>
-          <tbody>
-            <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="font-weight:700"><td class="py-3 px-4 text-sm">Maio</td><td class="text-right py-3 px-4 nm text-sm">34.776</td><td class="text-right py-3 px-4 nm text-sm">73.867</td><td class="text-right py-3 px-4 nm text-sm">90.220</td><td class="text-right py-3 px-4 nm text-sm">107.344</td><td class="text-right py-3 px-4 nm text-sm">117.919</td><td class="text-right py-3 px-4 text-sm"><span class="chip cu">119%</span></td></tr>
-            <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)"><td class="py-3 px-4 text-sm">Saúde</td><td class="text-right py-3 px-4 nm text-sm">17.069</td><td class="text-right py-3 px-4 nm text-sm">43.286</td><td class="text-right py-3 px-4 nm text-sm">71.696</td><td class="text-right py-3 px-4 nm text-sm">96.990</td><td class="text-right py-3 px-4 nm text-sm">96.357</td><td class="text-right py-3 px-4 text-sm"><span class="chip cu">135%</span></td></tr>
-            <tr class="tr"><td class="py-3 px-4 text-sm">Outros Seguros</td><td class="text-right py-3 px-4 nm text-sm">17.707</td><td class="text-right py-3 px-4 nm text-sm">30.581</td><td class="text-right py-3 px-4 nm text-sm">18.524</td><td class="text-right py-3 px-4 nm text-sm">10.355</td><td class="text-right py-3 px-4 nm text-sm">21.562</td><td class="text-right py-3 px-4 text-sm"><span class="chip cd">56%</span></td></tr>
-          </tbody>
+          <tbody id="bHistMaio"></tbody>
         </table>
       </div>
     </div>
@@ -390,11 +332,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
             <th class="text-right py-2.5 px-4 text-xs font-bold" style="background:#1B2738;color:#fff">Meta 2026</th>
             <th class="text-right py-2.5 px-4 text-xs font-bold rounded-tr-lg" style="background:#E8185A;color:#fff">%</th>
           </tr></thead>
-          <tbody>
-            <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="font-weight:700"><td class="py-3 px-4 text-sm">1° Quadri</td><td class="text-right py-3 px-4 nm text-sm">250.695</td><td class="text-right py-3 px-4 nm text-sm">509.923</td><td class="text-right py-3 px-4 nm text-sm">482.911</td><td class="text-right py-3 px-4 text-sm"><span class="chip cu">203%</span></td></tr>
-            <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)"><td class="py-3 px-4 text-sm">Saúde</td><td class="text-right py-3 px-4 nm text-sm">157.622</td><td class="text-right py-3 px-4 nm text-sm">423.502</td><td class="text-right py-3 px-4 nm text-sm">416.977</td><td class="text-right py-3 px-4 text-sm"><span class="chip cu">269%</span></td></tr>
-            <tr class="tr"><td class="py-3 px-4 text-sm">Outros Seguros</td><td class="text-right py-3 px-4 nm text-sm">93.073</td><td class="text-right py-3 px-4 nm text-sm">86.421</td><td class="text-right py-3 px-4 nm text-sm">65.933</td><td class="text-right py-3 px-4 text-sm"><span class="chip cd">93%</span></td></tr>
-          </tbody>
+          <tbody id="bHistQuadri"></tbody>
         </table>
       </div>
     </div>
@@ -1320,21 +1258,21 @@ async function loadData(){
     const rows=parseCsv(await resp.text());
     parseAll(rows);
     // Fallbacks para arrays críticos que ficaram vazios
-    if(!FIN_TOTAL.length)FIN_TOTAL=[{mes:'Jan',meta:102376.21,proj:113912.39,real:111043.99},{mes:'Fev',meta:152470.93,proj:111630.97,real:113209.50},{mes:'Mar',meta:126442.00,proj:167268.15,real:141116.23},{mes:'Abr',meta:102537.87,proj:134115.06,real:144553.19},{mes:'Mai',meta:117919.11,proj:146562.45,real:107344.12}];
-    if(!FIN_S.length)FIN_S=[{mes:'Jan',meta:87055.63,proj:97105.67,real:89358.41},{mes:'Fev',meta:136627.18,proj:93721.95,real:93291.62},{mes:'Mar',meta:109682.00,proj:145364.55,real:118488.37},{mes:'Abr',meta:83612.46,proj:113911.20,real:122363.21},{mes:'Mai',meta:96357.28,proj:126380.41,real:96989.54}];
-    if(!FIN_G.length)FIN_G=[{mes:'Jan',meta:15320.58,proj:16806.72,real:21685.58},{mes:'Fev',meta:15843.75,proj:17909.01,real:19917.88},{mes:'Mar',meta:16760.00,proj:21903.60,real:22627.86},{mes:'Abr',meta:18925.41,proj:20203.85,real:22189.98},{mes:'Mai',meta:21561.83,proj:20182.04,real:10354.58}];
+    if(!FIN_TOTAL.length)FIN_TOTAL=[{mes:'Jan',meta:102376.21,proj:113912.39,real:111043.99},{mes:'Fev',meta:152470.93,proj:111630.97,real:113209.50},{mes:'Mar',meta:126442.00,proj:167268.15,real:141116.23},{mes:'Abr',meta:102537.87,proj:134115.06,real:144553.19},{mes:'Mai',meta:117919.11,proj:146562.45,real:117085.15}];
+    if(!FIN_S.length)FIN_S=[{mes:'Jan',meta:87055.63,proj:97105.67,real:89358.41},{mes:'Fev',meta:136627.18,proj:93721.95,real:93291.62},{mes:'Mar',meta:109682.00,proj:145364.55,real:118488.37},{mes:'Abr',meta:83612.46,proj:113911.20,real:122363.21},{mes:'Mai',meta:96357.28,proj:126380.41,real:102677.98}];
+    if(!FIN_G.length)FIN_G=[{mes:'Jan',meta:15320.58,proj:16806.72,real:21685.58},{mes:'Fev',meta:15843.75,proj:17909.01,real:19917.88},{mes:'Mar',meta:16760.00,proj:21903.60,real:22627.86},{mes:'Abr',meta:18925.41,proj:20203.85,real:22189.98},{mes:'Mai',meta:21561.83,proj:20182.04,real:14407.17}];
     if(!LEADS_S.length)LEADS_S=[{mes:'Jan',mL:116,rL:437,sq:85,vP:11,vR:20,lq:19,lv:5,qv:24},{mes:'Fev',mL:121,rL:433,sq:65,vP:12,vR:16,lq:15,lv:4,qv:25},{mes:'Mar',mL:135,rL:549,sq:126,vP:14,vR:25,lq:23,lv:5,qv:22},{mes:'Abr',mL:163,rL:527,sq:111,vP:18,vR:27,lq:21,lv:5,qv:24},{mes:'Mai',mL:177,rL:206,sq:43,vP:18,vR:18,lq:21,lv:9,qv:42}];
     if(!VND_S.length)VND_S=[{mes:'Jan',proj:11,real:20,rMeta:87056,rReal:89358,tick:1412},{mes:'Fev',proj:12,real:16,rMeta:136627,rReal:93292,tick:2051},{mes:'Mar',proj:14,real:25,rMeta:109682,rReal:118488,tick:1243},{mes:'Abr',proj:18,real:27,rMeta:83612,rReal:122363,tick:1164},{mes:'Mai',proj:18,real:16,rMeta:96357,rReal:39602,tick:1053}];
     if(!VND_G.length)VND_G=[{mes:'Jan',real:71,rMeta:15321,rReal:21686},{mes:'Fev',real:56,rMeta:15844,rReal:19918},{mes:'Mar',real:54,rMeta:16760,rReal:22628},{mes:'Abr',real:83,rMeta:18925,rReal:22200},{mes:'Mai',real:18,rMeta:21562,rReal:5452}];
-    if(!NIVEL.length)NIVEL=[{mes:'Janeiro',m1:27687,m2:25400,m3:18254,vit:10178,odo:776,prem:7063,premio:582145},{mes:'Fevereiro',m1:47520,m2:13209,m3:12778,vit:6653,odo:667,prem:12463,premio:409052},{mes:'Março',m1:24967,m2:52818,m3:24103,vit:8908,odo:535,prem:7157,premio:548310},{mes:'Abril',m1:25433,m2:21826,m3:62092,vit:11056,odo:655,prem:1300,premio:932012},{mes:'Maio',m1:15289,m2:11928,m3:3613,vit:3008,odo:20,prem:5745,premio:521134}];
-    if(!SEG_S.length)SEG_S=[{seg:'Sulamerica',val:158363,pct:34},{seg:'Amil',val:135414,pct:29},{seg:'Alice',val:75859,pct:16},{seg:'Bradesco Saúde',val:32392,pct:7},{seg:'Porto Seguro',val:27881,pct:6}];
-    if(!SEG_G.length)SEG_G=[{seg:'Tokio Marine',val:22843,pct:25},{seg:'Porto Seguro',val:22385,pct:24},{seg:'Icatu',val:15355,pct:17},{seg:'Sulamerica',val:13872,pct:15},{seg:'Yellum',val:4031,pct:4}];
-    if(!HIST_FAT.length)HIST_FAT=[{seg:'Faturamento Total',a23:690629,a24:897003,a25:891595,a26:554987,perf:0.6225},{seg:'Saúde',a23:443233,a24:563745,a25:640065,a26:463104,perf:0.7235},{seg:'Outros Seguros',a23:247396,a24:333258,a25:251530,a26:91883,perf:0.3653}];
-    if(!HIST_MAIO.length)HIST_MAIO=[{seg:'Total Maio',a23:34776,a24:73867,a25:90220,a26:45054,meta26:117919,pct:0.50},{seg:'Saúde',a23:17069,a24:43286,a25:71696,a26:39602,meta26:96357,pct:0.55},{seg:'Outros Seguros',a23:17707,a24:30581,a25:18524,a26:5452,meta26:21562,pct:0.29}];
-    if(!DET_S.length)DET_S=[{comp:'P1 Saúde',proj:3848,real:1737,pct:0.45},{comp:'P1 Estoque Antecipação',proj:11484,real:1962,pct:0.17},{comp:'P1 Comissão Receber',proj:11517,real:9983,pct:0.87},{comp:'Estim. Premiação Saúde',proj:44250,real:5745,pct:0.13}];
-    if(!DET_G.length)DET_G=[{comp:'P2 Saúde',proj:23273,real:11928,pct:0.51},{comp:'P3 Saúde',proj:16911,real:3613,pct:0.21},{comp:'VT Saúde',proj:10778,real:3008,pct:0.28},{comp:'VT Seguros',proj:17199,real:4639,pct:0.27}];
+    if(!NIVEL.length)NIVEL=[{mes:'Janeiro',m1:27686.68,m2:25400.46,m3:18253.99,vit:10178.27,odo:776.29,prem:7062.72,premio:582145.33},{mes:'Fevereiro',m1:47520.29,m2:13209.27,m3:12777.91,vit:6653.19,odo:667.49,prem:12463.47,premio:409051.73},{mes:'Março',m1:24966.57,m2:52818.18,m3:24103.41,vit:8908.41,odo:534.58,prem:7157.22,premio:548309.73},{mes:'Abril',m1:25433.45,m2:21825.91,m3:62091.96,vit:11056.30,odo:655.13,prem:1300.46,premio:932012.27},{mes:'Maio',m1:18694.42,m2:15394.42,m3:8267.00,vit:5491.13,odo:530.73,prem:54300.28,premio:881665.70}];
+    if(!SEG_S.length)SEG_S=[{seg:'Sulamerica',val:203894,pct:39},{seg:'Amil',val:142071,pct:27},{seg:'Alice',val:79174,pct:15},{seg:'Bradesco Saúde',val:38715,pct:7},{seg:'Porto Seguro',val:28193,pct:5},{seg:'Affinity',val:11014,pct:2},{seg:'Gndi',val:7999,pct:2},{seg:'Assim Saúde',val:6337,pct:1},{seg:'Prevent Senior',val:5403,pct:1}];
+    if(!SEG_G.length)SEG_G=[{seg:'Tokio Marine',val:26736,pct:27},{seg:'Porto Seguro',val:23964,pct:24},{seg:'Icatu',val:16196,pct:16},{seg:'Sulamerica',val:14985,pct:15},{seg:'Yellum',val:4799,pct:5},{seg:'MAG',val:2125,pct:2},{seg:'Zurich',val:2029,pct:2},{seg:'Akad',val:2262,pct:2}];
+    if(!HIST_FAT.length)HIST_FAT=[{seg:'Faturamento Total',a23:690629,a24:897003,a25:891595,a26:627008,perf:0.7032},{seg:'Saúde',a23:443233,a24:563745,a25:640065,a26:526180,perf:0.8221},{seg:'Outros Seguros',a23:247396,a24:333258,a25:251530,a26:100828,perf:0.4009}];
+    if(!HIST_MAIO.length)HIST_MAIO=[{seg:'Total Maio',a23:34776,a24:73867,a25:90220,a26:117085,meta26:117919,pct:1.30},{seg:'Saúde',a23:17069,a24:43286,a25:71696,a26:102678,meta26:96357,pct:1.43},{seg:'Outros Seguros',a23:17707,a24:30581,a25:18524,a26:14407,meta26:21562,pct:0.78}];
+    if(!DET_S.length)DET_S=[{comp:'P1 Saúde',proj:3847.80,real:1736.75,pct:0.45},{comp:'P1_Estoque de Antecipação',proj:11483.76,real:4175.68,pct:0.36},{comp:'P1_Comissão Receber',proj:11516.64,real:11175.04,pct:0.97},{comp:'Estim_Conv_Fúnil',proj:3817.68,real:1606.94,pct:0.42},{comp:'Estim_Premiação Saúde',proj:44250.00,real:54300.28,pct:1.23},{comp:'Outros Seguros',proj:1970.00,real:2487.16,pct:1.26}];
+    if(!DET_G.length)DET_G=[{comp:'P2_Saúde',proj:23272.99,real:15394.42,pct:0.66},{comp:'P3_ Saúde',proj:16910.73,real:8267.00,pct:0.49},{comp:'VT_Saúde',proj:10777.56,real:5491.13,pct:0.51},{comp:'Odonto',proj:503.24,real:530.73,pct:1.05},{comp:'VT_Seguros',proj:17198.70,real:11920.01,pct:0.69}];
     if(!VND_SEG.length)VND_SEG=[{seg:'Alice',vnd:6,vol:4418.52},{seg:'Amil',vnd:2,vol:2107.14},{seg:'Porto Seguro',vnd:4,vol:12642.60},{seg:'Bradesco',vnd:1,vol:1991.95},{seg:'Qualicorp',vnd:1,vol:607.30},{seg:'Tokio Marine',vnd:21,vol:4786.51},{seg:'Sulamerica',vnd:2,vol:4017.11},{seg:'Select',vnd:3,vol:2237.00},{seg:'Medsenior',vnd:1,vol:1818.30},{seg:'Gndi',vnd:1,vol:1362.27},{seg:'Sami Cora',vnd:1,vol:451.00}];
-    if(!VND_PROD.length)VND_PROD=[{prod:'Saúde',vnd:18,pct:42.86},{prod:'APC',vnd:16,pct:38.10},{prod:'Automóvel',vnd:3,pct:7.14},{seg:'Estagiário',vnd:3,pct:7.14},{prod:'Vida',vnd:2,pct:4.76}];
+    if(!VND_PROD.length)VND_PROD=[{prod:'Saúde',vnd:20,pct:45.45},{prod:'APC',vnd:16,pct:36.36},{prod:'Automóvel',vnd:3,pct:6.82},{prod:'Estagiário',vnd:3,pct:6.82},{prod:'Vida',vnd:2,pct:4.55}];
     if(!PERF_G.length)PERF_G=[{n:'Luiz',c:'Consultor Seguros',t:90,m:[24,21,18,20,7]}];
     if(!CICLO.length)CICLO=[{k:'Ciclo Dentro do Mês (dias)',tot:2,m:[4,4,6,5,3]},{k:'Ciclo Ponta a Ponta (dias)',tot:5,m:[11,14,10,13,10]}];
     if(!CANAIS_S.length)CANAIS_S=[{c:'Orgânico (Site/Blog)',l:606,s:62,v:15},{c:'Resgate CRM',l:317,s:66,v:4},{c:'Simulador',l:339,s:66,v:13},{c:'Onboarding EV',l:326,s:59,v:14}];
@@ -1353,16 +1291,16 @@ async function loadData(){
 }
 
 function useFallbackData(){
-  FIN_S=[{mes:'Jan',meta:87056,proj:97106,real:89358},{mes:'Fev',meta:136627,proj:93722,real:93292},{mes:'Mar',meta:109682,proj:145365,real:118488},{mes:'Abr',meta:83612,proj:113911,real:122363},{mes:'Mai',meta:96357,proj:126380,real:39602}];
-  FIN_G=[{mes:'Jan',meta:15321,proj:16807,real:21686},{mes:'Fev',meta:15844,proj:17909,real:19918},{mes:'Mar',meta:16760,proj:21904,real:22628},{mes:'Abr',meta:18925,proj:20214,real:22200},{mes:'Mai',meta:21562,proj:20182,real:5452}];
-  FIN_TOTAL=[{mes:'Jan',meta:102376,proj:113912,real:111044},{mes:'Fev',meta:152471,proj:111631,real:113210},{mes:'Mar',meta:126442,proj:167268,real:141116},{mes:'Abr',meta:102538,proj:134125,real:144563},{mes:'Mai',meta:117919,proj:146562,real:45054}];
-  NIVEL=[{mes:'Janeiro',m1:27687,m2:25400,m3:18254,vit:10178,odo:776,prem:7063,premio:582145},{mes:'Fevereiro',m1:47520,m2:13209,m3:12778,vit:6653,odo:667,prem:12463,premio:409052},{mes:'Março',m1:24967,m2:52818,m3:24103,vit:8908,odo:535,prem:7157,premio:548310},{mes:'Abril',m1:25433,m2:21826,m3:62092,vit:11056,odo:655,prem:1300,premio:932012},{mes:'Maio',m1:15289,m2:11928,m3:3613,vit:3008,odo:20,prem:5745,premio:521134}];
-  SEG_S=[{seg:'Sulamerica',val:158363,pct:34},{seg:'Amil',val:135414,pct:29},{seg:'Alice',val:75859,pct:16},{seg:'Bradesco Saúde',val:32392,pct:7},{seg:'Porto Seguro',val:27881,pct:6},{seg:'Affinity',val:10678,pct:2},{seg:'Gndi',val:7400,pct:2},{seg:'Assim Saúde',val:6337,pct:1},{seg:'Prevent Senior',val:5403,pct:1}];
-  SEG_G=[{seg:'Tokio Marine',val:22843,pct:25},{seg:'Porto Seguro',val:22385,pct:24},{seg:'Icatu',val:15355,pct:17},{seg:'Sulamerica',val:13872,pct:15},{seg:'Yellum',val:4031,pct:4},{seg:'Akad',val:2050,pct:2},{seg:'Allianz',val:1921,pct:2}];
-  HIST_FAT=[{seg:'Faturamento Total',a23:690629,a24:897003,a25:891595,a26:554987,perf:0.6225},{seg:'Saúde',a23:443233,a24:563745,a25:640065,a26:463104,perf:0.7235},{seg:'Outros Seguros',a23:247396,a24:333258,a25:251530,a26:91883,perf:0.3653}];
-  HIST_MAIO=[{seg:'Total Maio',a23:34776,a24:73867,a25:90220,a26:45054,meta26:117919,pct:0.50},{seg:'Saúde',a23:17069,a24:43286,a25:71696,a26:39602,meta26:96357,pct:0.55},{seg:'Outros Seguros',a23:17707,a24:30581,a25:18524,a26:5452,meta26:21562,pct:0.29}];
-  DET_S=[{comp:'P1 Saúde',proj:3848,real:1737,pct:0.45},{comp:'P1 Estoque Antecipação',proj:11484,real:1962,pct:0.17},{comp:'P1 Comissão Receber',proj:11517,real:9983,pct:0.87},{comp:'Estim. Premiação Saúde',proj:44250,real:5745,pct:0.13}];
-  DET_G=[{comp:'P2 Saúde',proj:23273,real:11928,pct:0.51},{comp:'P3 Saúde',proj:16911,real:3613,pct:0.21},{comp:'VT Saúde',proj:10778,real:3008,pct:0.28},{comp:'VT Seguros',proj:17199,real:4639,pct:0.27}];
+  FIN_S=[{mes:'Jan',meta:87055.63,proj:97105.67,real:89358.41},{mes:'Fev',meta:136627.18,proj:93721.95,real:93291.62},{mes:'Mar',meta:109682.00,proj:145364.55,real:118488.37},{mes:'Abr',meta:83612.46,proj:113911.20,real:122363.21},{mes:'Mai',meta:96357.28,proj:126380.41,real:102677.98}];
+  FIN_G=[{mes:'Jan',meta:15320.58,proj:16806.72,real:21685.58},{mes:'Fev',meta:15843.75,proj:17909.01,real:19917.88},{mes:'Mar',meta:16760.00,proj:21903.60,real:22627.86},{mes:'Abr',meta:18925.41,proj:20203.85,real:22189.98},{mes:'Mai',meta:21561.83,proj:20182.04,real:14407.17}];
+  FIN_TOTAL=[{mes:'Jan',meta:102376.21,proj:113912.39,real:111043.99},{mes:'Fev',meta:152470.93,proj:111630.97,real:113209.50},{mes:'Mar',meta:126442.00,proj:167268.15,real:141116.23},{mes:'Abr',meta:102537.87,proj:134115.06,real:144553.19},{mes:'Mai',meta:117919.11,proj:146562.45,real:117085.15}];
+  NIVEL=[{mes:'Janeiro',m1:27686.68,m2:25400.46,m3:18253.99,vit:10178.27,odo:776.29,prem:7062.72,premio:582145.33},{mes:'Fevereiro',m1:47520.29,m2:13209.27,m3:12777.91,vit:6653.19,odo:667.49,prem:12463.47,premio:409051.73},{mes:'Março',m1:24966.57,m2:52818.18,m3:24103.41,vit:8908.41,odo:534.58,prem:7157.22,premio:548309.73},{mes:'Abril',m1:25433.45,m2:21825.91,m3:62091.96,vit:11056.30,odo:655.13,prem:1300.46,premio:932012.27},{mes:'Maio',m1:18694.42,m2:15394.42,m3:8267.00,vit:5491.13,odo:530.73,prem:54300.28,premio:881665.70}];
+  SEG_S=[{seg:'Sulamerica',val:203894,pct:39},{seg:'Amil',val:142071,pct:27},{seg:'Alice',val:79174,pct:15},{seg:'Bradesco Saúde',val:38715,pct:7},{seg:'Porto Seguro',val:28193,pct:5},{seg:'Affinity',val:11014,pct:2},{seg:'Gndi',val:7999,pct:2},{seg:'Assim Saúde',val:6337,pct:1},{seg:'Prevent Senior',val:5403,pct:1}];
+  SEG_G=[{seg:'Tokio Marine',val:26736,pct:27},{seg:'Porto Seguro',val:23964,pct:24},{seg:'Icatu',val:16196,pct:16},{seg:'Sulamerica',val:14985,pct:15},{seg:'Yellum',val:4799,pct:5},{seg:'MAG',val:2125,pct:2},{seg:'Zurich',val:2029,pct:2},{seg:'Akad',val:2262,pct:2}];
+  HIST_FAT=[{seg:'Faturamento Total',a23:690629,a24:897003,a25:891595,a26:627008,perf:0.7032},{seg:'Saúde',a23:443233,a24:563745,a25:640065,a26:526180,perf:0.8221},{seg:'Outros Seguros',a23:247396,a24:333258,a25:251530,a26:100828,perf:0.4009}];
+  HIST_MAIO=[{seg:'Total Maio',a23:34776,a24:73867,a25:90220,a26:117085,meta26:117919,pct:1.30},{seg:'Saúde',a23:17069,a24:43286,a25:71696,a26:102678,meta26:96357,pct:1.43},{seg:'Outros Seguros',a23:17707,a24:30581,a25:18524,a26:14407,meta26:21562,pct:0.78}];
+  DET_S=[{comp:'P1 Saúde',proj:3847.80,real:1736.75,pct:0.45},{comp:'P1_Estoque de Antecipação',proj:11483.76,real:4175.68,pct:0.36},{comp:'P1_Comissão Receber',proj:11516.64,real:11175.04,pct:0.97},{comp:'Estim_Conv_Fúnil',proj:3817.68,real:1606.94,pct:0.42},{comp:'Estim_Premiação Saúde',proj:44250.00,real:54300.28,pct:1.23},{comp:'Outros Seguros',proj:1970.00,real:2487.16,pct:1.26}];
+  DET_G=[{comp:'P2_Saúde',proj:23272.99,real:15394.42,pct:0.66},{comp:'P3_ Saúde',proj:16910.73,real:8267.00,pct:0.49},{comp:'VT_Saúde',proj:10777.56,real:5491.13,pct:0.51},{comp:'Odonto',proj:503.24,real:530.73,pct:1.05},{comp:'VT_Seguros',proj:17198.70,real:11920.01,pct:0.69}];
   LEADS_S=[{mes:'Jan',mL:116,rL:437,sq:85,vP:11,vR:20,lq:19,lv:5,qv:24},{mes:'Fev',mL:121,rL:433,sq:65,vP:12,vR:16,lq:15,lv:4,qv:25},{mes:'Mar',mL:135,rL:549,sq:126,vP:14,vR:25,lq:23,lv:5,qv:22},{mes:'Abr',mL:163,rL:527,sq:111,vP:18,vR:27,lq:21,lv:5,qv:24},{mes:'Mai',mL:177,rL:206,sq:43,vP:18,vR:18,lq:21,lv:9,qv:42}];
   CANAIS_S=[{c:'Orgânico (Site/Blog)',l:606,s:62,v:15},{c:'Resgate CRM',l:317,s:66,v:4},{c:'Simulador',l:339,s:66,v:13},{c:'Onboarding EV',l:326,s:59,v:14},{c:'Referrals Gerais',l:131,s:53,v:21},{c:'App PJ Hero',l:178,s:33,v:8}];
   LEADS_G=[{mes:'Jan',rL:129,sq:89,v:71,lq:69,lv:55,qv:80},{mes:'Fev',rL:73,sq:62,v:56,lq:85,lv:77,qv:90},{mes:'Mar',rL:135,sq:94,v:54,lq:70,lv:40,qv:57},{mes:'Abr',rL:162,sq:122,v:83,lq:75,lv:51,qv:68},{mes:'Mai',rL:40,sq:24,v:18,lq:60,lv:45,qv:75}];
@@ -1370,6 +1308,8 @@ function useFallbackData(){
   APC=[{mes:'Jan',m:22,r:23,pct:0.74},{mes:'Fev',m:27,r:14,pct:0.70},{mes:'Mar',m:36,r:23,pct:0.86},{mes:'Abr',m:47,r:33,pct:1.23},{mes:'Mai',m:62,r:1,pct:0.00}];
   VND_S=[{mes:'Jan',proj:11,real:20,rMeta:87056,rReal:89358,tick:1412},{mes:'Fev',proj:12,real:16,rMeta:136627,rReal:93292,tick:2051},{mes:'Mar',proj:14,real:25,rMeta:109682,rReal:118488,tick:1243},{mes:'Abr',proj:18,real:27,rMeta:83612,rReal:122363,tick:1164},{mes:'Mai',proj:18,real:16,rMeta:96357,rReal:39602,tick:1053}];
   VND_G=[{mes:'Jan',real:71,rMeta:15321,rReal:21686},{mes:'Fev',real:56,rMeta:15844,rReal:19918},{mes:'Mar',real:54,rMeta:16760,rReal:22628},{mes:'Abr',real:83,rMeta:18925,rReal:22200},{mes:'Mai',real:18,rMeta:21562,rReal:5452}];
+  VND_SEG=[{seg:'Alice',vnd:6,vol:4418.52},{seg:'Amil',vnd:2,vol:2107.14},{seg:'Porto Seguro',vnd:4,vol:12642.60},{seg:'Bradesco',vnd:1,vol:1991.95},{seg:'Qualicorp',vnd:1,vol:607.30},{seg:'Tokio Marine',vnd:21,vol:4786.51},{seg:'Sulamerica',vnd:2,vol:4017.11},{seg:'Select',vnd:3,vol:2237.00},{seg:'Medsenior',vnd:1,vol:1818.30},{seg:'Gndi',vnd:1,vol:1362.27},{seg:'Sami Cora',vnd:1,vol:451.00}];
+  VND_PROD=[{prod:'Saúde',vnd:20,pct:45.45},{prod:'APC',vnd:16,pct:36.36},{prod:'Automóvel',vnd:3,pct:6.82},{prod:'Estagiário',vnd:3,pct:6.82},{prod:'Vida',vnd:2,pct:4.55}];
   PERF_S=[{n:'Henrique',c:'Consultor Saúde',t:64,m:[13,14,18,15,4]},{n:'Tauanne',c:'Consultora Saúde',t:31,m:[0,1,7,12,11]}];
   PERF_G=[{n:'Luiz',c:'Consultor Seguros',t:90,m:[24,21,18,20,7]}];
   CICLO=[{k:'Ciclo Dentro do Mês (dias)',tot:2,m:[4,4,6,5,3]},{k:'Ciclo Ponta a Ponta (dias)',tot:5,m:[11,14,10,13,10]}];
@@ -1483,34 +1423,105 @@ const barBase={borderRadius:{topLeft:6,topRight:6},borderSkipped:false,barPercen
 
 // ════ RENDER FUNCTIONS ════
 function rConsolidado(){
+  // Gráfico performance geral
   mkBL('cGeral',FIN_TOTAL.map(r=>r.mes),[
     {type:'bar',label:'Projetado',data:FIN_TOTAL.map(r=>r.proj),backgroundColor:dk()?'rgba(27,39,56,0.85)':'rgba(27,39,56,0.75)',...barBase,order:2},
     {type:'bar',label:'Realizado',data:FIN_TOTAL.map(r=>r.real),backgroundColor:dk()?'rgba(232,24,90,0.90)':'rgba(232,24,90,0.85)',...barBase,order:2},
     {type:'line',label:'Meta',data:FIN_TOTAL.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1},
   ]);
+
+  // KPIs dinâmicos
+  const ult=FIN_TOTAL[FIN_TOTAL.length-1]||{};
+  const meta=ult.meta||0, proj=ult.proj||0, real=ult.real||0;
+  const pctProj=meta>0?proj/meta:0, pctReal=meta>0?real/meta:0;
+  const el=id=>document.getElementById(id);
+  if(el('dKpiMeta')) el('dKpiMeta').textContent=f2(meta);
+  if(el('dKpiProj')) el('dKpiProj').textContent=f2(proj);
+  if(el('dKpiProjChip')){el('dKpiProjChip').textContent=`+${Math.round((pctProj-1)*100)}%`;el('dKpiProjChip').className='chip '+(pctProj>=1?'cu':'cd');}
+  if(el('dKpiProjSub')){const diff=proj-meta;el('dKpiProjSub').innerHTML=diff>=0?`Acima da meta em <b>${f2(diff)}</b>`:`Abaixo da meta em <b>${f2(Math.abs(diff))}</b>`;}
+  if(el('dKpiReal')) el('dKpiReal').textContent=f2(real);
+  if(el('dKpiRealChip')){el('dKpiRealChip').textContent=Math.round(pctReal*100)+'%';el('dKpiRealChip').className='chip '+(pctReal>=1?'cu':'cd');}
+  if(el('dKpiRealSub')){const diff=real-meta;el('dKpiRealSub').innerHTML=diff>=0?`Acima da meta em <b>${f2(diff)}</b>`:`Falta <b class="text-rose-500">${f2(Math.abs(diff))}</b> para a meta`;}
+
+  // Funis dinâmicos
+  const funil=(divId,statsId,leads)=>{
+    const el2=document.getElementById(divId); if(!el2)return;
+    const rl=leads.rL||0, sq=leads.sq||0, vR=leads.vR||0;
+    const pSq=rl>0?Math.round(sq/rl*100):0, pV=rl>0?Math.round(vR/rl*100):0;
+    el2.innerHTML=[
+      {label:'Leads',n:rl,pct:100,color:'#1B2738'},
+      {label:'SQLs',n:sq,pct:pSq,color:'#E8185A'},
+      {label:'Vendas',n:vR,pct:pV,color:'#10B981'},
+    ].map(b=>`<div class="flex items-center gap-3">
+      <div class="w-14 text-xs font-bold text-slate-500">${b.label}</div>
+      <div class="flex-1 h-8 rounded-lg overflow-hidden" style="background:rgba(120,120,120,0.13)">
+        <div class="h-8 rounded-lg flex items-center px-3" style="width:${Math.max(b.pct,6)}%;background:${b.color}">
+          <span class="text-white text-sm font-bold">${b.n}</span>
+        </div>
+      </div>
+      <div class="w-10 text-right text-xs text-slate-500">${b.pct}%</div>
+    </div>`).join('');
+    const st=document.getElementById(statsId); if(!st)return;
+    const lq=leads.lq||0, lv=leads.lv||0, qv=leads.qv||0;
+    st.innerHTML=[
+      {label:'%Lead→SQL',val:lq+'%',color:'#1B2738',bg:'rgba(27,39,56,0.07)'},
+      {label:'%Lead→Venda',val:lv+'%',color:'#E8185A',bg:'rgba(232,24,90,0.07)'},
+      {label:'%SQL→Venda',val:qv+'%',color:'#10B981',bg:'rgba(16,185,129,0.07)'},
+    ].map(s=>`<div class="text-center p-3 rounded-xl" style="background:${s.bg}">
+      <div class="text-xs text-slate-400 mb-1">${s.label}</div>
+      <div class="text-lg font-bold" style="color:${s.color}">${s.val}</div>
+    </div>`).join('');
+  };
+  const maiS=LEADS_S[LEADS_S.length-1]||{};
+  const maiG=LEADS_G[LEADS_G.length-1]||{};
+  funil('dFunilS','dFunilSStats',maiS);
+  funil('dFunilG','dFunilGStats',maiG);
 }
-function rFinSaude(){
-  mkBL('cFinSaude',FIN_S.map(r=>r.mes),[
-    {type:'bar',label:'Projetado',data:FIN_S.map(r=>r.proj),backgroundColor:'rgba(176,191,208,0.85)',...barBase,order:2},
-    {type:'bar',label:'Realizado',data:FIN_S.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},
-    {type:'line',label:'Meta',data:FIN_S.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1},
-  ]);
-  finTbl(FIN_S,'bFS');
+
+function rFinKpis(){
+  // Cards KPI do financeiro — lidos da planilha via FIN_TOTAL
+  const ult=FIN_TOTAL[FIN_TOTAL.length-1]||{};
+  const meta=ult.meta||0, real=ult.real||0;
+  const pct=meta>0?real/meta:0;
+  const diff=real-meta;
+  const el=id=>document.getElementById(id);
+  if(el('dFinMesChip')){el('dFinMesChip').textContent=Math.round(pct*100)+'%';el('dFinMesChip').className='chip '+(pct>=1?'cu':'cd');}
+  if(el('dFinMesKpis')) el('dFinMesKpis').innerHTML=`
+    <div><div class="text-xs text-slate-400 mb-0.5">Meta</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(meta)}</div></div>
+    <div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:#E8185A">${f2(real)}</div></div>
+    <div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm" style="color:${diff>=0?'#10B981':'#E8185A'}">${diff>=0?'':''} (${f2(Math.abs(diff))})</div></div>`;
+
+  // Receita Ano — soma todos os meses
+  const totalReal=FIN_TOTAL.reduce((a,r)=>a+r.real,0);
+  // Meta anual fixa (não muda com os dados do mês)
+  const metaAno=2219073;
+  const pctAno=totalReal/metaAno;
+  const diffAno=totalReal-metaAno;
+  if(el('dFinAnoChip')){el('dFinAnoChip').textContent=Math.round(pctAno*100)+'%';el('dFinAnoChip').className='chip '+(pctAno>=1?'cu':'cd');}
+  if(el('dFinAnoKpis')) el('dFinAnoKpis').innerHTML=`
+    <div><div class="text-xs text-slate-400 mb-0.5">Meta</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(metaAno)}</div></div>
+    <div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:#E8185A">${f2(totalReal)}</div></div>
+    <div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm" style="color:${diffAno>=0?'#10B981':'#E8185A'}">(${f2(Math.abs(diffAno))})</div></div>`;
 }
-function rFinSeguros(){
-  mkDonut('cSegS',SEG_S.filter(r=>r.val>0).slice(0,8).map(r=>r.seg),SEG_S.filter(r=>r.val>0).slice(0,8).map(r=>r.val),COLORS);
-}
-function rFinSeguros(){
-  mkBL('cFinG',FIN_G.map(r=>r.mes),[
-    {type:'bar',label:'Projetado',data:FIN_G.map(r=>r.proj),backgroundColor:'rgba(176,191,208,0.85)',...barBase,order:2},
-    {type:'bar',label:'Realizado',data:FIN_G.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},
-    {type:'line',label:'Meta',data:FIN_G.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1},
-  ]);
-  finTbl(FIN_G,'bFG');
-}
+
 function rFinHist(){
-  const bh=document.getElementById('bHF');if(bh){bh.innerHTML='';HIST_FAT.forEach((r,i)=>{const s=i===0?'font-weight:700;background:rgba(27,39,56,0.06)':i%2?'background:rgba(27,39,56,0.03)':'';bh.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="${s}"><td class="py-1.5 px-3 text-sm">${r.seg}</td><td class="text-right py-1.5 px-3 nm text-sm">${fN(r.a23)}</td><td class="text-right py-1.5 px-3 nm text-sm">${fN(r.a24)}</td><td class="text-right py-1.5 px-3 nm text-sm">${fN(r.a25)}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${fN(r.a26)}</td><td class="text-right py-1.5 px-3 text-sm">${chip(r.perf)}</td></tr>`;});}
-  const bm=document.getElementById('bHM');if(bm){bm.innerHTML='';HIST_MAIO.forEach((r,i)=>{const s=i===0?'font-weight:700;background:rgba(27,39,56,0.06)':i%2?'background:rgba(27,39,56,0.03)':'';bm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="${s}"><td class="py-1.5 px-3 text-sm">${r.seg}</td><td class="text-right py-1.5 px-3 nm text-sm">${fN(r.a23)}</td><td class="text-right py-1.5 px-3 nm text-sm">${fN(r.a24)}</td><td class="text-right py-1.5 px-3 nm text-sm">${fN(r.a25)}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold">${fN(r.a26)}</td><td class="text-right py-1.5 px-3 nm text-sm">${fN(r.meta26)}</td><td class="text-right py-1.5 px-3 text-sm">${chip(r.pct)}</td></tr>`;});}
+  // Tabela Faturamento 2023-2026
+  const bh=document.getElementById('bHistFat');
+  if(bh){bh.innerHTML='';HIST_FAT.forEach((r,i)=>{const s=i===0?'font-weight:700;background:rgba(27,39,56,0.06)':i%2?'background:rgba(27,39,56,0.03)':'';bh.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="${s}"><td class="py-3 px-4 text-sm">${r.seg}</td><td class="text-right py-3 px-4 nm text-sm">${fN(r.a23)}</td><td class="text-right py-3 px-4 nm text-sm">${fN(r.a24)}</td><td class="text-right py-3 px-4 nm text-sm">${fN(r.a25)}</td><td class="text-right py-3 px-4 nm text-sm font-semibold" style="color:#E8185A">${fN(r.a26)}</td><td class="text-right py-3 px-4 text-sm">${chip(r.perf)}</td></tr>`;});}
+  // Tabela Maio Histórico
+  const bm=document.getElementById('bHistMaio');
+  if(bm){bm.innerHTML='';HIST_MAIO.forEach((r,i)=>{const s=i===0?'font-weight:700;background:rgba(27,39,56,0.06)':i%2?'background:rgba(27,39,56,0.03)':'';bm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="${s}"><td class="py-3 px-4 text-sm">${r.seg}</td><td class="text-right py-3 px-4 nm text-sm">${fN(r.a23)}</td><td class="text-right py-3 px-4 nm text-sm">${fN(r.a24)}</td><td class="text-right py-3 px-4 nm text-sm">${fN(r.a25)}</td><td class="text-right py-3 px-4 nm text-sm font-semibold">${fN(r.a26)}</td><td class="text-right py-3 px-4 nm text-sm">${fN(r.meta26)}</td><td class="text-right py-3 px-4 text-sm">${chip(r.pct)}</td></tr>`;});}
+  // Tabela 1° Quadrimestre — dados fixos (não mudam mensalmente)
+  const bq=document.getElementById('bHistQuadri');
+  if(bq){
+    const quadri=[
+      {seg:'1° Quadri',a25:250695,a26:509923,meta26:482911,pct:2.03},
+      {seg:'Saúde',a25:157622,a26:423502,meta26:416977,pct:2.69},
+      {seg:'Outros Seguros',a25:93073,a26:86421,meta26:65933,pct:0.93},
+    ];
+    bq.innerHTML='';quadri.forEach((r,i)=>{const s=i===0?'font-weight:700;background:rgba(27,39,56,0.06)':i%2?'background:rgba(27,39,56,0.03)':'';bq.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="${s}"><td class="py-3 px-4 text-sm">${r.seg}</td><td class="text-right py-3 px-4 nm text-sm">${fN(r.a25)}</td><td class="text-right py-3 px-4 nm text-sm font-semibold">${fN(r.a26)}</td><td class="text-right py-3 px-4 nm text-sm">${fN(r.meta26)}</td><td class="text-right py-3 px-4 text-sm">${chip(r.pct)}</td></tr>`;});
+  }
+  // Gráfico histórico
   const anos=['2023','2024','2025','2026*'];
   dc('cHist');const ctx=document.getElementById('cHist');if(!ctx)return;
   CH.cHist=new Chart(ctx,{type:'line',data:{labels:anos,datasets:[
@@ -1947,7 +1958,7 @@ document.querySelectorAll('.carousel-btn').forEach(btn=>{
 // ════ TABS ════
 const rMap={
   consolidado:rConsolidado,
-  financeiro:()=>{rCarrossel();rFinHist();rSegFixo();rVndFixo();rNivelFixo();rSegFinanceiro();rVndMensais();rFinDetalhe();const a=document.querySelector('[data-fin].active');if(a){const k=a.dataset.fin;if(k==='saude')rFinSaude();else if(k==='seguros')rFinSeguros();}else rFinSaude();},
+  financeiro:()=>{rFinKpis();rCarrossel();rFinHist();rSegFixo();rVndFixo();rNivelFixo();rSegFinanceiro();rVndMensais();rFinDetalhe();const a=document.querySelector('[data-fin].active');if(a){const k=a.dataset.fin;if(k==='saude')rFinSaude();else if(k==='seguros')rFinSeguros();}else rFinSaude();},
   'marketing':()=>{const a=document.querySelector('[data-mkt].active');if(a&&a.dataset.mkt==='seguros'){rMktSeguros();}else{rMktSaude();}},
   'vendas':()=>{const a=document.querySelector('[data-vnd].active');if(a&&a.dataset.vnd==='seguros'){rVndSeguros();}else{rVndSaude();}},
   cx:rCx
