@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
@@ -1751,7 +1751,7 @@ function useFallbackData(){
   ];
   // ── Performance Individual ───────────────────────────────────────
   PERF_S=[
-    {n:'Henrique',c:'Consultor Saúde',  t:67,m:[13,14,18,15,7]},
+    {n:'Henrique',c:'Consultor Saúde',  t:68,m:[13,14,18,15,8]},
     {n:'Tauanne', c:'Consultora Saúde', t:33,m:[0, 1, 7, 12,13]},
   ];
   PERF_G=[
@@ -2079,10 +2079,11 @@ function rMktSeguros(){
   const bm=document.getElementById('bMtrG');if(bm){bm.innerHTML='';LEADS_G.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold">${r.rL}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.sq}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${r.v}</td><td class="text-right py-1.5 px-3 text-sm">${chip(r.lq/100,0.5)}</td><td class="text-right py-1.5 px-3 text-sm">${chip(r.lv/100,0.3)}</td><td class="text-right py-1.5 px-3 text-sm">${chip(r.qv/100,0.5)}</td></tr>`;});}
 }
 function rVndSaude(){
-  mkBL('cVS',ML,[
+  dc('cVS');const ctxVS=document.getElementById('cVS');if(ctxVS){CH.cVS=new Chart(ctxVS,{data:{labels:ML,datasets:[
     {type:'bar',label:'Projetado',data:VND_S.map(r=>r.proj),backgroundColor:'rgba(176,191,208,0.85)',...barBase,order:2},
     {type:'bar',label:'Realizado',data:VND_S.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},
-  ]);
+  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{color:tc(),font:{size:11},padding:12,usePointStyle:true,pointStyleWidth:12}},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(232,24,90,0.25)',borderWidth:1,padding:12,callbacks:{label:c=>c.parsed.y!==null?`  ${c.dataset.label}: ${c.parsed.y}`:null}}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),stepSize:5,maxTicksLimit:8,callback:v=>v},grid:{color:gc()},border:{display:false},beginAtZero:true}}}});}
+
   mkBL('cRS',ML,[
     {type:'bar',label:'Meta',data:VND_S.map(r=>r.rMeta),backgroundColor:'rgba(176,191,208,0.85)',...barBase,order:2},
     {type:'bar',label:'Realizado',data:VND_S.map(r=>r.rReal),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},
