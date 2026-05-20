@@ -773,14 +773,14 @@ body{font-family:'Asap',system-ui,sans-serif;}
 <!-- ══════════ CX & CARTEIRA ══════════ -->
 <div data-panel="cx" class="tab-panel hidden space-y-4">
   <div class="grid grid-cols-4 gap-4">
-    <div class="card glass cbg border rounded-2xl p-4 rg kpi-green"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Carteira Saúde · Maio</div><div class="text-2xl font-bold nm" style="color:#10B981">454 vidas</div><div class="mt-1"><span class="chip cu">+10,5% vs Jan</span></div></div>
-    <div class="card glass cbg border rounded-2xl p-4 rg kpi-proj"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Crescimento YTD · Saúde</div><div class="text-2xl font-bold nm" style="color:#1B2738">+43 vidas</div><div class="mt-1 text-xs text-slate-400">Janeiro → Maio 2026</div></div>
-    <div class="card glass cbg border rounded-2xl p-4 rg kpi-meta"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Cancelamentos Saúde · YTD</div><div class="text-2xl font-bold nm text-slate-500">0</div><div class="mt-1 text-xs text-slate-400">Total: 10 em 2026</div></div>
-    <div class="card glass cbg border rounded-2xl p-4 rg kpi-meta"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Cancelamentos Seguros · YTD</div><div class="text-2xl font-bold nm text-slate-500">0</div><div class="mt-1 text-xs text-slate-400">Total: 10 em 2026</div></div>
+    <div class="card glass cbg border rounded-2xl p-4 rg kpi-green"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Carteira Saúde · Maio</div><div class="text-2xl font-bold nm" style="color:#10B981">454 contratos</div><div class="mt-1"><span class="chip cu">+10,5% vs Jan</span></div></div>
+    <div class="card glass cbg border rounded-2xl p-4 rg kpi-proj"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Crescimento YTD · Saúde</div><div class="text-2xl font-bold nm" style="color:#1B2738">+43 contratos</div><div class="mt-1 text-xs text-slate-400">Janeiro → Maio 2026</div></div>
+    <div class="card glass cbg border rounded-2xl p-4 rg kpi-meta"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Cancelamentos Saúde · YTD</div><div class="text-2xl font-bold nm text-slate-500" id="kpiCancelS">—</div><div class="mt-1 text-xs text-slate-400" id="kpiCancelSsub">—</div></div>
+    <div class="card glass cbg border rounded-2xl p-4 rg kpi-meta"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Cancelamentos Seguros · YTD</div><div class="text-2xl font-bold nm text-slate-500" id="kpiCancelG">—</div><div class="mt-1 text-xs text-slate-400" id="kpiCancelGsub">—</div></div>
   </div>
   <div class="grid grid-cols-2 gap-4">
-    <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Carteira de Saúde · Evolução</div><div class="text-xs text-slate-400 mb-3">Vidas ativas por mês 2026</div><div style="height:260px"><canvas id="cCart"></canvas></div></div>
-    <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Crescimento Líquido · Saúde</div><div class="text-xs text-slate-400 mb-3">Novas vidas líquidas por mês</div><div style="height:260px"><canvas id="cGrow"></canvas></div></div>
+    <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Carteira de Saúde · Evolução</div><div class="text-xs text-slate-400 mb-3">Contratos ativos por mês 2026</div><div style="height:260px"><canvas id="cCart"></canvas></div></div>
+    <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Crescimento Líquido · Saúde</div><div class="text-xs text-slate-400 mb-3">Novos contratos líquidos por mês</div><div style="height:260px"><canvas id="cGrow"></canvas></div></div>
   </div>
   <div class="sl">Resumo Carteira & Cancelamentos · 2026</div>
   <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto">
@@ -2101,16 +2101,30 @@ function rVndSeguros(){
   perfCards(PERF_G,'perfG');
 }
 function rCx(){
+  // KPI cards cancelamentos
+  const totalCS=CANCEL_S.reduce((a,b)=>a+b,0);
+  const totalCG=CANCEL_G.reduce((a,b)=>a+b,0);
+  const maiCS=CANCEL_S[CANCEL_S.length-1];
+  const maiCG=CANCEL_G[CANCEL_G.length-1];
+  const elCS=document.getElementById('kpiCancelS');
+  const elCG=document.getElementById('kpiCancelG');
+  const elCSs=document.getElementById('kpiCancelSsub');
+  const elCGs=document.getElementById('kpiCancelGsub');
+  if(elCS)elCS.textContent=totalCS;
+  if(elCG)elCG.textContent=totalCG;
+  if(elCSs)elCSs.textContent=`Maio: ${maiCS} · Total YTD: ${totalCS}`;
+  if(elCGs)elCGs.textContent=`Maio: ${maiCG} · Total YTD: ${totalCG}`;
+
   dc('cCart');const ctx=document.getElementById('cCart');if(!ctx)return;
-  CH.cCart=new Chart(ctx,{type:'line',data:{labels:ML,datasets:[{label:'Carteira Saúde (vidas)',data:CART_S,borderColor:'#10B981',backgroundColor:'rgba(16,185,129,0.10)',fill:true,tension:0.4,pointRadius:7,pointBackgroundColor:'#10B981',pointBorderColor:dk()?'#0D1320':'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(16,185,129,0.25)',borderWidth:1,padding:12,callbacks:{label:c=>`  Carteira: ${c.parsed.y} vidas`}}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6,callback:v=>v+' vidas'},grid:{color:gc()},border:{display:false},min:380}}},});
+  CH.cCart=new Chart(ctx,{type:'line',data:{labels:ML,datasets:[{label:'Carteira Saúde (contratos)',data:CART_S,borderColor:'#10B981',backgroundColor:'rgba(16,185,129,0.10)',fill:true,tension:0.4,pointRadius:7,pointBackgroundColor:'#10B981',pointBorderColor:dk()?'#0D1320':'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(16,185,129,0.25)',borderWidth:1,padding:12,callbacks:{label:c=>`  Carteira: ${c.parsed.y} contratos`}}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6,callback:v=>v+' contratos'},grid:{color:gc()},border:{display:false},min:380}}},});
   const cm=CART_S.map((v,i)=>i===0?0:v-CART_S[i-1]);
   dc('cGrow');const ctx2=document.getElementById('cGrow');if(!ctx2)return;
-  CH.cGrow=new Chart(ctx2,{type:'bar',data:{labels:ML,datasets:[{label:'Novas vidas líquidas',data:cm,backgroundColor:cm.map(v=>v>=0?'rgba(16,185,129,0.80)':'rgba(232,24,90,0.80)'),...barBase}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(232,24,90,0.25)',borderWidth:1,padding:12}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6},grid:{color:gc()},border:{display:false}}}}});
+  CH.cGrow=new Chart(ctx2,{type:'bar',data:{labels:ML,datasets:[{label:'Novos contratos líquidos',data:cm,backgroundColor:cm.map(v=>v>=0?'rgba(16,185,129,0.80)':'rgba(232,24,90,0.80)'),...barBase}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(232,24,90,0.25)',borderWidth:1,padding:12}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6},grid:{color:gc()},border:{display:false}}}}});
   const bc=document.getElementById('bCx');if(bc){bc.innerHTML=`
-    <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40"><td class="py-1.5 px-3 text-sm font-medium">Carteira Saúde (vidas)</td>${CART_S.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:#10B981">${v}</td>`).join('')}</tr>
-    <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)"><td class="py-1.5 px-3 text-sm font-medium">Carteira Seguros</td><td class="text-right py-1.5 px-3 nm text-sm text-slate-400" colspan="5">Sem dados em 2026</td></tr>
-    <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40"><td class="py-1.5 px-3 text-sm font-medium">Cancelamentos Saúde</td>${[0,0,0,0,0].map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:#10B981">${v}</td>`).join('')}</tr>
-    <tr class="tr" style="background:rgba(27,39,56,0.03)"><td class="py-1.5 px-3 text-sm font-medium">Cancelamentos Seguros</td>${[0,0,0,0,0].map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:#10B981">${v}</td>`).join('')}</tr>
+    <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40"><td class="py-1.5 px-3 text-sm font-medium">Carteira Saúde (contratos)</td>${CART_S.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:#10B981">${v}</td>`).join('')}</tr>
+    <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)"><td class="py-1.5 px-3 text-sm font-medium">Carteira Seguros</td>${CART_G.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:#10B981">${v}</td>`).join('')}</tr>
+    <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40"><td class="py-1.5 px-3 text-sm font-medium">Cancelamentos Saúde</td>${CANCEL_S.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>0?'#E8185A':'#10B981'}">${v}</td>`).join('')}</tr>
+    <tr class="tr" style="background:rgba(27,39,56,0.03)"><td class="py-1.5 px-3 text-sm font-medium">Cancelamentos Seguros</td>${CANCEL_G.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>0?'#E8185A':'#10B981'}">${v}</td>`).join('')}</tr>
   `;}
 }
 
