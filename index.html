@@ -1850,10 +1850,9 @@ function rConsolidado(){
   if(el('dKpiRealChip')){el('dKpiRealChip').textContent=Math.round(pctReal*100)+'%';el('dKpiRealChip').className='chip '+(pctReal>=1?'cu':'cd');}
   if(el('dKpiRealSub')){const diff=real-meta;el('dKpiRealSub').innerHTML=diff>=0?`Acima da meta em <b>${f2(diff)}</b>`:`Falta <b class="text-rose-500">${f2(Math.abs(diff))}</b> para a meta`;}
 
-  // Funis dinâmicos
   const funil=(divId,statsId,leads)=>{
     const el2=document.getElementById(divId); if(!el2)return;
-    const rl=leads.rL||0, sq=leads.sq||0, vR=leads.vR||0;
+    const rl=leads.rL||0, sq=leads.sq||0, vR=leads.vR||leads.v||0;
     const pSq=rl>0?Math.round(sq/rl*100):0, pV=rl>0?Math.round(vR/rl*100):0;
     el2.innerHTML=[
       {label:'Leads',n:rl,pct:100,color:'#1B2738'},
