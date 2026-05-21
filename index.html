@@ -300,7 +300,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/a/macros/companyhero.com/s/AKfycbyWezVosuXmwtEBNLSWxQNGnjdYwsZjPlB5E3X0tq37CaMidBqLWMuY7F7LGU6teYMw/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxLEelyqUIuR0vZhJJagnn_D3ZFWvznqNuZpsO9qt0uVbbKhGc-ipbz5QtXm_xiI1jo/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -308,19 +308,48 @@ let VND_S=[],VND_G=[],PERF_S=[],PERF_G=[],CICLO=[],CART_S=[],CART_G=[],CANCEL_S=
 let VND_SEG=[],VND_PROD=[];
 const ML=['Jan','Fev','Mar','Abr','Mai'];
 
-async function loadData(){
+// ── JSONP: contorna CORS em qualquer domínio (file://, github.io, netlify, etc.) ──
+function loadData(){
   showLoading('Buscando dados da planilha…');spinRefresh(true);
-  try{
-    const res=await fetch(APPS_SCRIPT_URL,{cache:'no-store'});
-    if(!res.ok)throw new Error('HTTP '+res.status);
-    const json=await res.json();
-    if(!json.ok)throw new Error(json.error||'Erro no Apps Script');
-    mapApiData(json.data);showSync(json.ts);
-  }catch(err){
-    console.warn('Apps Script indisponível:',err.message);
+
+  // Timeout: se o Apps Script não responder em 12s, usa fallback
+  const timer=setTimeout(()=>{
+    cleanupJsonp();
+    console.warn('Apps Script: timeout de 12s');
     useFallbackData();showError();
+    hideLoading();spinRefresh(false);initDashboard();
+  },12000);
+
+  // Callback global que o Apps Script vai chamar
+  window.__heroCallback=function(json){
+    clearTimeout(timer);cleanupJsonp();
+    try{
+      if(!json.ok)throw new Error(json.error||'Erro no Apps Script');
+      mapApiData(json.data);showSync(json.ts);
+    }catch(err){
+      console.warn('Apps Script erro:',err.message);
+      useFallbackData();showError();
+    }
+    hideLoading();spinRefresh(false);initDashboard();
+  };
+
+  function cleanupJsonp(){
+    const old=document.getElementById('__jsonpScript');
+    if(old)old.remove();
+    delete window.__heroCallback;
   }
-  hideLoading();spinRefresh(false);initDashboard();
+
+  // Injeta <script> com ?callback=__heroCallback — sem restrição de CORS
+  const s=document.createElement('script');
+  s.id='__jsonpScript';
+  s.onerror=()=>{
+    clearTimeout(timer);cleanupJsonp();
+    console.warn('Apps Script: falha ao carregar script JSONP');
+    useFallbackData();showError();
+    hideLoading();spinRefresh(false);initDashboard();
+  };
+  s.src=APPS_SCRIPT_URL+'?callback=__heroCallback&_='+Date.now();
+  document.head.appendChild(s);
 }
 
 function mapApiData(d){
