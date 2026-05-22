@@ -107,9 +107,8 @@ body{font-family:'Asap',system-ui,sans-serif;}
 <main class="max-w-[1440px] mx-auto px-6 py-6">
 <!-- CONSOLIDADO -->
 <div data-panel="consolidado" class="tab-panel space-y-4">
-  <div class="grid grid-cols-3 gap-4">
+  <div class="grid grid-cols-2 gap-4">
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-meta"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Meta · <span data-mesfull>Maio 2026</span></div><div id="dKpiMeta" class="text-2xl font-bold nm text-slate-600 dark:text-slate-300">—</div><div class="mt-2 text-xs text-slate-400">Objetivo mensal estabelecido</div></div>
-    <div class="card glass cbg border rounded-2xl p-4 rg kpi-proj"><div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Projetado · <span data-mesfull>Maio 2026</span></span><span id="dKpiProjChip" class="chip">—</span></div><div id="dKpiProj" class="text-2xl font-bold nm" style="color:#1B2738">—</div><div class="mt-2 text-xs text-slate-400" id="dKpiProjSub">—</div></div>
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-real"><div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Realizado · <span data-mesfull>Maio 2026</span></span><span id="dKpiRealChip" class="chip">—</span></div><div id="dKpiReal" class="text-2xl font-bold nm" style="color:#E8185A">—</div><div id="dKpiRealSub" class="mt-2 text-xs text-slate-400">—</div></div>
   </div>
   <div class="card glass cbg border rounded-2xl p-5 rg">
@@ -229,7 +228,8 @@ body{font-family:'Asap',system-ui,sans-serif;}
           <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">SQLs</th>
           <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vendas</th>
           <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL</th>
-          <th class="text-right py-2 px-3 text-xs font-bold rounded-tr-lg" style="background:#E8185A;color:#fff">%L→Venda</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→Venda</th>
+          <th class="text-right py-2 px-3 text-xs font-bold rounded-tr-lg" style="background:#E8185A;color:#fff">%SQL→Venda</th>
         </tr></thead>
         <tbody id="bCanalS"></tbody>
         <tfoot id="bCanalSFoot"></tfoot>
@@ -237,7 +237,32 @@ body{font-family:'Asap',system-ui,sans-serif;}
       </div>
     </div>
     <div class="sl">Métricas de Conversão · Saúde · Mensal</div>
-    <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto"><table class="w-full text-sm"><thead><tr><th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mês</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads Meta</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads Real</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">SQLs</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vnd Proj</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vnd Real</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→Venda</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%SQL→Venda</th></tr></thead><tbody id="bMtrS"></tbody></table></div>
+    <div class="flex gap-2 mb-3">
+      <button onclick="setMtrViewS('real')" id="btnMtrSReal" class="px-4 py-1.5 rounded-lg text-xs font-semibold border transition-all sb active">Realizado</button>
+      <button onclick="setMtrViewS('meta')" id="btnMtrSMeta" class="px-4 py-1.5 rounded-lg text-xs font-semibold border transition-all sb">Meta</button>
+    </div>
+    <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto">
+      <div id="mtrSRealView">
+        <table class="w-full text-sm"><thead><tr>
+          <th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mês</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">SQLs</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vendas</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→Venda</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%SQL→Venda</th>
+        </tr></thead><tbody id="bMtrS"></tbody></table>
+      </div>
+      <div id="mtrSMetaView" class="hidden">
+        <table class="w-full text-sm"><thead><tr>
+          <th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mês</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads Meta</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vnd Projetado</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL Meta</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%L→Venda Meta</th>
+        </tr></thead><tbody id="bMtrSMeta"></tbody></table>
+      </div>
+    </div>
   </div>
   <div data-mkt-panel="seguros" class="mkt-panel hidden space-y-4">
     <div class="grid grid-cols-4 gap-4">
@@ -257,9 +282,55 @@ body{font-family:'Asap',system-ui,sans-serif;}
       <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">APC · Detalhamento mensal</div><table class="w-full text-sm mt-3"><thead><tr><th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mês</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Meta</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Realizado</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">% Conv.</th></tr></thead><tbody id="bApc"></tbody></table></div>
     </div>
     <div class="sl">Origem dos Leads · Outros Seguros</div>
-    <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto"><table class="w-full text-sm"><thead><tr><th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Canal</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">SQLs</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vendas</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%L→Venda</th></tr></thead><tbody id="bCanalG"></tbody></table></div>
+    <div class="space-y-3">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div class="text-sm font-bold text-slate-600 dark:text-slate-300">Leads · SQLs · Vendas por Canal · Seguros</div>
+        <select id="selCanalG" onchange="rCanalG()" class="text-xs font-semibold border rounded-lg px-3 py-1.5 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 cursor-pointer">
+          <option value="-1">Acumulado YTD</option>
+          <option value="0">Janeiro</option><option value="1">Fevereiro</option><option value="2">Março</option><option value="3">Abril</option><option value="4">Maio</option><option value="5">Junho</option>
+        </select>
+      </div>
+      <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto">
+        <table class="w-full text-sm"><thead><tr>
+          <th class="text-left py-2 px-3 text-xs font-bold rounded-tl-lg" style="background:#1B2738;color:#fff">Canal</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">SQLs</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vendas</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→Venda</th>
+          <th class="text-right py-2 px-3 text-xs font-bold rounded-tr-lg" style="background:#E8185A;color:#fff">%SQL→Venda</th>
+        </tr></thead>
+        <tbody id="bCanalG"></tbody>
+        <tfoot id="bCanalGFoot"></tfoot>
+        </table>
+      </div>
+    </div>
     <div class="sl">Métricas de Conversão · Seguros · Mensal</div>
-    <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto"><table class="w-full text-sm"><thead><tr><th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mês</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">SQLs</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vendas</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→Venda</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%SQL→Venda</th></tr></thead><tbody id="bMtrG"></tbody></table></div>
+    <div class="flex gap-2 mb-3">
+      <button onclick="setMtrViewG('real')" id="btnMtrGReal" class="px-4 py-1.5 rounded-lg text-xs font-semibold border transition-all sb active">Realizado</button>
+      <button onclick="setMtrViewG('meta')" id="btnMtrGMeta" class="px-4 py-1.5 rounded-lg text-xs font-semibold border transition-all sb">Meta</button>
+    </div>
+    <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto">
+      <div id="mtrGRealView">
+        <table class="w-full text-sm"><thead><tr>
+          <th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mês</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">SQLs</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vendas</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→Venda</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%SQL→Venda</th>
+        </tr></thead><tbody id="bMtrG"></tbody></table>
+      </div>
+      <div id="mtrGMetaView" class="hidden">
+        <table class="w-full text-sm"><thead><tr>
+          <th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mês</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads Meta</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vnd Projetado</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%L→SQL Meta</th>
+        </tr></thead><tbody id="bMtrGMeta"></tbody></table>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -288,11 +359,14 @@ body{font-family:'Asap',system-ui,sans-serif;}
       <div class="card glass cbg border rounded-2xl p-4 rg kpi-green"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Vendas Seguros · YTD</div><div id="kpiVndsTotG" class="text-2xl font-bold nm" style="color:#10B981">—</div><div class="mt-1 text-xs text-slate-400"><span data-ytd>Jan–Mai 2026</span></div></div>
       <div class="card glass cbg border rounded-2xl p-4 rg kpi-real"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Receita Seguros · YTD</div><div id="kpiRecG" class="text-2xl font-bold nm" style="color:#E8185A">—</div><div class="mt-1 text-xs text-slate-400">Realizado acumulado</div></div>
       <div class="card glass cbg border rounded-2xl p-4 rg kpi-proj"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Luiz · Total Vendas</div><div id="kpiLuiz" class="text-2xl font-bold nm" style="color:#1B2738">—</div><div class="mt-1 text-xs text-slate-400">Vendedor de Seguros</div></div>
+      <div class="card glass cbg border rounded-2xl p-4 rg kpi-amber"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Ticket Médio · Seguros</div><div id="kpiTickG" class="text-2xl font-bold nm" style="color:#F59E0B">—</div><div class="mt-1 text-xs text-slate-400" id="kpiTickGsub">Média Jan–Mai 2026</div></div>
       <div class="card glass cbg border rounded-2xl p-4 rg kpi-amber"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Top Seguradora</div><div id="kpiTopSeg" class="text-base font-bold" style="color:#F59E0B">—</div><div class="mt-1 text-xs text-slate-400" id="kpiTopSeg2">—</div></div>
     </div>
     <div class="grid grid-cols-2 gap-4">
       <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Vendas Seguros · Mensal</div><div style="height:260px"><canvas id="cVG"></canvas></div></div>
       <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Receita Seguros · Mensal</div><div style="height:260px"><canvas id="cRG"></canvas></div></div>
+    </div>
+    <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Ticket Médio · Seguros · Evolução</div><div class="text-xs text-slate-400 mb-3">Valor médio por venda</div><div style="height:220px"><canvas id="cTickG"></canvas></div></div>
     </div>
     <div class="sl">Performance Individual · Seguros</div>
     <div class="grid grid-cols-2 gap-4" id="perfG"></div>
@@ -327,7 +401,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbyhImH7rZyDY0kFse1Ys4W3CxkR-OKziUYzhqQS_2VV3pMVih6BE9xyQAxhiV4ebut9/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycby1h3-kCz27OmPBldm4Sb96f_Sk60uUk0PQFu42vM0FKfwFdnRAyz4brsfUuj9cmrij/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -408,6 +482,7 @@ function mapApiData(d){
   if(d.marketing?.canaisS?.length)CANAIS_S=d.marketing.canaisS;
   if(d.marketing?.canaisG?.length)CANAIS_G=d.marketing.canaisG;
   if(d.marketing?.canaisSmes?.length)CANAIS_S_MES=d.marketing.canaisSmes;
+  if(d.marketing?.canaisGmes?.length)CANAIS_G_MES=d.marketing.canaisGmes;
   if(d.vendasSaude?.length)VND_S=d.vendasSaude;
   if(d.vendasSeguros?.length)VND_G=d.vendasSeguros;
   if(d.perfSaude?.length)PERF_S=d.perfSaude;
@@ -546,7 +621,7 @@ function detTbl(data,id){
 }
 function canalTbl(data,id){
   const tb=document.getElementById(id);if(!tb)return;tb.innerHTML='';
-  [...data].sort((a,b)=>b.l-a.l).forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';const lq=r.l>0?Math.round(r.s/r.l*100):0;const lv=r.l>0?Math.round(r.v/r.l*100):0;tb.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.c}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.l}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.s}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.v}</td><td class="text-right py-1.5 px-3 text-sm">${chip(lq/100,0.2)}</td><td class="text-right py-1.5 px-3 text-sm">${chip(lv/100,0.03)}</td></tr>`;});
+  [...data].sort((a,b)=>b.l-a.l).forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';const lq=r.l>0?Math.round(r.s/r.l*100):0;const lv=r.l>0?Math.round(r.v/r.l*100):0;const sqv2=r.s>0?Math.round(r.v/r.s*100):0;tb.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.c}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.l}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.s}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.v}</td><td class="text-right py-1.5 px-3 text-sm">${chip(lq/100,0.2)}</td><td class="text-right py-1.5 px-3 text-sm">${chip(lv/100,0.03)}</td><td class="text-right py-1.5 px-3 text-sm">${chip(sqv2/100,0.15)}</td></tr>`;});
 }
 
 // Canais Saúde: grupos e filtro por mês
@@ -615,6 +690,7 @@ function canalTblComMedia(data, tbId, footId) {
     const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';
     const lq=r.l>0?Math.round(r.s/r.l*100):0;
     const lv=r.l>0?Math.round(r.v/r.l*100):0;
+    const sv=r.s>0?Math.round(r.v/r.s*100):0;
     tb.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}>
       <td class="py-1.5 px-3 text-sm font-medium">${r.c}</td>
       <td class="text-right py-1.5 px-3 nm text-sm">${r.l}</td>
@@ -622,11 +698,13 @@ function canalTblComMedia(data, tbId, footId) {
       <td class="text-right py-1.5 px-3 nm text-sm">${r.v}</td>
       <td class="text-right py-1.5 px-3 text-sm">${chip(lq/100,0.2)}</td>
       <td class="text-right py-1.5 px-3 text-sm">${chip(lv/100,0.03)}</td>
+      <td class="text-right py-1.5 px-3 text-sm">${chip(sv/100,0.15)}</td>
     </tr>`;
   });
   // Linha de média/total
   const avgLQ = tL>0?Math.round(tS/tL*100):0;
   const avgLV = tL>0?Math.round(tV/tL*100):0;
+  const avgSV=tS>0?Math.round(tV/tS*100):0;
   if(ft) ft.innerHTML=`<tr style="background:#1B2738;color:#fff;font-weight:700">
     <td class="py-2 px-3 text-sm">Média do Grupo</td>
     <td class="text-right py-2 px-3 nm text-sm">${tL}</td>
@@ -634,6 +712,7 @@ function canalTblComMedia(data, tbId, footId) {
     <td class="text-right py-2 px-3 nm text-sm">${tV}</td>
     <td class="text-right py-2 px-3 nm text-sm">${avgLQ}%</td>
     <td class="text-right py-2 px-3 nm text-sm">${avgLV}%</td>
+    <td class="text-right py-2 px-3 nm text-sm">${avgSV}%</td>
   </tr>`;
 }
 function funnel(id,rows){
@@ -673,6 +752,7 @@ function rConsolidado(){
   };
   funil2('dFunilS','dFunilSStats',LEADS_S[LEADS_S.length-1]||{});
   funil2('dFunilG','dFunilGStats',LEADS_G[LEADS_G.length-1]||{});
+
 }
 
 // ── render financeiro ─────────────────────────────────────────────
@@ -733,7 +813,9 @@ function rMktSaude(){
   funnel('fnS',[{label:'Leads',n:tL,pct:1,color:'#1B2738'},{label:'SQLs',n:tQ,pct:tL>0?tQ/tL:0,color:'#E8185A'},{label:'Vendas',n:tV,pct:tL>0?tV/tL:0,color:'#10B981'}]);
   mkLine('cConvS',ML,[{label:'%Lead→SQL',data:LEADS_S.map(r=>r.lq||0),borderColor:'#1B2738',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%Lead→Venda',data:LEADS_S.map(r=>r.lv||0),borderColor:'#E8185A',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%SQL→Venda',data:LEADS_S.map(r=>r.qv||0),borderColor:'#F59E0B',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5}]);
   rCanalS();
-  const bm=document.getElementById('bMtrS');if(bm){bm.innerHTML='';LEADS_S.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.mL||0}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold">${r.rL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.sq||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.vP||0}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${r.vR||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.2)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lv||0)/100,0.04)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.qv||0)/100,0.2)}</td></tr>`;});}
+  const bm=document.getElementById('bMtrS');if(bm){bm.innerHTML='';LEADS_S.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold">${r.rL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.sq||0}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${r.vR||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.2)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lv||0)/100,0.04)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.qv||0)/100,0.2)}</td></tr>`;});}
+  // Tabela Meta Saúde
+  const bms=document.getElementById('bMtrSMeta');if(bms){bms.innerHTML='';LEADS_S.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bms.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.mL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.vP||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.2)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lv||0)/100,0.04)}</td></tr>`;});}
 }
 function rMktSeguros(){
   const tL=LEADS_G.reduce((a,r)=>a+(r.rL||0),0),tQ=LEADS_G.reduce((a,r)=>a+(r.sq||0),0),tV=LEADS_G.reduce((a,r)=>a+(r.v||0),0),tA=APC.reduce((a,r)=>a+(r.r||0),0);
@@ -751,6 +833,9 @@ function rMktSeguros(){
   const ba=document.getElementById('bApc');if(ba){ba.innerHTML='';APC.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';ba.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.m}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${r.r}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.pct||0)/100,0.008)}</td></tr>`;});}
   canalTbl(CANAIS_G,'bCanalG');
   const bm=document.getElementById('bMtrG');if(bm){bm.innerHTML='';LEADS_G.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold">${r.rL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.sq||0}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${r.v||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.5)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lv||0)/100,0.3)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.qv||0)/100,0.5)}</td></tr>`;});}
+  // Tabela Meta Seguros
+  const bmm=document.getElementById('bMtrGMeta');if(bmm){bmm.innerHTML='';LEADS_G.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bmm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.mL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.vP||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.5)}</td></tr>`;});}
+  rCanalG();
 }
 
 // ── render vendas ─────────────────────────────────────────────────
@@ -785,6 +870,17 @@ function rVndSeguros(){
   mkBar('cVG',ML,[{label:'Vendas',data:VND_G.map(r=>r.real||0),backgroundColor:'rgba(232,24,90,0.85)',...barBase}]);
   mkBL('cRG',ML,[{type:'bar',label:'Meta',data:VND_G.map(r=>r.rMeta||0),backgroundColor:'rgba(176,191,208,0.85)',...barBase,order:2},{type:'bar',label:'Realizado',data:VND_G.map(r=>r.rReal||0),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2}]);
   perfCards(PERF_G,'perfG');
+  // Ticket médio seguros — calculado como receita/vendas
+  const totVndG_=VND_G.reduce((a,r)=>a+(r.real||0),0);
+  const totRecG_=VND_G.reduce((a,r)=>a+(r.rReal||0),0);
+  const avgTickG=totVndG_>0?Math.round(totRecG_/totVndG_*100)/100:0;
+  const el2=id=>document.getElementById(id);
+  if(el2('kpiTickG'))el2('kpiTickG').textContent=f2(avgTickG);
+  if(el2('kpiTickGsub'))el2('kpiTickGsub').textContent='Média '+rangeYTD();
+  // Gráfico ticket seguros
+  dc('cTickG');const ctxTG=document.getElementById('cTickG');
+  if(ctxTG){const ticksG=VND_G.map(r=>r.real>0?Math.round(r.rReal/r.real*100)/100:0);
+  CH.cTickG=new Chart(ctxTG,{type:'line',data:{labels:ML,datasets:[{label:'Ticket Médio Seguros',data:ticksG,borderColor:'#F59E0B',backgroundColor:'rgba(245,158,11,0.08)',fill:true,tension:0.4,pointRadius:7,pointBackgroundColor:'#F59E0B',pointBorderColor:dk()?'#0D1320':'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(245,158,11,0.25)',borderWidth:1,padding:12,callbacks:{label:c=>`  Ticket Médio: ${f2(c.parsed.y)}`}}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6,callback:v=>'R$'+Math.round(v/1000)+'k'},grid:{color:gc()},border:{display:false},beginAtZero:false}}}});}
 }
 
 // ── render cx ─────────────────────────────────────────────────────
@@ -822,6 +918,29 @@ document.querySelectorAll('.hist-carousel-btn').forEach(btn=>{btn.addEventListen
 document.querySelectorAll('.det-carousel-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.det-carousel-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.det-carousel-slide').forEach(s=>s.classList.add('hidden'));btn.classList.add('active');document.querySelector(`[data-dslide-panel="${btn.dataset.dslide}"]`).classList.remove('hidden');});});
 document.getElementById('themeToggle').addEventListener('click',()=>{document.documentElement.classList.toggle('dark');const a=document.querySelector('.tab-btn.active');if(a)a.click();});
 
+
+// ── Métricas Saúde: toggle Realizado/Meta ────────────────────────
+function setMtrViewS(v){
+  document.getElementById('mtrSRealView').classList.toggle('hidden', v!=='real');
+  document.getElementById('mtrSMetaView').classList.toggle('hidden', v!=='meta');
+  document.getElementById('btnMtrSReal').classList.toggle('active', v==='real');
+  document.getElementById('btnMtrSMeta').classList.toggle('active', v==='meta');
+}
+// ── Métricas Seguros: toggle Realizado/Meta ──────────────────────
+function setMtrViewG(v){
+  document.getElementById('mtrGRealView').classList.toggle('hidden', v!=='real');
+  document.getElementById('mtrGMetaView').classList.toggle('hidden', v!=='meta');
+  document.getElementById('btnMtrGReal').classList.toggle('active', v==='real');
+  document.getElementById('btnMtrGMeta').classList.toggle('active', v==='meta');
+}
+// ── Canais Seguros com filtro por mês ────────────────────────────
+let CANAIS_G_MES = [];
+function rCanalG(){
+  const sel=document.getElementById('selCanalG');
+  const mes=sel?parseInt(sel.value):-1;
+  const data=mes===-1?CANAIS_G:(CANAIS_G_MES[mes]||[]);
+  canalTblComMedia(data,'bCanalG','bCanalGFoot');
+}
 function initDashboard(){
   // Detectar último mês com dados reais
   const ultimo = FIN_TOTAL.filter(function(r){ return r.real > 0; });
