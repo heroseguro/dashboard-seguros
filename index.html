@@ -257,9 +257,10 @@ body{font-family:'Asap',system-ui,sans-serif;}
         <table class="w-full text-sm"><thead><tr>
           <th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mês</th>
           <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads Meta</th>
-          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vnd Projetado</th>
-          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL Meta</th>
-          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%L→Venda Meta</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads Real</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vnd Proj</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">%L→SQL</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%L→Venda</th>
         </tr></thead><tbody id="bMtrSMeta"></tbody></table>
       </div>
     </div>
@@ -326,8 +327,10 @@ body{font-family:'Asap',system-ui,sans-serif;}
         <table class="w-full text-sm"><thead><tr>
           <th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mês</th>
           <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads Meta</th>
-          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vnd Projetado</th>
-          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%L→SQL Meta</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Leads Real</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vnd Meta</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Vnd Real</th>
+          <th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">%L→SQL</th>
         </tr></thead><tbody id="bMtrGMeta"></tbody></table>
       </div>
     </div>
@@ -401,7 +404,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycby1h3-kCz27OmPBldm4Sb96f_Sk60uUk0PQFu42vM0FKfwFdnRAyz4brsfUuj9cmrij/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzRX14SFdg9_PrlyYaJ1NqlOb7h6zE6XS5DA2Bf2kjcI6UKEjo_TOCpqjEkLmdnejg/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -815,7 +818,16 @@ function rMktSaude(){
   rCanalS();
   const bm=document.getElementById('bMtrS');if(bm){bm.innerHTML='';LEADS_S.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold">${r.rL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.sq||0}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${r.vR||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.2)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lv||0)/100,0.04)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.qv||0)/100,0.2)}</td></tr>`;});}
   // Tabela Meta Saúde
-  const bms=document.getElementById('bMtrSMeta');if(bms){bms.innerHTML='';LEADS_S.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bms.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.mL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.vP||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.2)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lv||0)/100,0.04)}</td></tr>`;});}
+  const bms=document.getElementById('bMtrSMeta');if(bms){bms.innerHTML='';LEADS_S.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';
+    const pLM=r.mL>0&&r.rL>0?Math.round(r.rL/r.mL*100):0;
+    bms.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}>
+      <td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td>
+      <td class="text-right py-1.5 px-3 nm text-sm">${r.mL||0}</td>
+      <td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:${r.rL>=(r.mL||999)?'#10B981':'#E8185A'}">${r.rL||0} ${r.mL>0?'<span class="text-xs opacity-60">('+pLM+'%)</span>':''}</td>
+      <td class="text-right py-1.5 px-3 nm text-sm">${r.vP||0}</td>
+      <td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.2)}</td>
+      <td class="text-right py-1.5 px-3 text-sm">${chip((r.lv||0)/100,0.04)}</td>
+    </tr>`;});}
 }
 function rMktSeguros(){
   const tL=LEADS_G.reduce((a,r)=>a+(r.rL||0),0),tQ=LEADS_G.reduce((a,r)=>a+(r.sq||0),0),tV=LEADS_G.reduce((a,r)=>a+(r.v||0),0),tA=APC.reduce((a,r)=>a+(r.r||0),0);
@@ -834,7 +846,16 @@ function rMktSeguros(){
   canalTbl(CANAIS_G,'bCanalG');
   const bm=document.getElementById('bMtrG');if(bm){bm.innerHTML='';LEADS_G.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold">${r.rL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.sq||0}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${r.v||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.5)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lv||0)/100,0.3)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.qv||0)/100,0.5)}</td></tr>`;});}
   // Tabela Meta Seguros
-  const bmm=document.getElementById('bMtrGMeta');if(bmm){bmm.innerHTML='';LEADS_G.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bmm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.mL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.vP||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.5)}</td></tr>`;});}
+  const bmm=document.getElementById('bMtrGMeta');if(bmm){bmm.innerHTML='';LEADS_G.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';
+    const pLMG=r.mL>0&&r.rL>0?Math.round(r.rL/r.mL*100):0;
+    bmm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}>
+      <td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td>
+      <td class="text-right py-1.5 px-3 nm text-sm">${r.mL||0}</td>
+      <td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:${r.rL>=(r.mL||999)?'#10B981':'#E8185A'}">${r.rL||0} ${r.mL>0?'<span class="text-xs opacity-60">('+pLMG+'%)</span>':''}</td>
+      <td class="text-right py-1.5 px-3 nm text-sm">${r.vP||0}</td>
+      <td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:${r.v>=(r.vP||999)?'#10B981':'#E8185A'}">${r.v||0}</td>
+      <td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.5)}</td>
+    </tr>`;});}
   rCanalG();
 }
 
