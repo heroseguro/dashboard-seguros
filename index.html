@@ -467,7 +467,7 @@ function loadData(){
     console.warn('Apps Script: timeout de 12s');
     useFallbackData();showError();
     hideLoading();spinRefresh(false);initDashboard();
-  },12000);
+  },25000);
 
   // Callback global que o Apps Script vai chamar
   window.__heroCallback=function(json){
@@ -485,7 +485,8 @@ function loadData(){
   function cleanupJsonp(){
     const old=document.getElementById('__jsonpScript');
     if(old)old.remove();
-    delete window.__heroCallback;
+    // Delay na remoção do callback para evitar race condition
+    setTimeout(function(){ try{ delete window.__heroCallback; }catch(e){} }, 500);
   }
 
   // Injeta <script> com ?callback=__heroCallback — sem restrição de CORS
@@ -964,7 +965,7 @@ function rCx(){
   const el=id=>document.getElementById(id);
   if(el('kpiCartS'))el('kpiCartS').textContent=cartMai+' contratos';
   if(el('kpiCartSChip')){el('kpiCartSChip').textContent=(pctGrow>=0?'+':'')+Math.round(pctGrow*100)+'% vs Dez/25';el('kpiCartSChip').className='chip '+(pctGrow>=0?'cu':'cd');}
-  if(el('kpiGrowS'))el('kpiGrowS').textContent=(grow>=0?'+':'')+grow+' desde Dez/25';
+  if(el('kpiGrowS'))el('kpiGrowS').textContent=(grow>=0?'+':'')+grow+' contratos';
   if(el('kpiCancelS'))el('kpiCancelS').textContent=totalCS;
   if(el('kpiCancelG'))el('kpiCancelG').textContent=totalCG;
   if(el('kpiCancelSsub'))el('kpiCancelSsub').textContent=`Maio: ${CANCEL_S[CANCEL_S.length-1]||0} · YTD: ${totalCS}`;
