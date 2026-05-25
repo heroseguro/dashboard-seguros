@@ -440,7 +440,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbyxUBgM4xHOJoNFwgzBHSc27kbAlMEPBQKxvEjsqEtsoOEuFo4HiJC3bEptybcdc-ja/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbw4Na7MVKD0otdI9CMbmAdk_6jLfj-Di2vneTHo4kUGese5N_Wfj61k8N0kmSS-674T/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -460,6 +460,8 @@ function mesFull(){ return mesAtualFull()+' '+ANO; }
 // ── JSONP: contorna CORS em qualquer domínio (file://, github.io, netlify, etc.) ──
 function loadData(){
   showLoading('Buscando dados da planilha…');spinRefresh(true);
+  // Mostrar fallback imediatamente para não ficar tela em branco
+  useFallbackData();
 
   // Timeout: se o Apps Script não responder em 12s, usa fallback
   const timer=setTimeout(()=>{
@@ -467,7 +469,7 @@ function loadData(){
     console.warn('Apps Script: timeout de 12s');
     useFallbackData();showError();
     hideLoading();spinRefresh(false);initDashboard();
-  },25000);
+  },30000);
 
   // Callback global que o Apps Script vai chamar
   window.__heroCallback=function(json){
@@ -523,8 +525,19 @@ function mapApiData(d){
   if(d.marketing?.canaisG?.length)CANAIS_G=d.marketing.canaisG;
   if(d.marketing?.canaisSmes?.length)CANAIS_S_MES=d.marketing.canaisSmes;
   if(d.marketing?.canaisGmes?.length)CANAIS_G_MES=d.marketing.canaisGmes;
-  if(d.vendasSaude?.length)VND_S=d.vendasSaude;
-  if(d.vendasSeguros?.length)VND_G=d.vendasSeguros;
+  if(d.vendasSaude?.length){
+    VND_S=d.vendasSaude.map(function(r,i){
+      // Se tick veio zerado, usar fallback hardcoded
+      const tickFB=[1412.60,2051.00,1243.01,1163.59,1240.73];
+      return {...r, tick: r.tick>0 ? r.tick : (tickFB[i]||0)};
+    });
+  }
+  if(d.vendasSeguros?.length){
+    VND_G=d.vendasSeguros.map(function(r,i){
+      const tickFB=[1228,1240,763,1339,1674];
+      return {...r, tick: r.tick>0 ? r.tick : (tickFB[i]||0)};
+    });
+  }
   if(d.perfSaude?.length)PERF_S=d.perfSaude;
   if(d.perfSeguros?.length)PERF_G=d.perfSeguros;
   if(d.ciclo?.length)CICLO=d.ciclo;
@@ -539,6 +552,8 @@ function mapApiData(d){
   // Aplicar mês do servidor se disponível
   if(typeof d.mesIdx === 'number') MES_IDX = d.mesIdx;
   if(!FIN_TOTAL.length||!FIN_S.length||!FIN_G.length)useFallbackFinanceiro();
+  // Se dados vieram todos zerados (Apps Script com erro), usar fallback
+  else if(FIN_TOTAL.every(r=>r.real===0))useFallbackFinanceiro();
   if(!LEADS_S.length||!LEADS_G.length)useFallbackMarketing();
   if(!VND_S.length||!VND_G.length)useFallbackVendas();
   if(!CART_S.length)useFallbackCX();
@@ -1142,6 +1157,22 @@ function initDashboard(){
   rConsolidado();
 }
 loadData();
+
+// Auto-refresh a cada 5 minutos
+setInterval(function(){
+  loadData();
+}, 5 * 60 * 1000);
+
+// Detectar virada de mês — verificar a cada hora
+setInterval(function(){
+  const agora = new Date();
+  const mesAtualJS = agora.getMonth(); // 0=Jan
+  // Se o mês JS mudou em relação ao MES_IDX (que começa em Janeiro=0)
+  // recarregar para pegar novos dados
+  if(mesAtualJS !== MES_IDX && FIN_TOTAL.length > 0){
+    loadData();
+  }
+}, 60 * 60 * 1000);
 </script>
 </body>
 </html>
