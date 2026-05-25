@@ -440,12 +440,13 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbw4Na7MVKD0otdI9CMbmAdk_6jLfj-Di2vneTHo4kUGese5N_Wfj61k8N0kmSS-674T/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwjxj9gHsUWt2Qfrsd6O4pzACBOpkqDoIXBeN2wtVgl8_R-5OKO1K1NN4IjS0ggyd4E/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
 let VND_S=[],VND_G=[],PERF_S=[],PERF_G=[],CICLO=[],CART_S=[],CART_G=[],CANCEL_S=[],CANCEL_G=[];
 let VND_SEG=[],VND_PROD=[];
+let KPI_MES={meta:0,real:0},KPI_SEM={meta:725307,real:0},KPI_ANO={meta:2219073,real:0};
 let CANAIS_S_MES=[];
 const ML=['Jan','Fev','Mar','Abr','Mai'];
 const ML_FULL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -551,6 +552,10 @@ function mapApiData(d){
   if(d.cx?.churnG?.length)CHURN_G=d.cx.churnG;
   // Aplicar mês do servidor se disponível
   if(typeof d.mesIdx === 'number') MES_IDX = d.mesIdx;
+  // KPIs diretos da planilha
+  if(d.kpis?.mes?.real>0)   KPI_MES=d.kpis.mes;
+  if(d.kpis?.semestre?.meta>0) KPI_SEM=d.kpis.semestre;
+  if(d.kpis?.ano?.meta>0)   KPI_ANO=d.kpis.ano;
   if(!FIN_TOTAL.length||!FIN_S.length||!FIN_G.length)useFallbackFinanceiro();
   // Se dados vieram todos zerados (Apps Script com erro), usar fallback
   else if(FIN_TOTAL.every(r=>r.real===0))useFallbackFinanceiro();
@@ -790,7 +795,9 @@ function rConsolidado(){
     {type:'line',label:'Meta',data:FIN_TOTAL.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}
   ]);
   const ult=FIN_TOTAL[FIN_TOTAL.length-1]||{};
-  const meta=ult.meta||0,proj=ult.proj||0,real=ult.real||0;
+  const meta = KPI_MES.meta>0 ? KPI_MES.meta : (ult.meta||0);
+  const real  = KPI_MES.real>0 ? KPI_MES.real : (ult.real||0);
+  const proj  = ult.proj||0;
   const pP=meta>0?proj/meta:0,pR=meta>0?real/meta:0;
   const el=id=>document.getElementById(id);
   if(el('dKpiMeta'))el('dKpiMeta').textContent=f2(meta);
@@ -815,18 +822,20 @@ function rConsolidado(){
 
 // ── render financeiro ─────────────────────────────────────────────
 function rFinanceiro(){
-  const ult=FIN_TOTAL[FIN_TOTAL.length-1]||{};
-  const meta=ult.meta||0,real=ult.real||0,diff=real-meta,pct=meta>0?real/meta:0;
   const el=id=>document.getElementById(id);
+  // Usar KPIs diretos da planilha quando disponíveis
+  const meta = KPI_MES.meta>0 ? KPI_MES.meta : (FIN_TOTAL[FIN_TOTAL.length-1]||{}).meta||0;
+  const real  = KPI_MES.real>0 ? KPI_MES.real : (FIN_TOTAL[FIN_TOTAL.length-1]||{}).real||0;
+  const diff=real-meta, pct=meta>0?real/meta:0;
   if(el('dFinMesChip')){el('dFinMesChip').textContent=Math.round(pct*100)+'%';el('dFinMesChip').className='chip '+(pct>=1?'cu':'cd');}
   if(el('dFinMesKpis'))el('dFinMesKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(meta)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:${real>=meta?'#10B981':'#E8185A'}">${f2(real)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diff)}</div></div>`;
-  const totalReal=FIN_TOTAL.reduce((a,r)=>a+r.real,0);
-  const totalProj=FIN_TOTAL.reduce((a,r)=>a+r.proj,0);
-  const totalMeta=FIN_TOTAL.reduce((a,r)=>a+r.meta,0);
-  // Semestre: soma dos meses disponíveis (meta do ano / 2 como referência semestral)
-  const metaSem=totalMeta; // meta YTD = meta semestral acumulada
-  const pctSem=metaSem>0?totalReal/metaSem:0,diffSem=totalReal-metaSem;
-  const metaAno=2219073,pctAno=totalReal/metaAno,diffAno=totalReal-metaAno;
+  // Semestre: usar KPI direto da planilha
+  const metaSem = KPI_SEM.meta>0 ? KPI_SEM.meta : 725307;
+  const totalReal = KPI_SEM.real>0 ? KPI_SEM.real : FIN_TOTAL.reduce((a,r)=>a+r.real,0);
+  const pctSem=metaSem>0?totalReal/metaSem:0, diffSem=totalReal-metaSem;
+  // Ano
+  const metaAno = KPI_ANO.meta>0 ? KPI_ANO.meta : 2219073;
+  const pctAno=totalReal/metaAno, diffAno=totalReal-metaAno;
   if(el('dFinSemChip')){el('dFinSemChip').textContent=Math.round(pctSem*100)+'%';el('dFinSemChip').className='chip '+(pctSem>=1?'cu':'cd');}
   if(el('dFinSemKpis'))el('dFinSemKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta YTD</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(metaSem)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:${totalReal>=metaSem?'#10B981':'#E8185A'}">${f2(totalReal)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diffSem)}</div></div>`;
   if(el('dFinAnoChip')){el('dFinAnoChip').textContent=Math.round(pctAno*100)+'%';el('dFinAnoChip').className='chip '+(pctAno>=1?'cu':'cd');}
