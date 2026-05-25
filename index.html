@@ -545,8 +545,8 @@ function mapApiData(d){
   if(d.cx?.cartG?.length)CART_G=d.cx.cartG;
   if(d.cx?.cancelS?.length)CANCEL_S=d.cx.cancelS;
   if(d.cx?.cancelG?.length)CANCEL_G=d.cx.cancelG;
-  if(d.cx?.cartSDez)CART_S_DEZ=d.cx.cartSDez;
-  if(d.cx?.cartGDez)CART_G_DEZ=d.cx.cartGDez;
+  if(d.cx?.cartSDez!=null)CART_S_DEZ=d.cx.cartSDez;
+  if(d.cx?.cartGDez!=null)CART_G_DEZ=d.cx.cartGDez;
   if(d.cx?.churnS?.length)CHURN_S=d.cx.churnS;
   if(d.cx?.churnG?.length)CHURN_G=d.cx.churnG;
   // Aplicar mês do servidor se disponível
@@ -589,7 +589,7 @@ function useFallbackVendas(){
   PERF_G=[{n:'Luiz',c:'Consultor Seguros',t:99,m:[24,21,18,20,16]}];
   CICLO=[{k:'Dentro do Mês (dias)',tot:2,m:[4,4,6,5,5]},{k:'Ponta a Ponta (dias)',tot:5,m:[11,14,10,13,11]}];
 }
-function useFallbackCX(){CART_S=[411,418,438,448,454];CART_G=[506,556,605,683,703];CANCEL_S=[0,5,2,2,1];CANCEL_G=[3,5,7,6,1];CART_S_DEZ=393;CART_G_DEZ=435;CHURN_S=[0,0.72,0.46,0.45,0.22];CHURN_G=[0.59,0.90,1.16,0.88,0.14];}
+function useFallbackCX(){CART_S=[411,421,439,460,466];CART_G=[506,556,605,683,703];CANCEL_S=[0,5,2,2,1];CANCEL_G=[3,5,7,6,1];CART_S_DEZ=393;CART_G_DEZ=435;CHURN_S=[0,0.72,0.46,0.45,0.22];CHURN_G=[0.59,0.90,1.16,0.88,0.14];}
 function useFallbackNivel(){
   NIVEL=[{mes:'Jan',m1:27686.68,m2:25400.46,m3:18253.99,vit:10178.27,odo:776.29,prem:7062.72,premio:582145.33},{mes:'Fev',m1:47520.29,m2:13209.27,m3:12777.91,vit:6653.19,odo:667.49,prem:12463.47,premio:409051.73},{mes:'Mar',m1:24966.57,m2:52818.18,m3:24103.41,vit:8908.41,odo:534.58,prem:7157.22,premio:548309.73},{mes:'Abr',m1:25433.45,m2:21825.91,m3:62091.96,vit:11056.30,odo:655.13,prem:1300.46,premio:932012.27},{mes:'Mai',m1:19105.81,m2:15394.42,m3:8267.00,vit:5630.85,odo:530.73,prem:54300.28,premio:889614.20}];
 }
@@ -923,7 +923,11 @@ function rMktSeguros(){
 
 // ── render vendas ─────────────────────────────────────────────────
 function rVndSaude(){
-  const totVnd=VND_S.reduce((a,r)=>a+(r.real||0),0),totRec=VND_S.reduce((a,r)=>a+(r.rReal||0),0);
+  const totVnd=VND_S.reduce((a,r)=>a+(r.real||0),0);
+  // Receita YTD: usa rReal de VND_S, mas se zerado usa FIN_S (mais confiável)
+  const totRecVnd=VND_S.reduce((a,r)=>a+(r.rReal||0),0);
+  const totRecFin=FIN_S.reduce((a,r)=>a+(r.real||0),0);
+  const totRec=totRecVnd>0?totRecVnd:totRecFin;
   // Ticket: usa da planilha se disponível, senão calcula receita/vendas
   const VND_S_tick = VND_S.map(r=>({...r, tick: r.tick>0 ? r.tick : (r.real>0 ? Math.round(r.rReal/r.real*100)/100 : 0)}));
   const avgTick = VND_S_tick.filter(r=>r.tick>0).reduce((a,r,_,arr)=>a+r.tick/arr.length,0);
@@ -941,7 +945,10 @@ function rVndSaude(){
   const bc=document.getElementById('bCiclo');if(bc){bc.innerHTML='';CICLO.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bc.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.k}</td><td class="text-right py-1.5 px-3 nm text-sm font-bold">${r.tot}</td>${(r.m||[]).map(v=>`<td class="text-right py-1.5 px-3 nm text-sm">${v}</td>`).join('')}</tr>`;});}
 }
 function rVndSeguros(){
-  const totVnd=VND_G.reduce((a,r)=>a+(r.real||0),0),totRec=VND_G.reduce((a,r)=>a+(r.rReal||0),0);
+  const totVnd=VND_G.reduce((a,r)=>a+(r.real||0),0);
+  const totRecVndG=VND_G.reduce((a,r)=>a+(r.rReal||0),0);
+  const totRecFinG=FIN_G.reduce((a,r)=>a+(r.real||0),0);
+  const totRec=totRecVndG>0?totRecVndG:totRecFinG;
   // Ticket seguros: usa planilha se disponível, senão calcula
   const VND_G_tick = VND_G.map(r=>({...r, tick: r.tick>0 ? r.tick : (r.real>0 ? Math.round(r.rReal/r.real*100)/100 : 0)}));
   const luiz=PERF_G.find(r=>r.n==='Luiz');
