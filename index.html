@@ -439,7 +439,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxFV3B6t5TsE5OHjk9hFl0Jj19kCqCCizZwgi4B8yEZLNtLdQoLNAii_k7WLEpQCNDD/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbz-gKxIk8UUzxwgDdx8xug2oA_yACBb9MlZ89bAF6o0cqGTjgWlzSCmMvmkp6NRmr63/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -818,8 +818,8 @@ function rConsolidado(){
     const st=document.getElementById(statsId);if(!st)return;
     st.innerHTML=[{label:'%Lead→SQL',val:(leads.lq||0)+'%',color:'#1B2738',bg:'rgba(27,39,56,0.07)'},{label:'%Lead→Venda',val:(leads.lv||0)+'%',color:'#E8185A',bg:'rgba(232,24,90,0.07)'},{label:'%SQL→Venda',val:(leads.qv||0)+'%',color:'#10B981',bg:'rgba(16,185,129,0.07)'}].map(s=>`<div class="text-center p-3 rounded-xl" style="background:${s.bg}"><div class="text-xs text-slate-400 mb-1">${s.label}</div><div class="text-lg font-bold" style="color:${s.color}">${s.val}</div></div>`).join('');
   };
-  funil2('dFunilS','dFunilSStats',LEADS_S[LEADS_S.length-1]||{});
-  funil2('dFunilG','dFunilGStats',LEADS_G[LEADS_G.length-1]||{});
+  funil2('dFunilS','dFunilSStats',LEADS_S[MES_IDX]||LEADS_S[LEADS_S.length-1]||{});
+  funil2('dFunilG','dFunilGStats',LEADS_G[MES_IDX]||LEADS_G[LEADS_G.length-1]||{});
 
 }
 
@@ -843,7 +843,7 @@ function rFinanceiro(){
   if(el('dFinSemKpis'))el('dFinSemKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta YTD</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(metaSem)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:${totalReal>=metaSem?'#10B981':'#E8185A'}">${f2(totalReal)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diffSem)}</div></div>`;
   if(el('dFinAnoChip')){el('dFinAnoChip').textContent=Math.round(pctAno*100)+'%';el('dFinAnoChip').className='chip '+(pctAno>=1?'cu':'cd');}
   if(el('dFinAnoKpis'))el('dFinAnoKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta Anual</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(metaAno)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado YTD</div><div class="text-xl font-bold nm" style="color:${totalReal>=metaAno?'#10B981':'#E8185A'}">${f2(totalReal)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diffAno)}</div></div>`;
-  const mkFin=(id,data)=>mkBL(id,data.map(r=>r.mes),[{type:'bar',label:'Realizado',data:data.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},{type:'line',label:'Meta',data:data.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}]);
+  const mkFin=(id,data)=>{const dv=data.filter(r=>r.real>0||r.meta>0);mkBL(id,dv.map(r=>r.mes),[{type:'bar',label:'Realizado',data:dv.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},{type:'line',label:'Meta',data:dv.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}]);};
   mkFin('cCarGeral',FIN_TOTAL);finTbl(FIN_TOTAL,'bCarGeral');
   mkFin('cCarSaude',FIN_S);finTbl(FIN_S,'bCarSaude');
   mkFin('cCarSeguros',FIN_G);finTbl(FIN_G,'bCarSeguros');
@@ -886,9 +886,10 @@ function rMktSaude(){
   if(el('kpiSqlsSsub'))el('kpiSqlsSsub').textContent=tL>0?Math.round(tQ/tL*100)+'% conv Lead→SQL':'—';
   if(el('kpiVndsS'))el('kpiVndsS').textContent=tV;
   if(el('kpiVndsSsub'))el('kpiVndsSsub').textContent=tL>0?Math.round(tV/tL*100)+'% conv Lead→Venda':'—';
-  mkBar('cLS',ML,[{label:'Meta',data:LEADS_S.map(r=>r.mL||0),backgroundColor:'rgba(176,191,208,0.80)',...barBase},{label:'Realizado',data:LEADS_S.map(r=>r.rL||0),backgroundColor:'rgba(232,24,90,0.85)',...barBase}]);
+  const LEADS_S_vis=LEADS_S.filter(r=>r.rL>0||r.mL>0);
+  mkBar('cLS',LEADS_S_vis.map(r=>r.mes),[{label:'Meta',data:LEADS_S_vis.map(r=>r.mL||0),backgroundColor:'rgba(176,191,208,0.80)',...barBase},{label:'Realizado',data:LEADS_S_vis.map(r=>r.rL||0),backgroundColor:'rgba(232,24,90,0.85)',...barBase}]);
   funnel('fnS',[{label:'Leads',n:tL,pct:1,color:'#1B2738'},{label:'SQLs',n:tQ,pct:tL>0?tQ/tL:0,color:'#E8185A'},{label:'Vendas',n:tV,pct:tL>0?tV/tL:0,color:'#10B981'}]);
-  mkLine('cConvS',ML,[{label:'%Lead→SQL',data:LEADS_S.map(r=>r.lq||0),borderColor:'#1B2738',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%Lead→Venda',data:LEADS_S.map(r=>r.lv||0),borderColor:'#E8185A',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%SQL→Venda',data:LEADS_S.map(r=>r.qv||0),borderColor:'#F59E0B',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5}]);
+  mkLine('cConvS',LEADS_S_vis.map(r=>r.mes),[{label:'%Lead→SQL',data:LEADS_S_vis.map(r=>r.lq||0),borderColor:'#1B2738',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%Lead→Venda',data:LEADS_S_vis.map(r=>r.lv||0),borderColor:'#E8185A',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%SQL→Venda',data:LEADS_S_vis.map(r=>r.qv||0),borderColor:'#F59E0B',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5}]);
   rCanalS();
   const bm=document.getElementById('bMtrS');if(bm){bm.innerHTML='';LEADS_S.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bm.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold">${r.rL||0}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.sq||0}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${r.vR||0}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lq||0)/100,0.2)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.lv||0)/100,0.04)}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.qv||0)/100,0.2)}</td></tr>`;});}
   // Tabela Meta Saúde
@@ -912,9 +913,10 @@ function rMktSeguros(){
   if(el('kpiVndsG'))el('kpiVndsG').textContent=tV;
   if(el('kpiVndsGsub'))el('kpiVndsGsub').textContent=tL>0?Math.round(tV/tL*100)+'% conv Lead→Venda':'—';
   if(el('kpiApc'))el('kpiApc').textContent=tA;
-  mkBar('cLG',ML,[{label:'Leads',data:LEADS_G.map(r=>r.rL||0),backgroundColor:'rgba(27,39,56,0.75)',...barBase},{label:'SQLs',data:LEADS_G.map(r=>r.sq||0),backgroundColor:'rgba(232,24,90,0.60)',...barBase},{label:'Vendas',data:LEADS_G.map(r=>r.v||0),backgroundColor:'rgba(16,185,129,0.75)',...barBase}]);
+  const LEADS_G_vis=LEADS_G.filter(r=>r.rL>0||r.v>0);
+  mkBar('cLG',LEADS_G_vis.map(r=>r.mes),[{label:'Leads',data:LEADS_G_vis.map(r=>r.rL||0),backgroundColor:'rgba(27,39,56,0.75)',...barBase},{label:'SQLs',data:LEADS_G_vis.map(r=>r.sq||0),backgroundColor:'rgba(232,24,90,0.60)',...barBase},{label:'Vendas',data:LEADS_G_vis.map(r=>r.v||0),backgroundColor:'rgba(16,185,129,0.75)',...barBase}]);
   funnel('fnG',[{label:'Leads',n:tL,pct:1,color:'#1B2738'},{label:'SQLs',n:tQ,pct:tL>0?tQ/tL:0,color:'#E8185A'},{label:'Vendas',n:tV,pct:tL>0?tV/tL:0,color:'#10B981'}]);
-  mkLine('cConvG',ML,[{label:'%Lead→SQL',data:LEADS_G.map(r=>r.lq||0),borderColor:'#1B2738',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%Lead→Venda',data:LEADS_G.map(r=>r.lv||0),borderColor:'#E8185A',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%SQL→Venda',data:LEADS_G.map(r=>r.qv||0),borderColor:'#F59E0B',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5}]);
+  mkLine('cConvG',LEADS_G_vis.map(r=>r.mes),[{label:'%Lead→SQL',data:LEADS_G_vis.map(r=>r.lq||0),borderColor:'#1B2738',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%Lead→Venda',data:LEADS_G_vis.map(r=>r.lv||0),borderColor:'#E8185A',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5},{label:'%SQL→Venda',data:LEADS_G_vis.map(r=>r.qv||0),borderColor:'#F59E0B',tension:0.4,pointRadius:5,fill:false,borderWidth:2.5}]);
   mkBar('cApc',ML,[{label:'Meta',data:APC.map(r=>r.m||0),backgroundColor:'rgba(176,191,208,0.80)',...barBase},{label:'Realizado',data:APC.map(r=>r.r||0),backgroundColor:'rgba(232,24,90,0.85)',...barBase}]);
   const ba=document.getElementById('bApc');if(ba){ba.innerHTML='';APC.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';ba.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.mes}</td><td class="text-right py-1.5 px-3 nm text-sm">${r.m}</td><td class="text-right py-1.5 px-3 nm text-sm font-semibold" style="color:#E8185A">${r.r}</td><td class="text-right py-1.5 px-3 text-sm">${chip((r.pct||0)/100,0.008)}</td></tr>`;});}
   canalTbl(CANAIS_G,'bCanalG');
