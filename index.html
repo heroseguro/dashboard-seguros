@@ -112,7 +112,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-real"><div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Realizado · <span data-mesfull>Maio 2026</span></span><span id="dKpiRealChip" class="chip">—</span></div><div id="dKpiReal" class="text-2xl font-bold nm" style="color:#E8185A">—</div><div id="dKpiRealSub" class="mt-2 text-xs text-slate-400">—</div></div>
   </div>
   <div class="card glass cbg border rounded-2xl p-5 rg">
-    <div class="flex items-center justify-between mb-3 flex-wrap gap-2"><div><div class="text-sm font-bold">Performance Geral</div><div class="text-xs text-slate-400 mt-0.5"><span data-ytd>Janeiro → <span data-mes>Mai</span> 2026</span></div></div><div class="flex gap-4 text-xs text-slate-500 dark:text-slate-400"><span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm inline-block" style="background:#B0BFD0"></span>Projetado</span><span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm inline-block" style="background:#E8185A"></span>Realizado</span><span class="flex items-center gap-1.5"><span class="inline-block w-5 h-0" style="border-top:2.5px dashed #B0BFD0;display:inline-block;vertical-align:middle;"></span>Meta</span></div></div>
+    <div class="flex items-center justify-between mb-3 flex-wrap gap-2"><div><div class="text-sm font-bold">Performance Geral</div><div class="text-xs text-slate-400 mt-0.5"><span data-ytd>Janeiro → <span data-mes>Mai</span> 2026</span></div></div><div class="flex gap-4 text-xs text-slate-500 dark:text-slate-400"><span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm inline-block" style="background:#E8185A"></span>Realizado</span><span class="flex items-center gap-1.5"><span class="inline-block w-5 h-0" style="border-top:2.5px dashed #B0BFD0;display:inline-block;vertical-align:middle;"></span>Meta</span></div></div>
     <div style="height:320px"><canvas id="cGeral"></canvas></div>
   </div>
   <div class="sl">Pipeline de <span data-mes>Mai</span> · Saúde & Seguros</div>
@@ -124,9 +124,10 @@ body{font-family:'Asap',system-ui,sans-serif;}
 
 <!-- FINANCEIRO -->
 <div data-panel="financeiro" class="tab-panel hidden space-y-4">
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-3 gap-4">
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-real"><div class="flex items-center justify-between mb-3"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Receita Mês · <span data-mes>Mai</span></span><span id="dFinMesChip" class="chip">—</span></div><div class="flex gap-8 flex-wrap" id="dFinMesKpis">—</div></div>
-    <div class="card glass cbg border rounded-2xl p-4 rg kpi-proj"><div class="flex items-center justify-between mb-3"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Receita Ano · YTD</span><span id="dFinAnoChip" class="chip">—</span></div><div class="flex gap-8 flex-wrap" id="dFinAnoKpis">—</div></div>
+    <div class="card glass cbg border rounded-2xl p-4 rg kpi-proj"><div class="flex items-center justify-between mb-3"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Receita Semestre · 1S</span><span id="dFinSemChip" class="chip">—</span></div><div class="flex gap-8 flex-wrap" id="dFinSemKpis">—</div></div>
+    <div class="card glass cbg border rounded-2xl p-4 rg kpi-green"><div class="flex items-center justify-between mb-3"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Receita Ano · YTD</span><span id="dFinAnoChip" class="chip">—</span></div><div class="flex gap-8 flex-wrap" id="dFinAnoKpis">—</div></div>
   </div>
   <div>
     <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
@@ -388,8 +389,43 @@ body{font-family:'Asap',system-ui,sans-serif;}
     <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Carteira de Saúde · Evolução</div><div style="height:260px"><canvas id="cCart"></canvas></div></div>
     <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Crescimento Líquido · Saúde</div><div style="height:260px"><canvas id="cGrow"></canvas></div></div>
   </div>
-  <div class="sl">Resumo Carteira & Cancelamentos · 2026</div>
-  <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto"><table class="w-full text-sm"><thead><tr><th class="text-left py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Métrica</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Jan</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Fev</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mar</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Abr</th><th class="text-right py-2 px-3 text-xs font-bold" style="background:#E8185A;color:#fff">Mai</th></tr></thead><tbody id="bCx"></tbody></table></div>
+  <div class="sl">Carteira de Contratos · 2026</div>
+  <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto">
+    <table class="w-full text-sm"><thead><tr>
+      <th class="text-left py-2 px-3 text-xs font-bold rounded-tl-lg" style="background:#1B2738;color:#fff">Segmento</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Dez/25</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Jan</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Fev</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mar</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Abr</th>
+      <th class="text-right py-2 px-3 text-xs font-bold rounded-tr-lg" style="background:#E8185A;color:#fff">Mai</th>
+    </tr></thead><tbody id="bCxCart"></tbody></table>
+  </div>
+
+  <div class="sl">Cancelamentos & Novos Contratos · 2026</div>
+  <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto">
+    <table class="w-full text-sm"><thead><tr>
+      <th class="text-left py-2 px-3 text-xs font-bold rounded-tl-lg" style="background:#1B2738;color:#fff">Métrica</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Jan</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Fev</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mar</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Abr</th>
+      <th class="text-right py-2 px-3 text-xs font-bold rounded-tr-lg" style="background:#E8185A;color:#fff">Mai</th>
+    </tr></thead><tbody id="bCxCancel"></tbody></table>
+  </div>
+
+  <div class="sl">Churn · 2026</div>
+  <div class="card glass cbg border rounded-2xl p-5 rg overflow-x-auto">
+    <table class="w-full text-sm"><thead><tr>
+      <th class="text-left py-2 px-3 text-xs font-bold rounded-tl-lg" style="background:#1B2738;color:#fff">Segmento</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Jan</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Fev</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Mar</th>
+      <th class="text-right py-2 px-3 text-xs font-bold" style="background:#1B2738;color:#fff">Abr</th>
+      <th class="text-right py-2 px-3 text-xs font-bold rounded-tr-lg" style="background:#E8185A;color:#fff">Mai</th>
+    </tr></thead><tbody id="bCxChurn"></tbody></table>
+  </div>
+  <div id="bCx" class="hidden"></div>
 </div>
 
 <!-- Loading -->
@@ -404,7 +440,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzRX14SFdg9_PrlyYaJ1NqlOb7h6zE6XS5DA2Bf2kjcI6UKEjo_TOCpqjEkLmdnejg/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbyxUBgM4xHOJoNFwgzBHSc27kbAlMEPBQKxvEjsqEtsoOEuFo4HiJC3bEptybcdc-ja/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -495,6 +531,10 @@ function mapApiData(d){
   if(d.cx?.cartG?.length)CART_G=d.cx.cartG;
   if(d.cx?.cancelS?.length)CANCEL_S=d.cx.cancelS;
   if(d.cx?.cancelG?.length)CANCEL_G=d.cx.cancelG;
+  if(d.cx?.cartSDez)CART_S_DEZ=d.cx.cartSDez;
+  if(d.cx?.cartGDez)CART_G_DEZ=d.cx.cartGDez;
+  if(d.cx?.churnS?.length)CHURN_S=d.cx.churnS;
+  if(d.cx?.churnG?.length)CHURN_G=d.cx.churnG;
   // Aplicar mês do servidor se disponível
   if(typeof d.mesIdx === 'number') MES_IDX = d.mesIdx;
   if(!FIN_TOTAL.length||!FIN_S.length||!FIN_G.length)useFallbackFinanceiro();
@@ -527,13 +567,13 @@ function useFallbackMarketing(){
   APC=[{mes:'Jan',m:22,r:23,pct:0.74},{mes:'Fev',m:27,r:14,pct:0.70},{mes:'Mar',m:36,r:23,pct:0.86},{mes:'Abr',m:47,r:33,pct:1.23},{mes:'Mai',m:62,r:15,pct:0.79}];
 }
 function useFallbackVendas(){
-  VND_S=[{mes:'Jan',proj:11,real:20,rMeta:87056,rReal:89358,tick:1412.60},{mes:'Fev',proj:12,real:16,rMeta:136627,rReal:93292,tick:2051.00},{mes:'Mar',proj:14,real:25,rMeta:109682,rReal:118488,tick:1243.01},{mes:'Abr',proj:18,real:27,rMeta:83612,rReal:122363,tick:1163.59},{mes:'Mai',proj:18,real:22,rMeta:96357,rReal:103229,tick:1251.81}];
-  VND_G=[{mes:'Jan',real:71,rMeta:15321,rReal:21686},{mes:'Fev',real:56,rMeta:15844,rReal:19918},{mes:'Mar',real:54,rMeta:16760,rReal:22628},{mes:'Abr',real:83,rMeta:18925,rReal:22190},{mes:'Mai',real:36,rMeta:21562,rReal:15177}];
+  VND_S=[{mes:'Jan',proj:11,real:20,rMeta:87056,rReal:89358,tick:1412.60},{mes:'Fev',proj:12,real:16,rMeta:136627,rReal:93292,tick:2051.00},{mes:'Mar',proj:14,real:25,rMeta:109682,rReal:118488,tick:1243.01},{mes:'Abr',proj:18,real:27,rMeta:83612,rReal:122363,tick:1163.59},{mes:'Mai',proj:18,real:22,rMeta:96357,rReal:103229,tick:1240.73}];
+  VND_G=[{mes:'Jan',real:71,rMeta:15321,rReal:21686,tick:1228},{mes:'Fev',real:56,rMeta:15844,rReal:19918,tick:1240},{mes:'Mar',real:54,rMeta:16760,rReal:22628,tick:763},{mes:'Abr',real:83,rMeta:18925,rReal:22190,tick:1339},{mes:'Mai',real:36,rMeta:21562,rReal:15177,tick:1674}];
   PERF_S=[{n:'Henrique',c:'Consultor Saúde',t:68,m:[13,14,18,15,8]},{n:'Tauanne',c:'Consultora Saúde',t:33,m:[0,1,7,12,13]}];
   PERF_G=[{n:'Luiz',c:'Consultor Seguros',t:99,m:[24,21,18,20,16]}];
   CICLO=[{k:'Dentro do Mês (dias)',tot:2,m:[4,4,6,5,5]},{k:'Ponta a Ponta (dias)',tot:5,m:[11,14,10,13,11]}];
 }
-function useFallbackCX(){CART_S=[411,418,438,448,454];CART_G=[506,556,605,683,703];CANCEL_S=[0,5,2,2,1];CANCEL_G=[3,5,7,6,1];}
+function useFallbackCX(){CART_S=[411,418,438,448,454];CART_G=[506,556,605,683,703];CANCEL_S=[0,5,2,2,1];CANCEL_G=[3,5,7,6,1];CART_S_DEZ=393;CART_G_DEZ=435;CHURN_S=[0,0.72,0.46,0.45,0.22];CHURN_G=[0.59,0.90,1.16,0.88,0.14];}
 function useFallbackNivel(){
   NIVEL=[{mes:'Jan',m1:27686.68,m2:25400.46,m3:18253.99,vit:10178.27,odo:776.29,prem:7062.72,premio:582145.33},{mes:'Fev',m1:47520.29,m2:13209.27,m3:12777.91,vit:6653.19,odo:667.49,prem:12463.47,premio:409051.73},{mes:'Mar',m1:24966.57,m2:52818.18,m3:24103.41,vit:8908.41,odo:534.58,prem:7157.22,premio:548309.73},{mes:'Abr',m1:25433.45,m2:21825.91,m3:62091.96,vit:11056.30,odo:655.13,prem:1300.46,premio:932012.27},{mes:'Mai',m1:19105.81,m2:15394.42,m3:8267.00,vit:5630.85,odo:530.73,prem:54300.28,premio:889614.20}];
 }
@@ -730,7 +770,6 @@ function perfCards(data,gid){
 // ── render consolidado ────────────────────────────────────────────
 function rConsolidado(){
   mkBL('cGeral',FIN_TOTAL.map(r=>r.mes),[
-    {type:'bar',label:'Projetado',data:FIN_TOTAL.map(r=>r.proj),backgroundColor:dk()?'rgba(27,39,56,0.85)':'rgba(27,39,56,0.75)',...barBase,order:2},
     {type:'bar',label:'Realizado',data:FIN_TOTAL.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},
     {type:'line',label:'Meta',data:FIN_TOTAL.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}
   ]);
@@ -766,10 +805,17 @@ function rFinanceiro(){
   if(el('dFinMesChip')){el('dFinMesChip').textContent=Math.round(pct*100)+'%';el('dFinMesChip').className='chip '+(pct>=1?'cu':'cd');}
   if(el('dFinMesKpis'))el('dFinMesKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(meta)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:${real>=meta?'#10B981':'#E8185A'}">${f2(real)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diff)}</div></div>`;
   const totalReal=FIN_TOTAL.reduce((a,r)=>a+r.real,0);
-  const metaAno=601745.12,pctAno=totalReal/metaAno,diffAno=totalReal-metaAno;
+  const totalProj=FIN_TOTAL.reduce((a,r)=>a+r.proj,0);
+  const totalMeta=FIN_TOTAL.reduce((a,r)=>a+r.meta,0);
+  // Semestre: soma dos meses disponíveis (meta do ano / 2 como referência semestral)
+  const metaSem=totalMeta; // meta YTD = meta semestral acumulada
+  const pctSem=metaSem>0?totalReal/metaSem:0,diffSem=totalReal-metaSem;
+  const metaAno=2219073,pctAno=totalReal/metaAno,diffAno=totalReal-metaAno;
+  if(el('dFinSemChip')){el('dFinSemChip').textContent=Math.round(pctSem*100)+'%';el('dFinSemChip').className='chip '+(pctSem>=1?'cu':'cd');}
+  if(el('dFinSemKpis'))el('dFinSemKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta YTD</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(metaSem)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:${totalReal>=metaSem?'#10B981':'#E8185A'}">${f2(totalReal)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diffSem)}</div></div>`;
   if(el('dFinAnoChip')){el('dFinAnoChip').textContent=Math.round(pctAno*100)+'%';el('dFinAnoChip').className='chip '+(pctAno>=1?'cu':'cd');}
-  if(el('dFinAnoKpis'))el('dFinAnoKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta YTD</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(metaAno)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:${totalReal>=metaAno?'#10B981':'#E8185A'}">${f2(totalReal)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diffAno)}</div></div>`;
-  const mkFin=(id,data)=>mkBL(id,data.map(r=>r.mes),[{type:'bar',label:'Projetado',data:data.map(r=>r.proj),backgroundColor:'rgba(176,191,208,0.85)',...barBase,order:2},{type:'bar',label:'Realizado',data:data.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},{type:'line',label:'Meta',data:data.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}]);
+  if(el('dFinAnoKpis'))el('dFinAnoKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta Anual</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(metaAno)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado YTD</div><div class="text-xl font-bold nm" style="color:${totalReal>=metaAno?'#10B981':'#E8185A'}">${f2(totalReal)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diffAno)}</div></div>`;
+  const mkFin=(id,data)=>mkBL(id,data.map(r=>r.mes),[{type:'bar',label:'Realizado',data:data.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},{type:'line',label:'Meta',data:data.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}]);
   mkFin('cCarGeral',FIN_TOTAL);finTbl(FIN_TOTAL,'bCarGeral');
   mkFin('cCarSaude',FIN_S);finTbl(FIN_S,'bCarSaude');
   mkFin('cCarSeguros',FIN_G);finTbl(FIN_G,'bCarSeguros');
@@ -862,7 +908,9 @@ function rMktSeguros(){
 // ── render vendas ─────────────────────────────────────────────────
 function rVndSaude(){
   const totVnd=VND_S.reduce((a,r)=>a+(r.real||0),0),totRec=VND_S.reduce((a,r)=>a+(r.rReal||0),0);
-  const avgTick=VND_S.filter(r=>r.tick>0).reduce((a,r,_,arr)=>a+r.tick/arr.length,0);
+  // Ticket: usa da planilha se disponível, senão calcula receita/vendas
+  const VND_S_tick = VND_S.map(r=>({...r, tick: r.tick>0 ? r.tick : (r.real>0 ? Math.round(r.rReal/r.real*100)/100 : 0)}));
+  const avgTick = VND_S_tick.filter(r=>r.tick>0).reduce((a,r,_,arr)=>a+r.tick/arr.length,0);
   const cicloP=CICLO.find(r=>r.k.includes('Ponta')||r.k.includes('ponta'));
   const el=id=>document.getElementById(id);
   if(el('kpiVndsTotS'))el('kpiVndsTotS').textContent=totVnd;
@@ -872,12 +920,14 @@ function rVndSaude(){
   mkBar('cVS',ML,[{label:'Projetado',data:VND_S.map(r=>r.proj||0),backgroundColor:'rgba(176,191,208,0.85)',...barBase},{label:'Realizado',data:VND_S.map(r=>r.real||0),backgroundColor:'rgba(232,24,90,0.85)',...barBase}]);
   mkBL('cRS',ML,[{type:'bar',label:'Meta',data:VND_S.map(r=>r.rMeta||0),backgroundColor:'rgba(176,191,208,0.85)',...barBase,order:2},{type:'bar',label:'Realizado',data:VND_S.map(r=>r.rReal||0),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2}]);
   dc('cTick');const ctxT=document.getElementById('cTick');
-  if(ctxT){CH.cTick=new Chart(ctxT,{type:'line',data:{labels:ML,datasets:[{label:'Ticket Médio',data:VND_S.map(r=>r.tick||0),borderColor:'#1B2738',backgroundColor:'rgba(27,39,56,0.08)',fill:true,tension:0.4,pointRadius:7,pointBackgroundColor:'#1B2738',pointBorderColor:dk()?'#0D1320':'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(232,24,90,0.25)',borderWidth:1,padding:12,callbacks:{label:c=>`  Ticket Médio: ${f2(c.parsed.y)}`}}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6,callback:v=>'R$'+Math.round(v/1000)+'k'},grid:{color:gc()},border:{display:false},beginAtZero:false}}}});}
+  if(ctxT){CH.cTick=new Chart(ctxT,{type:'line',data:{labels:ML,datasets:[{label:'Ticket Médio',data:VND_S_tick.map(r=>r.tick||0),borderColor:'#1B2738',backgroundColor:'rgba(27,39,56,0.08)',fill:true,tension:0.4,pointRadius:7,pointBackgroundColor:'#1B2738',pointBorderColor:dk()?'#0D1320':'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(232,24,90,0.25)',borderWidth:1,padding:12,callbacks:{label:c=>`  Ticket Médio: ${f2(c.parsed.y)}`}}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6,callback:v=>'R$'+Math.round(v/1000)+'k'},grid:{color:gc()},border:{display:false},beginAtZero:false}}}});}
   perfCards(PERF_S,'perfS');
   const bc=document.getElementById('bCiclo');if(bc){bc.innerHTML='';CICLO.forEach((r,i)=>{const bg=i%2?'style="background:rgba(27,39,56,0.04)"':'';bc.innerHTML+=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" ${bg}><td class="py-1.5 px-3 text-sm font-medium">${r.k}</td><td class="text-right py-1.5 px-3 nm text-sm font-bold">${r.tot}</td>${(r.m||[]).map(v=>`<td class="text-right py-1.5 px-3 nm text-sm">${v}</td>`).join('')}</tr>`;});}
 }
 function rVndSeguros(){
   const totVnd=VND_G.reduce((a,r)=>a+(r.real||0),0),totRec=VND_G.reduce((a,r)=>a+(r.rReal||0),0);
+  // Ticket seguros: usa planilha se disponível, senão calcula
+  const VND_G_tick = VND_G.map(r=>({...r, tick: r.tick>0 ? r.tick : (r.real>0 ? Math.round(r.rReal/r.real*100)/100 : 0)}));
   const luiz=PERF_G.find(r=>r.n==='Luiz');
   const topSeg=[...VND_SEG].sort((a,b)=>b.vnd-a.vnd)[0]||{};
   const seg2=[...VND_SEG].sort((a,b)=>b.vnd-a.vnd)[1]||{};
@@ -894,36 +944,151 @@ function rVndSeguros(){
   // Ticket médio seguros — calculado como receita/vendas
   const totVndG_=VND_G.reduce((a,r)=>a+(r.real||0),0);
   const totRecG_=VND_G.reduce((a,r)=>a+(r.rReal||0),0);
-  const avgTickG=totVndG_>0?Math.round(totRecG_/totVndG_*100)/100:0;
+  const VND_G_tick2=VND_G.map(r=>({...r,tick:r.tick>0?r.tick:(r.real>0?Math.round(r.rReal/r.real*100)/100:0)}));const avgTickG=VND_G_tick2.filter(r=>r.tick>0).reduce((a,r,_,arr)=>a+r.tick/arr.length,0);
   const el2=id=>document.getElementById(id);
   if(el2('kpiTickG'))el2('kpiTickG').textContent=f2(avgTickG);
   if(el2('kpiTickGsub'))el2('kpiTickGsub').textContent='Média '+rangeYTD();
   // Gráfico ticket seguros
   dc('cTickG');const ctxTG=document.getElementById('cTickG');
-  if(ctxTG){const ticksG=VND_G.map(r=>r.real>0?Math.round(r.rReal/r.real*100)/100:0);
-  CH.cTickG=new Chart(ctxTG,{type:'line',data:{labels:ML,datasets:[{label:'Ticket Médio Seguros',data:ticksG,borderColor:'#F59E0B',backgroundColor:'rgba(245,158,11,0.08)',fill:true,tension:0.4,pointRadius:7,pointBackgroundColor:'#F59E0B',pointBorderColor:dk()?'#0D1320':'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(245,158,11,0.25)',borderWidth:1,padding:12,callbacks:{label:c=>`  Ticket Médio: ${f2(c.parsed.y)}`}}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6,callback:v=>'R$'+Math.round(v/1000)+'k'},grid:{color:gc()},border:{display:false},beginAtZero:false}}}});}
+  if(ctxTG){CH.cTickG=new Chart(ctxTG,{type:'line',data:{labels:ML,datasets:[{label:'Ticket Médio Seguros',data:VND_G_tick2.map(r=>r.tick||0),borderColor:'#F59E0B',backgroundColor:'rgba(245,158,11,0.08)',fill:true,tension:0.4,pointRadius:7,pointBackgroundColor:'#F59E0B',pointBorderColor:dk()?'#0D1320':'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(245,158,11,0.25)',borderWidth:1,padding:12,callbacks:{label:c=>`  Ticket Médio: ${f2(c.parsed.y)}`}}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6,callback:v=>'R$'+Math.round(v/1000)+'k'},grid:{color:gc()},border:{display:false},beginAtZero:false}}}});}
 }
 
 // ── render cx ─────────────────────────────────────────────────────
 function rCx(){
   const totalCS=CANCEL_S.reduce((a,b)=>a+b,0),totalCG=CANCEL_G.reduce((a,b)=>a+b,0);
-  const cartMai=CART_S[CART_S.length-1]||0,cartJan=CART_S[0]||0,grow=cartMai-cartJan;
-  const pctGrow=cartJan>0?grow/cartJan:0;
+  const cartMai=CART_S[CART_S.length-1]||0;
+  // Crescimento desde dezembro/2025
+  const baseDez=CART_S_DEZ||CART_S[0]||0;
+  const grow=cartMai-baseDez;
+  const pctGrow=baseDez>0?grow/baseDez:0;
   const el=id=>document.getElementById(id);
   if(el('kpiCartS'))el('kpiCartS').textContent=cartMai+' contratos';
-  if(el('kpiCartSChip')){el('kpiCartSChip').textContent=(pctGrow>=0?'+':'')+Math.round(pctGrow*100)+'% vs Jan';el('kpiCartSChip').className='chip '+(pctGrow>=0?'cu':'cd');}
-  if(el('kpiGrowS'))el('kpiGrowS').textContent=(grow>=0?'+':'')+grow+' contratos';
+  if(el('kpiCartSChip')){el('kpiCartSChip').textContent=(pctGrow>=0?'+':'')+Math.round(pctGrow*100)+'% vs Dez/25';el('kpiCartSChip').className='chip '+(pctGrow>=0?'cu':'cd');}
+  if(el('kpiGrowS'))el('kpiGrowS').textContent=(grow>=0?'+':'')+grow+' desde Dez/25';
   if(el('kpiCancelS'))el('kpiCancelS').textContent=totalCS;
   if(el('kpiCancelG'))el('kpiCancelG').textContent=totalCG;
   if(el('kpiCancelSsub'))el('kpiCancelSsub').textContent=`Maio: ${CANCEL_S[CANCEL_S.length-1]||0} · YTD: ${totalCS}`;
   if(el('kpiCancelGsub'))el('kpiCancelGsub').textContent=`Maio: ${CANCEL_G[CANCEL_G.length-1]||0} · YTD: ${totalCG}`;
   dc('cCart');const ctx=document.getElementById('cCart');
   if(ctx){CH.cCart=new Chart(ctx,{type:'line',data:{labels:ML,datasets:[{label:'Carteira Saúde',data:CART_S,borderColor:'#10B981',backgroundColor:'rgba(16,185,129,0.10)',fill:true,tension:0.4,pointRadius:7,pointBackgroundColor:'#10B981',pointBorderColor:dk()?'#0D1320':'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(16,185,129,0.25)',borderWidth:1,padding:12,callbacks:{label:c=>`  Carteira: ${c.parsed.y} contratos`}}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6},grid:{color:gc()},border:{display:false},min:Math.max(0,(CART_S[0]||400)-30)}}}});}
-  const cm=CART_S.map((v,i)=>i===0?0:v-CART_S[i-1]);
+  // Novos contratos líquidos: Jan = Jan - Dez/25, Fev = Fev - Jan...
+  const baseCart=[CART_S_DEZ||CART_S[0]||0,...CART_S];
+  const cm=CART_S.map((v,i)=>v-baseCart[i]);
   dc('cGrow');const ctx2=document.getElementById('cGrow');
   if(ctx2){CH.cGrow=new Chart(ctx2,{type:'bar',data:{labels:ML,datasets:[{label:'Novos líquidos',data:cm,backgroundColor:cm.map(v=>v>=0?'rgba(16,185,129,0.80)':'rgba(232,24,90,0.80)'),...barBase}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:dk()?'rgba(8,18,41,0.95)':'rgba(255,255,255,0.97)',titleColor:tc(),bodyColor:tc(),borderColor:'rgba(232,24,90,0.25)',borderWidth:1,padding:12}},scales:{x:{ticks:{color:tc(),font:{size:11,weight:'600'}},grid:{display:false},border:{display:false}},y:{ticks:{color:tc(),maxTicksLimit:6},grid:{color:gc()},border:{display:false}}}}});}
+  // Tabela 1: Carteira
+  const bcCart=document.getElementById('bCxCart');
+  if(bcCart){
+    const novosS=CART_S.map((v,i)=>v-(i===0?CART_S_DEZ||v:CART_S[i-1]));
+    const novosG=CART_G.map((v,i)=>v-(i===0?CART_G_DEZ||v:CART_G[i-1]));
+    const tdC=(v,color)=>`<td class="text-right py-2 px-3 nm text-sm font-bold" style="color:${color}">${v}</td>`;
+    const tdN=(v)=>`<td class="text-right py-2 px-3 nm text-sm font-semibold" style="color:${v>=0?'#10B981':'#E8185A'}">${v>=0?'+':''}${v}</td>`;
+    bcCart.innerHTML=
+      `<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40">
+        <td class="py-2 px-3 text-sm font-semibold">Saúde · Carteira</td>
+        <td class="text-right py-2 px-3 nm text-sm text-slate-400">${CART_S_DEZ||'—'}</td>
+        ${CART_S.map(v=>tdC(v,'#10B981')).join('')}
+      </tr>
+      <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)">
+        <td class="py-2 px-3 text-sm text-slate-500">↳ Novos líquidos</td>
+        <td class="text-right py-2 px-3 nm text-sm text-slate-400">—</td>
+        ${novosS.map(v=>tdN(v)).join('')}
+      </tr>
+      <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40">
+        <td class="py-2 px-3 text-sm font-semibold">Seguros · Carteira</td>
+        <td class="text-right py-2 px-3 nm text-sm text-slate-400">${CART_G_DEZ||'—'}</td>
+        ${CART_G.map(v=>tdC(v,'#3B82F6')).join('')}
+      </tr>
+      <tr class="tr" style="background:rgba(27,39,56,0.03)">
+        <td class="py-2 px-3 text-sm text-slate-500">↳ Novos líquidos</td>
+        <td class="text-right py-2 px-3 nm text-sm text-slate-400">—</td>
+        ${novosG.map(v=>tdN(v)).join('')}
+      </tr>`;
+  }
+
+  // Tabela 2: Cancelamentos
+  const bcCancel=document.getElementById('bCxCancel');
+  if(bcCancel){
+    const tdC2=(v,color)=>`<td class="text-right py-2 px-3 nm text-sm font-bold" style="color:${color}">${v}</td>`;
+    bcCancel.innerHTML=
+      `<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40">
+        <td class="py-2 px-3 text-sm font-semibold">Saúde</td>
+        ${CANCEL_S.map(v=>tdC2(v,v>0?'#E8185A':'#10B981')).join('')}
+      </tr>
+      <tr class="tr" style="background:rgba(27,39,56,0.03)">
+        <td class="py-2 px-3 text-sm font-semibold">Seguros</td>
+        ${CANCEL_G.map(v=>tdC2(v,v>0?'#E8185A':'#10B981')).join('')}
+      </tr>`;
+  }
+
+  // Tabela 3: Churn
+  const bcChurn=document.getElementById('bCxChurn');
+  if(bcChurn){
+    const tdCh=(v)=>`<td class="text-right py-2 px-3 nm text-sm font-bold" style="color:${v>1?'#E8185A':v>0.4?'#F59E0B':'#10B981'}">${v}%</td>`;
+    bcChurn.innerHTML=
+      `<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40">
+        <td class="py-2 px-3 text-sm font-semibold">Saúde</td>
+        ${(CHURN_S.length?CHURN_S:[0,0,0,0,0]).map(v=>tdCh(v)).join('')}
+      </tr>
+      <tr class="tr" style="background:rgba(27,39,56,0.03)">
+        <td class="py-2 px-3 text-sm font-semibold">Seguros</td>
+        ${(CHURN_G.length?CHURN_G:[0,0,0,0,0]).map(v=>tdCh(v)).join('')}
+      </tr>`;
+  }
+
   const bc=document.getElementById('bCx');
-  if(bc){bc.innerHTML=`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40"><td class="py-1.5 px-3 text-sm font-medium">Carteira Saúde</td>${CART_S.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:#10B981">${v}</td>`).join('')}</tr><tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)"><td class="py-1.5 px-3 text-sm font-medium">Carteira Seguros</td>${CART_G.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:#10B981">${v}</td>`).join('')}</tr><tr class="tr border-b border-slate-200/40 dark:border-slate-700/40"><td class="py-1.5 px-3 text-sm font-medium">Cancelamentos Saúde</td>${CANCEL_S.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>0?'#E8185A':'#10B981'}">${v}</td>`).join('')}</tr><tr class="tr" style="background:rgba(27,39,56,0.03)"><td class="py-1.5 px-3 text-sm font-medium">Cancelamentos Seguros</td>${CANCEL_G.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>0?'#E8185A':'#10B981'}">${v}</td>`).join('')}</tr>`;}
+  if(bc){
+    const novosS=CART_S.map((v,i)=>v-(i===0?CART_S_DEZ||v:CART_S[i-1]));
+    const novosG=CART_G.map((v,i)=>v-(i===0?CART_G_DEZ||v:CART_G[i-1]));
+    const ML5=['Jan','Fev','Mar','Abr','Mai'];
+    bc.innerHTML=`
+      <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.06)">
+        <td class="py-1.5 px-3 text-xs font-bold text-slate-500 uppercase">Métrica</td>
+        <td class="text-right py-1.5 px-3 text-xs font-bold text-slate-500">Dez/25</td>
+        ${ML5.map(m=>`<td class="text-right py-1.5 px-3 text-xs font-bold text-slate-500">${m}</td>`).join('')}
+      </tr>
+      <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40">
+        <td class="py-1.5 px-3 text-sm font-medium">Carteira Saúde</td>
+        <td class="text-right py-1.5 px-3 nm text-sm text-slate-400">${CART_S_DEZ||'—'}</td>
+        ${CART_S.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:#10B981">${v}</td>`).join('')}
+      </tr>
+      <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)">
+        <td class="py-1.5 px-3 text-sm font-medium">Novos Contratos · Saúde</td>
+        <td class="text-right py-1.5 px-3 nm text-sm text-slate-400">—</td>
+        ${novosS.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>=0?'#10B981':'#E8185A'}">${v>=0?'+':''}${v}</td>`).join('')}
+      </tr>
+      <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40">
+        <td class="py-1.5 px-3 text-sm font-medium">Cancelamentos Saúde</td>
+        <td class="text-right py-1.5 px-3 nm text-sm text-slate-400">—</td>
+        ${CANCEL_S.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>0?'#E8185A':'#10B981'}">${v}</td>`).join('')}
+      </tr>
+      ${CHURN_S.length?`<tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)">
+        <td class="py-1.5 px-3 text-sm font-medium">Churn · Saúde</td>
+        <td class="text-right py-1.5 px-3 nm text-sm text-slate-400">—</td>
+        ${CHURN_S.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>0.5?'#E8185A':'#10B981'}">${v}%</td>`).join('')}
+      </tr>`:''}
+      <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40">
+        <td class="py-1.5 px-3 text-sm font-medium">Carteira Seguros</td>
+        <td class="text-right py-1.5 px-3 nm text-sm text-slate-400">${CART_G_DEZ||'—'}</td>
+        ${CART_G.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:#10B981">${v}</td>`).join('')}
+      </tr>
+      <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40" style="background:rgba(27,39,56,0.03)">
+        <td class="py-1.5 px-3 text-sm font-medium">Novos Contratos · Seguros</td>
+        <td class="text-right py-1.5 px-3 nm text-sm text-slate-400">—</td>
+        ${novosG.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>=0?'#10B981':'#E8185A'}">${v>=0?'+':''}${v}</td>`).join('')}
+      </tr>
+      <tr class="tr border-b border-slate-200/40 dark:border-slate-700/40">
+        <td class="py-1.5 px-3 text-sm font-medium">Cancelamentos Seguros</td>
+        <td class="text-right py-1.5 px-3 nm text-sm text-slate-400">—</td>
+        ${CANCEL_G.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>0?'#E8185A':'#10B981'}">${v}</td>`).join('')}
+      </tr>
+      ${CHURN_G.length?`<tr class="tr" style="background:rgba(27,39,56,0.03)">
+        <td class="py-1.5 px-3 text-sm font-medium">Churn · Seguros</td>
+        <td class="text-right py-1.5 px-3 nm text-sm text-slate-400">—</td>
+        ${CHURN_G.map(v=>`<td class="text-right py-1.5 px-3 nm text-sm font-bold" style="color:${v>1?'#E8185A':'#F59E0B'}">${v}%</td>`).join('')}
+      </tr>`:''}
+    `;
+  }
 }
 
 // ── tabs ──────────────────────────────────────────────────────────
