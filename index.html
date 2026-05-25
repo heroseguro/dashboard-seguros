@@ -109,7 +109,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
 <div data-panel="consolidado" class="tab-panel space-y-4">
   <div class="grid grid-cols-2 gap-4">
     <div class="card glass cbg border rounded-2xl p-4 rg kpi-meta"><div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Meta · <span data-mesfull>Maio 2026</span></div><div id="dKpiMeta" class="text-2xl font-bold nm text-slate-600 dark:text-slate-300">—</div><div class="mt-2 text-xs text-slate-400">Objetivo mensal estabelecido</div></div>
-    <div class="card glass cbg border rounded-2xl p-4 rg kpi-real"><div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Realizado · <span data-mesfull>Maio 2026</span></span><span id="dKpiRealChip" class="chip">—</span></div><div id="dKpiReal" class="text-2xl font-bold nm" style="color:#E8185A">—</div><div id="dKpiRealSub" class="mt-2 text-xs text-slate-400">—</div></div>
+    <div class="card glass cbg border rounded-2xl p-4 rg kpi-real"><div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-widest text-slate-400">Realizado · <span data-mesfull>Maio 2026</span></span><span id="dKpiRealChip" class="chip">—</span></div><div id="dKpiReal" class="text-2xl font-bold nm">—</div><div id="dKpiRealSub" class="mt-2 text-xs text-slate-400">—</div></div>
   </div>
   <div class="card glass cbg border rounded-2xl p-5 rg">
     <div class="flex items-center justify-between mb-3 flex-wrap gap-2"><div><div class="text-sm font-bold">Performance Geral</div><div class="text-xs text-slate-400 mt-0.5"><span data-ytd>Janeiro → <span data-mes>Mai</span> 2026</span></div></div><div class="flex gap-4 text-xs text-slate-500 dark:text-slate-400"><span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm inline-block" style="background:#E8185A"></span>Realizado</span><span class="flex items-center gap-1.5"><span class="inline-block w-5 h-0" style="border-top:2.5px dashed #B0BFD0;display:inline-block;vertical-align:middle;"></span>Meta</span></div></div>
@@ -372,8 +372,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
     </div>
     <div class="card glass cbg border rounded-2xl p-5 rg"><div class="text-sm font-bold mb-1">Ticket Médio · Seguros · Evolução</div><div class="text-xs text-slate-400 mb-3">Valor médio por venda</div><div style="height:220px"><canvas id="cTickG"></canvas></div></div>
     </div>
-    <div class="sl">Performance Individual · Seguros</div>
-    <div class="grid grid-cols-2 gap-4" id="perfG"></div>
+
   </div>
 </div>
 
@@ -440,7 +439,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwjxj9gHsUWt2Qfrsd6O4pzACBOpkqDoIXBeN2wtVgl8_R-5OKO1K1NN4IjS0ggyd4E/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxFV3B6t5TsE5OHjk9hFl0Jj19kCqCCizZwgi4B8yEZLNtLdQoLNAii_k7WLEpQCNDD/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -448,7 +447,7 @@ let VND_S=[],VND_G=[],PERF_S=[],PERF_G=[],CICLO=[],CART_S=[],CART_G=[],CANCEL_S=
 let VND_SEG=[],VND_PROD=[];
 let KPI_MES={meta:0,real:0},KPI_SEM={meta:725307,real:0},KPI_ANO={meta:2219073,real:0};
 let CANAIS_S_MES=[];
-const ML=['Jan','Fev','Mar','Abr','Mai'];
+const ML=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const ML_FULL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const ML_NOMES=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 let MES_IDX=4; // índice 0-based, começa em Maio (4) como padrão
@@ -581,8 +580,8 @@ function useFallbackFinanceiro(){
   FIN_G=[{mes:'Jan',meta:15320.58,proj:16806.72,real:21685.58},{mes:'Fev',meta:15843.75,proj:17909.01,real:19917.88},{mes:'Mar',meta:16760.00,proj:21903.60,real:22627.86},{mes:'Abr',meta:18925.41,proj:20203.85,real:22189.98},{mes:'Mai',meta:21561.83,proj:20182.04,real:15177.38}];
 }
 function useFallbackMarketing(){
-  LEADS_S=[{mes:'Jan',mL:116,rL:437,sq:85,vP:11,vR:20,lq:19,lv:5,qv:24},{mes:'Fev',mL:121,rL:433,sq:65,vP:12,vR:16,lq:15,lv:4,qv:25},{mes:'Mar',mL:135,rL:549,sq:126,vP:14,vR:25,lq:23,lv:5,qv:22},{mes:'Abr',mL:163,rL:527,sq:111,vP:18,vR:27,lq:21,lv:5,qv:24},{mes:'Mai',mL:177,rL:346,sq:82,vP:18,vR:22,lq:24,lv:6,qv:27}];
-  LEADS_G=[{mes:'Jan',rL:129,sq:89,v:71,lq:69,lv:55,qv:80},{mes:'Fev',rL:73,sq:62,v:56,lq:85,lv:77,qv:90},{mes:'Mar',rL:135,sq:94,v:54,lq:70,lv:40,qv:57},{mes:'Abr',rL:162,sq:122,v:83,lq:75,lv:51,qv:68},{mes:'Mai',rL:81,sq:52,v:37,lq:64,lv:46,qv:71}];
+  LEADS_S=[{mes:'Jan',mL:116,rL:437,sq:85,vP:11,vR:20,lq:19,lv:5,qv:24},{mes:'Fev',mL:121,rL:433,sq:65,vP:12,vR:16,lq:15,lv:4,qv:25},{mes:'Mar',mL:135,rL:549,sq:126,vP:14,vR:25,lq:23,lv:5,qv:22},{mes:'Abr',mL:163,rL:527,sq:111,vP:18,vR:27,lq:21,lv:5,qv:24},{mes:'Mai',mL:177,rL:396,sq:86,vP:18,vR:23,lq:22,lv:6,qv:27}];
+  LEADS_G=[{mes:'Jan',rL:129,sq:89,v:71,lq:69,lv:55,qv:80},{mes:'Fev',rL:73,sq:62,v:56,lq:85,lv:77,qv:90},{mes:'Mar',rL:135,sq:94,v:54,lq:70,lv:40,qv:57},{mes:'Abr',rL:162,sq:122,v:83,lq:75,lv:51,qv:68},{mes:'Mai',rL:115,sq:72,v:77,lq:63,lv:67,qv:107}];
   CANAIS_S=[{c:'Orgânico',l:651,s:65,v:15},{c:'Resgate CRM',l:324,s:73,v:7},{c:'Simulador',l:358,s:72,v:14},{c:'Onboarding EV',l:357,s:67,v:14},{c:'Referrals',l:157,s:60,v:22},{c:'App PJ Hero',l:186,s:37,v:8}];
   CANAIS_G=[{c:'Referrals',l:86,s:69,v:50},{c:'Checkout EV',l:107,s:107,v:106},{c:'Orgânico',l:146,s:65,v:46},{c:'Contadores',l:67,s:57,v:36}];
   APC=[{mes:'Jan',m:22,r:23,pct:0.74},{mes:'Fev',m:27,r:14,pct:0.70},{mes:'Mar',m:36,r:23,pct:0.86},{mes:'Abr',m:47,r:33,pct:1.23},{mes:'Mai',m:62,r:15,pct:0.79}];
@@ -804,7 +803,11 @@ function rConsolidado(){
   if(el('dKpiProj'))el('dKpiProj').textContent=f2(proj);
   if(el('dKpiProjChip')){el('dKpiProjChip').textContent=Math.round(pP*100)+'%';el('dKpiProjChip').className='chip '+(pP>=1?'cu':'cd');}
   if(el('dKpiProjSub')){const d=proj-meta;el('dKpiProjSub').innerHTML=d>=0?`<span style='color:#10B981;font-size:.75rem'>${f2(d)} acima da meta</span>`:`<span style='color:#E8185A;font-size:.75rem'>${f2(Math.abs(d))} abaixo da meta</span>`;}
-  if(el('dKpiReal'))el('dKpiReal').textContent=f2(real);
+  if(el('dKpiReal')){
+    el('dKpiReal').textContent=f2(real);
+    const corReal=pR>=1?'#10B981':pR>=0.9?'#F59E0B':'#E8185A';
+    el('dKpiReal').style.color=corReal;
+  }
   if(el('dKpiRealChip')){el('dKpiRealChip').textContent=Math.round(pR*100)+'%';el('dKpiRealChip').className='chip '+(pR>=1?'cu':'cd');}
   if(el('dKpiRealSub')){const d=real-meta;el('dKpiRealSub').innerHTML=d>=0?`<span style='color:#10B981;font-size:.75rem'>${f2(d)} acima da meta</span>`:`<span style='color:#E8185A;font-size:.75rem'>${f2(Math.abs(d))} abaixo da meta</span>`;}
   const funil2=(divId,statsId,leads)=>{
@@ -1163,7 +1166,10 @@ function initDashboard(){
   // Detectar último mês com dados reais
   const ultimo = FIN_TOTAL.filter(function(r){ return r.real > 0; });
   if(ultimo.length > 0) MES_IDX = ultimo.length - 1;
-  else MES_IDX = 4; // fallback Maio
+  else {
+    // Fallback: usar mês atual do sistema (0=Jan)
+    MES_IDX = new Date().getMonth();
+  }
   document.getElementById('hDate').textContent=mesFull()+' ·';
   document.getElementById('fDate').textContent=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
   // Atualizar todos os textos fixos de mês no HTML
