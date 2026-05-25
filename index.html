@@ -789,9 +789,14 @@ function perfCards(data,gid){
 
 // ── render consolidado ────────────────────────────────────────────
 function rConsolidado(){
-  mkBL('cGeral',FIN_TOTAL.map(r=>r.mes),[
-    {type:'bar',label:'Realizado',data:FIN_TOTAL.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},
-    {type:'line',label:'Meta',data:FIN_TOTAL.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}
+  // Usar KPI_MES.real para o mês atual se disponível
+  const finTotalAdj = FIN_TOTAL.map(function(r,i){
+    if(i===MES_IDX && KPI_MES.real>0) return {...r, real:KPI_MES.real, meta:KPI_MES.meta||r.meta};
+    return r;
+  });
+  mkBL('cGeral',finTotalAdj.map(r=>r.mes),[
+    {type:'bar',label:'Realizado',data:finTotalAdj.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},
+    {type:'line',label:'Meta',data:finTotalAdj.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}
   ]);
   const ult=FIN_TOTAL[FIN_TOTAL.length-1]||{};
   const meta = KPI_MES.meta>0 ? KPI_MES.meta : (ult.meta||0);
@@ -825,6 +830,14 @@ function rConsolidado(){
 
 // ── render financeiro ─────────────────────────────────────────────
 function rFinanceiro(){
+  // Ajustar FIN_TOTAL com valores do KPI_MES para o mês atual
+  const FIN_TOTAL_ADJ = FIN_TOTAL.map(function(r,i){
+    if(i===MES_IDX && KPI_MES.real>0) return {...r, real:KPI_MES.real, meta:KPI_MES.meta||r.meta};
+    return r;
+  });
+  const FIN_S_ADJ = FIN_S.map(function(r,i){
+    return r; // mantém original por enquanto
+  });
   const el=id=>document.getElementById(id);
   // Usar KPIs diretos da planilha quando disponíveis
   const meta = KPI_MES.meta>0 ? KPI_MES.meta : (FIN_TOTAL[FIN_TOTAL.length-1]||{}).meta||0;
@@ -834,7 +847,7 @@ function rFinanceiro(){
   if(el('dFinMesKpis'))el('dFinMesKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(meta)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:${real>=meta?'#10B981':'#E8185A'}">${f2(real)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diff)}</div></div>`;
   // Semestre: usar KPI direto da planilha
   const metaSem = KPI_SEM.meta>0 ? KPI_SEM.meta : 725307;
-  const totalReal = KPI_SEM.real>0 ? KPI_SEM.real : FIN_TOTAL.reduce((a,r)=>a+r.real,0);
+  const totalReal = KPI_SEM.real>0 ? KPI_SEM.real : FIN_TOTAL_ADJ.reduce((a,r)=>a+r.real,0);
   const pctSem=metaSem>0?totalReal/metaSem:0, diffSem=totalReal-metaSem;
   // Ano
   const metaAno = KPI_ANO.meta>0 ? KPI_ANO.meta : 2219073;
@@ -844,7 +857,7 @@ function rFinanceiro(){
   if(el('dFinAnoChip')){el('dFinAnoChip').textContent=Math.round(pctAno*100)+'%';el('dFinAnoChip').className='chip '+(pctAno>=1?'cu':'cd');}
   if(el('dFinAnoKpis'))el('dFinAnoKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta Anual</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(metaAno)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado YTD</div><div class="text-xl font-bold nm" style="color:${totalReal>=metaAno?'#10B981':'#E8185A'}">${f2(totalReal)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diffAno)}</div></div>`;
   const mkFin=(id,data)=>{const dv=data.filter(r=>r.real>0||r.meta>0);mkBL(id,dv.map(r=>r.mes),[{type:'bar',label:'Realizado',data:dv.map(r=>r.real),backgroundColor:'rgba(232,24,90,0.85)',...barBase,order:2},{type:'line',label:'Meta',data:dv.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}]);};
-  mkFin('cCarGeral',FIN_TOTAL);finTbl(FIN_TOTAL,'bCarGeral');
+  mkFin('cCarGeral',FIN_TOTAL_ADJ);finTbl(FIN_TOTAL_ADJ,'bCarGeral');
   mkFin('cCarSaude',FIN_S);finTbl(FIN_S,'bCarSaude');
   mkFin('cCarSeguros',FIN_G);finTbl(FIN_G,'bCarSeguros');
   // Histórico
