@@ -64,6 +64,18 @@ body{font-family:'Asap',system-ui,sans-serif;}
 #errorBadge{display:none;align-items:center;gap:.4rem;font-size:.7rem;font-weight:600;color:#E8185A;background:rgba(232,24,90,0.12);padding:.2rem .65rem;border-radius:9999px;cursor:pointer;}
 #errorBadge.show{display:flex;}
 @keyframes spin{to{transform:rotate(360deg)}}
+.blurred{filter:blur(6px);pointer-events:none;user-select:none;}
+#loginOverlay{position:fixed;inset:0;z-index:998;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;backdrop-filter:blur(2px);background:rgba(13,19,32,0.55);}
+#loginOverlay.show{display:flex;}
+.login-card{background:#fff;border-radius:1.5rem;padding:2.5rem 3rem;text-align:center;box-shadow:0 25px 60px -15px rgba(0,0,0,0.35);max-width:420px;width:90%;}
+.dark .login-card{background:#0D1320;border:1px solid rgba(255,255,255,0.08);}
+.login-card .logo-bar{width:4px;height:48px;background:#E8185A;border-radius:2px;display:inline-block;margin-right:.75rem;vertical-align:middle;}
+.login-card h2{font-size:1.3rem;font-weight:800;color:#1B2738;margin:.75rem 0 .25rem;}
+.dark .login-card h2{color:#f0f4f8;}
+.login-card p{font-size:.875rem;color:#64748b;margin-bottom:1.75rem;line-height:1.5;}
+.login-btn{display:inline-flex;align-items:center;gap:.75rem;background:#1B2738;color:#fff;padding:.85rem 1.75rem;border-radius:.85rem;font-size:.9rem;font-weight:700;text-decoration:none;transition:background .2s;}
+.login-btn:hover{background:#E8185A;}
+.login-btn svg{width:20px;height:20px;}
 </style>
 </head>
 <body class="gradient-bg-light dark:gradient-bg-dark text-slate-800 dark:text-slate-100 min-h-screen">
@@ -434,6 +446,23 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <div style="color:#94a3b8;font-family:Asap,sans-serif;font-size:.75rem">Hero Seguros · Maio 2026</div>
 </div>
 </main>
+<!-- Login Overlay -->
+<div id="loginOverlay">
+  <div class="login-card">
+    <div style="margin-bottom:1rem">
+      <span class="logo-bar"></span>
+      <span style="font-family:Asap,sans-serif;font-weight:800;font-size:1.4rem;color:#1B2738;vertical-align:middle">COMPANY HERO</span>
+    </div>
+    <h2>Acesso Restrito</h2>
+    <p>Este dashboard é exclusivo para colaboradores da Company Hero.<br>Faça login com sua conta <strong>@companyhero.com</strong> para continuar.</p>
+    <a href="https://accounts.google.com/signin" target="_blank" class="login-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.545 10.239v3.821h5.445c-.712 2.315-2.647 3.972-5.445 3.972a6.033 6.033 0 110-12.064c1.498 0 2.866.549 3.921 1.453l2.814-2.814A9.969 9.969 0 0012.545 2C7.021 2 2.543 6.477 2.543 12s4.478 10 10.002 10c8.396 0 10.249-7.85 9.426-11.748l-9.426-.013z"/></svg>
+      Entrar com Google
+    </a>
+    <p style="margin-top:1.25rem;font-size:.75rem;color:#94a3b8">Após fazer login, clique em <strong>Atualizar</strong> no dashboard.</p>
+  </div>
+</div>
+
 <footer class="max-w-[1440px] mx-auto px-6 py-5 text-xs text-slate-400 flex justify-between">
   <span>Dashboard · Hero Seguros · 2026</span>
   <span id="fDate"></span>
@@ -568,9 +597,24 @@ function mapApiData(d){
   if(!VND_SEG.length)useFallbackVndMensais();
 }
 
-function showSync(ts){const d=ts?new Date(ts):new Date();const fmt=d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});document.getElementById('syncBadge').textContent='✓ Atualizado '+fmt;document.getElementById('syncBadge').classList.add('show');document.getElementById('errorBadge').classList.remove('show');}
-function showError(){document.getElementById('errorBadge').textContent='⚠ Faça login com @companyhero.com · Clique para tentar novamente';
-  document.getElementById('errorBadge').classList.add('show');document.getElementById('syncBadge').classList.remove('show');}
+function showSync(ts){
+  const d=ts?new Date(ts):new Date();
+  const fmt=d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('syncBadge').textContent='✓ Atualizado '+fmt;
+  document.getElementById('syncBadge').classList.add('show');
+  document.getElementById('errorBadge').classList.remove('show');
+  // Remover overlay e blur quando autenticado
+  document.getElementById('loginOverlay').classList.remove('show');
+  document.querySelector('main').classList.remove('blurred');
+}
+function showError(){
+  document.getElementById('errorBadge').textContent='⚠ Faça login com @companyhero.com · Clique para tentar novamente';
+  document.getElementById('errorBadge').classList.add('show');
+  document.getElementById('syncBadge').classList.remove('show');
+  // Mostrar overlay de login e borrar conteúdo
+  document.getElementById('loginOverlay').classList.add('show');
+  document.querySelector('main').classList.add('blurred');
+}
 function spinRefresh(on){const ic=document.getElementById('refreshIcon');if(ic)ic.style.animation=on?'spin 0.8s linear infinite':'';}
 function showLoading(msg){document.getElementById('loadingMsg').textContent=msg||'Carregando…';document.getElementById('loadingOverlay').style.display='flex';}
 function hideLoading(){document.getElementById('loadingOverlay').style.display='none';}
