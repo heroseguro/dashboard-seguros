@@ -439,7 +439,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbyTAoJ1jY8mj1fzhZ5FnGanglz_qd4g7gSOjDV6ccBcIB19jEkXJlQ8FLT3A5TsSMmF/exec';
+const APPS_SCRIPT_URL='https://script.google.com/a/macros/companyhero.com/s/AKfycbxJXKA6uHkEzM1DIrnrpJGJR1gWzeCyuV7_ftZnQd_muyMY00y47_YKkBjmQnNcL80s/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -569,7 +569,8 @@ function mapApiData(d){
 }
 
 function showSync(ts){const d=ts?new Date(ts):new Date();const fmt=d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});document.getElementById('syncBadge').textContent='✓ Atualizado '+fmt;document.getElementById('syncBadge').classList.add('show');document.getElementById('errorBadge').classList.remove('show');}
-function showError(){document.getElementById('errorBadge').classList.add('show');document.getElementById('syncBadge').classList.remove('show');}
+function showError(){document.getElementById('errorBadge').textContent='⚠ Faça login com @companyhero.com · Clique para tentar novamente';
+  document.getElementById('errorBadge').classList.add('show');document.getElementById('syncBadge').classList.remove('show');}
 function spinRefresh(on){const ic=document.getElementById('refreshIcon');if(ic)ic.style.animation=on?'spin 0.8s linear infinite':'';}
 function showLoading(msg){document.getElementById('loadingMsg').textContent=msg||'Carregando…';document.getElementById('loadingOverlay').style.display='flex';}
 function hideLoading(){document.getElementById('loadingOverlay').style.display='none';}
