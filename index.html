@@ -468,7 +468,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/a/macros/companyhero.com/s/AKfycbzNRR93Vb_z8X93Xox5VwNc1cE8i8_kN5baCFHiPdM4PbH43nROehtsMhJ7Ya0z9y-W/exec';
+const APPS_SCRIPT_URL='https://script.google.com/a/macros/companyhero.com/s/AKfycby-KvuknWHfeviyiQx4FQ7UtuQ0EMI1ptRdSMRmBuiNiV2fMhGeqFvxUcoi5eAlYvVz/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -858,8 +858,9 @@ function rConsolidado(){
     {type:'line',label:'Meta',data:finTotalAdj.map(r=>r.meta),borderColor:'#B0BFD0',borderWidth:2.5,borderDash:[8,5],pointRadius:5,pointBackgroundColor:'#B0BFD0',pointBorderColor:dk()?'#0e1117':'#fff',pointBorderWidth:2,tension:0.3,fill:false,order:1}
   ]);
   const ult=FIN_TOTAL[FIN_TOTAL.length-1]||{};
-  const meta = KPI_MES.meta>0 ? KPI_MES.meta : (ult.meta||0);
-  const real  = KPI_MES.real>0 ? KPI_MES.real : (ult.real||0);
+  const finMes = FIN_TOTAL[MES_IDX] || ult;
+  const meta = KPI_MES.meta>0 ? KPI_MES.meta : (finMes.meta||0);
+  const real  = KPI_MES.real>0 ? KPI_MES.real : (finMes.real||0);
   const proj  = ult.proj||0;
   const pP=meta>0?proj/meta:0,pR=meta>0?real/meta:0;
   const el=id=>document.getElementById(id);
@@ -899,8 +900,10 @@ function rFinanceiro(){
   });
   const el=id=>document.getElementById(id);
   // Usar KPIs diretos da planilha quando disponíveis
-  const meta = KPI_MES.meta>0 ? KPI_MES.meta : (FIN_TOTAL[FIN_TOTAL.length-1]||{}).meta||0;
-  const real  = KPI_MES.real>0 ? KPI_MES.real : (FIN_TOTAL[FIN_TOTAL.length-1]||{}).real||0;
+  // Usar meta do mês atual (MES_IDX)
+  const finMesAtual = FIN_TOTAL[MES_IDX] || FIN_TOTAL[FIN_TOTAL.length-1] || {};
+  const meta = KPI_MES.meta>0 ? KPI_MES.meta : (finMesAtual.meta||0);
+  const real  = KPI_MES.real>0 ? KPI_MES.real : (finMesAtual.real||0);
   const diff=real-meta, pct=meta>0?real/meta:0;
   if(el('dFinMesChip')){el('dFinMesChip').textContent=Math.round(pct*100)+'%';el('dFinMesChip').className='chip '+(pct>=1?'cu':'cd');}
   if(el('dFinMesKpis'))el('dFinMesKpis').innerHTML=`<div><div class="text-xs text-slate-400 mb-0.5">Meta</div><div class="text-xl font-bold nm text-slate-700 dark:text-slate-200">${f2(meta)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Realizado</div><div class="text-xl font-bold nm" style="color:${real>=meta?'#10B981':'#E8185A'}">${f2(real)}</div></div><div><div class="text-xs text-slate-400 mb-0.5">Diferença</div><div class="text-xl font-bold nm">${f2d(diff)}</div></div>`;
@@ -1237,16 +1240,8 @@ function rCanalG(){
   canalTblComMedia(data,'bCanalG','bCanalGFoot');
 }
 function initDashboard(){
-  // Usar mês atual do sistema como primário
-  // Janeiro=0, Fevereiro=1... Junho=5
-  const mesDoSistema = new Date().getMonth();
-  // Se a planilha tem dados até o mês do sistema ou além, usa o sistema
-  // Se a planilha tem dados só até mês anterior, usa o sistema mesmo assim
-  MES_IDX = mesDoSistema;
-  // Ajuste: se o ano é 2026 e estamos em Jan (0), garante que não vai além dos dados
-  const ultimoComDados = FIN_TOTAL.filter(function(r){ return r.real > 0; }).length - 1;
-  // Se o sistema diz Junho mas a planilha só tem até Abril, mostrar Junho mesmo (com meta)
-  // MES_IDX permanece = mês do sistema
+  // Mês atual do sistema (0=Jan, 5=Jun...)
+  MES_IDX = new Date().getMonth();
   document.getElementById('hDate').textContent=mesFull()+' ·';
   document.getElementById('fDate').textContent=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
   // Atualizar todos os textos fixos de mês no HTML
