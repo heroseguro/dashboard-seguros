@@ -468,7 +468,7 @@ body{font-family:'Asap',system-ui,sans-serif;}
   <span id="fDate"></span>
 </footer>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/a/macros/companyhero.com/s/AKfycbyzKIjacsJqOCAuS4Hx5OzRTuydDKobf20zSuGgdfLdBWRfToujgTl071lQnA20FHzJ/exec';
+const APPS_SCRIPT_URL='https://script.google.com/a/macros/companyhero.com/s/AKfycbzNRR93Vb_z8X93Xox5VwNc1cE8i8_kN5baCFHiPdM4PbH43nROehtsMhJ7Ya0z9y-W/exec';
 let FIN_S=[],FIN_G=[],FIN_TOTAL=[],NIVEL=[],SEG_S=[],SEG_G=[];
 let HIST_FAT=[],HIST_MAIO=[],DET_S=[],DET_G=[];
 let LEADS_S=[],CANAIS_S=[],LEADS_G=[],CANAIS_G=[],APC=[];
@@ -489,8 +489,22 @@ function mesFull(){ return mesAtualFull()+' '+ANO; }
 // ── JSONP: contorna CORS em qualquer domínio (file://, github.io, netlify, etc.) ──
 function loadData(){
   showLoading('Buscando dados da planilha…');spinRefresh(true);
-  // Mostrar fallback imediatamente para não ficar tela em branco
   useFallbackData();
+  // Usar google.script.run quando hospedado no Apps Script
+  if(typeof google !== 'undefined' && google.script && google.script.run){
+    google.script.run
+      .withSuccessHandler(function(result){
+        try{
+          const json = typeof result === 'string' ? JSON.parse(result) : result;
+          if(json && json.ok){ json.data.mesIdx=json.mesIdx; mapApiData(json.data); showSync(json.ts); }
+          else { showError(); }
+        }catch(e){ showError(); }
+        hideLoading(); spinRefresh(false); initDashboard();
+      })
+      .withFailureHandler(function(){ showError(); hideLoading(); spinRefresh(false); initDashboard(); })
+      .getDadosDashboard();
+    return;
+  }
 
   // Timeout: se o Apps Script não responder em 12s, usa fallback
   const timer=setTimeout(()=>{
@@ -1223,13 +1237,16 @@ function rCanalG(){
   canalTblComMedia(data,'bCanalG','bCanalGFoot');
 }
 function initDashboard(){
-  // Detectar último mês com dados reais
-  const ultimo = FIN_TOTAL.filter(function(r){ return r.real > 0; });
-  if(ultimo.length > 0) MES_IDX = ultimo.length - 1;
-  else {
-    // Fallback: usar mês atual do sistema (0=Jan)
-    MES_IDX = new Date().getMonth();
-  }
+  // Usar mês atual do sistema como primário
+  // Janeiro=0, Fevereiro=1... Junho=5
+  const mesDoSistema = new Date().getMonth();
+  // Se a planilha tem dados até o mês do sistema ou além, usa o sistema
+  // Se a planilha tem dados só até mês anterior, usa o sistema mesmo assim
+  MES_IDX = mesDoSistema;
+  // Ajuste: se o ano é 2026 e estamos em Jan (0), garante que não vai além dos dados
+  const ultimoComDados = FIN_TOTAL.filter(function(r){ return r.real > 0; }).length - 1;
+  // Se o sistema diz Junho mas a planilha só tem até Abril, mostrar Junho mesmo (com meta)
+  // MES_IDX permanece = mês do sistema
   document.getElementById('hDate').textContent=mesFull()+' ·';
   document.getElementById('fDate').textContent=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
   // Atualizar todos os textos fixos de mês no HTML
