@@ -76,17 +76,6 @@ body{font-family:'Asap',system-ui,sans-serif;}
 .login-btn{display:inline-flex;align-items:center;gap:.75rem;background:#1B2738;color:#fff;padding:.85rem 1.75rem;border-radius:.85rem;font-size:.9rem;font-weight:700;text-decoration:none;transition:background .2s;}
 .login-btn:hover{background:#E8185A;}
 .login-btn svg{width:20px;height:20px;}
-.cal-chip{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .75rem;border-radius:9999px;font-size:.72rem;font-weight:700;border:1px solid rgba(100,116,139,0.25);cursor:pointer;transition:all .15s;color:#64748b;background:transparent;}
-.cal-chip .dot{width:.55rem;height:.55rem;border-radius:9999px;}
-.cal-chip.off{opacity:.38;}
-.dark .cal-chip{color:#cbd5e1;border-color:rgba(148,163,184,0.2);}
-.cal-day{min-height:118px;border-radius:.9rem;padding:.5rem;border:1px solid rgba(11,24,52,0.07);background:rgba(255,255,255,0.55);}
-.dark .cal-day{border-color:rgba(255,255,255,0.06);background:rgba(255,255,255,0.025);}
-.cal-day.out{opacity:.35;}
-.cal-day.today{border:2px solid #E8185A;}
-.cal-ev{display:block;font-size:.68rem;line-height:1.25;font-weight:600;padding:.22rem .4rem;border-radius:.4rem;margin-top:.25rem;border-left:3px solid currentColor;}
-.cal-ev span{color:#1B2738;font-weight:600;}
-.dark .cal-ev span{color:#e2e8f0;}
 </style>
 </head>
 <body class="gradient-bg-light dark:gradient-bg-dark text-slate-800 dark:text-slate-100 min-h-screen">
@@ -125,7 +114,6 @@ body{font-family:'Asap',system-ui,sans-serif;}
     <button data-tab="marketing" class="tab-btn">Marketing</button>
     <button data-tab="vendas" class="tab-btn">Vendas</button>
     <button data-tab="cx" class="tab-btn">CX & Carteira</button>
-    <button data-tab="calendario" class="tab-btn">Calendário</button>
   </div>
 </header>
 <main class="max-w-[1440px] mx-auto px-6 py-6">
@@ -398,21 +386,6 @@ body{font-family:'Asap',system-ui,sans-serif;}
     </div>
 
   </div>
-</div>
-
-<!-- CALENDÁRIO -->
-<div data-panel="calendario" class="tab-panel hidden space-y-4">
-  <div class="card glass cbg border rounded-2xl p-5 rg">
-    <div class="flex items-start justify-between flex-wrap gap-3 mb-4">
-      <div><div class="text-sm font-bold">Calendário de ações · Novembro 2026</div><div class="text-xs text-slate-400 mt-0.5">Saúde & Seguros · lançamentos, e-mails, pushs, redes sociais e disparos do Reage Zumbi</div></div>
-      <div id="calFilters" class="flex flex-wrap gap-2"></div>
-    </div>
-    <div id="calKpis" class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5"></div>
-    <div class="hidden md:grid grid-cols-7 gap-2 mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 text-center"><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div><div>Dom</div></div>
-    <div id="calGrid" class="hidden md:grid grid-cols-7 gap-2"></div>
-    <div id="calList" class="md:hidden space-y-2"></div>
-  </div>
-  <div class="text-xs text-slate-400 px-1">Fontes: copies da Black da Hero (Plano de Saúde), calendário de Redes Sociais no Notion, e-mails no HubSpot e envios programados da conversa Reage Zumbi Novembro/2026 na Treble (consultados em 09/11). Horário dos pushs a definir com CRM.</div>
 </div>
 
 <!-- CX -->
@@ -1230,76 +1203,8 @@ function rCx(){
   }
 }
 
-// ── Calendário de novembro ───────────────────────────────────────
-const CAL_TYPES={
-  lanc:{label:'Lançamentos',color:'#E8185A'},
-  email:{label:'E-mails',color:'#1B2738'},
-  push:{label:'Pushs',color:'#F59E0B'},
-  social:{label:'Redes sociais',color:'#8B5CF6'},
-  zumbi:{label:'Reage Zumbi (WhatsApp)',color:'#10B981'}
-};
-const CAL_EVENTS=[
-  ['2026-11-04','social','YouTube · Corte 3: Simulador, como comparar operadoras'],
-  ['2026-11-05','social','YouTube · Corte 3: profissões que não podem ser MEI'],
-  ['2026-11-10','lanc','Black da Hero · início da oferta de Plano de Saúde (75% de cashback, BLACK75)'],
-  ['2026-11-10','email','Black · E-mail 1: lançamento da oferta'],
-  ['2026-11-10','push','Black · Push 1: Black da Hero no Plano de Saúde'],
-  ['2026-11-10','social','IG Oficial · Black: lançamento da oferta (carrossel)'],
-  ['2026-11-10','zumbi','09:30 · 3.502 contatos'],
-  ['2026-11-11','social','IG Parceiros · Black: como funciona?'],
-  ['2026-11-11','social','YouTube · Corte 4: profissões que não podem ser MEI'],
-  ['2026-11-11','social','LinkedIn · divulgação do vídeo profissões que não podem ser MEI'],
-  ['2026-11-12','zumbi','11:05 · 1.149 contatos'],
-  ['2026-11-13','zumbi','09:05 · 669 contatos'],
-  ['2026-11-16','lanc','Lançamento Assistência Saúde (Bem-te-vi) · carrossel IG Oficial e LinkedIn'],
-  ['2026-11-16','zumbi','09:05 · 3.028 contatos'],
-  ['2026-11-17','email','Black · E-mail 2: como funciona o cashback'],
-  ['2026-11-17','push','Black · Push 2: seu cashback em 4 passos'],
-  ['2026-11-18','zumbi','10:01 · 1.371 contatos'],
-  ['2026-11-18','zumbi','10:01 · 3.028 contatos'],
-  ['2026-11-18','zumbi','10:05 · 3.028 contatos'],
-  ['2026-11-19','social','IG Parceiros · Black'],
-  ['2026-11-19','zumbi','10:01 · 1.371 contatos'],
-  ['2026-11-23','social','IG Oficial · Assistência Saúde (Bem-te-vi): Reels'],
-  ['2026-11-23','social','YouTube · Corte 4: Concierge, quando a operadora nega o exame'],
-  ['2026-11-24','email','Black · E-mail 3: dúvidas antes de contratar'],
-  ['2026-11-24','push','Black · Push 3: sua cidade tem rede credenciada?'],
-  ['2026-11-24','social','IG Oficial · Black: como funciona o cashback (Reels)'],
-  ['2026-11-26','social','YouTube · 5 dicas antes de fechar seu plano de saúde'],
-  ['2026-11-26','social','IG Oficial · Boas escolhas financeiras para PJs (carrossel + story)'],
-  ['2026-11-26','zumbi','09:05 · 1.083 contatos'],
-  ['2026-11-27','social','IG Parceiros · Black'],
-  ['2026-11-30','email','Black · E-mail 4: Concierge e prazo final'],
-  ['2026-11-30','push','Black · Push 4: último dia da Black da Hero'],
-  ['2026-11-30','social','IG Oficial · Black: último dia, dúvidas, Concierge e prazo final'],
-  ['2026-11-30','social','IG Parceiros · Black: último dia'],
-  ['2026-11-30','lanc','Fim da Black da Hero e da condição de 70% de cashback da parceria Nomad (Husky)']
-];
-const calOn=new Set(Object.keys(CAL_TYPES));
-function rCalendario(){
-  const f=document.getElementById('calFilters');
-  f.innerHTML=Object.entries(CAL_TYPES).map(([k,t])=>`<button data-calk="${k}" class="cal-chip ${calOn.has(k)?'':'off'}"><span class="dot" style="background:${t.color}"></span>${t.label}</button>`).join('');
-  f.querySelectorAll('[data-calk]').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.calk;calOn.has(k)?calOn.delete(k):calOn.add(k);rCalendario();}));
-  const ev=CAL_EVENTS.filter(e=>calOn.has(e[1]));
-  const count=k=>CAL_EVENTS.filter(e=>e[1]===k).length;
-  const zumbiTot=CAL_EVENTS.filter(e=>e[1]==='zumbi').reduce((a,e)=>a+parseInt(e[2].split('·')[1].replace(/\D/g,'')),0);
-  document.getElementById('calKpis').innerHTML=Object.entries(CAL_TYPES).map(([k,t])=>`<div class="rounded-xl border p-3" style="border-color:${t.color}33"><div class="text-[11px] font-bold uppercase tracking-widest text-slate-400">${t.label}</div><div class="text-xl font-bold nm mt-1" style="color:${t.color}">${count(k)}</div>${k==='zumbi'?`<div class="text-[11px] text-slate-400">${zumbiTot.toLocaleString('pt-BR')} contatos no total</div>`:''}</div>`).join('');
-  const today=new Date(); const tk=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
-  const item=e=>{const t=CAL_TYPES[e[1]];return `<div class="cal-ev" style="color:${t.color};background:${t.color}14"><span>${e[1]==='zumbi'?'Reage Zumbi · ':''}${e[2]}</span></div>`;};
-  // grade: 1/11/2026 é domingo; semana começa na segunda
-  const first=new Date(2026,10,1); const lead=(first.getDay()+6)%7; const cells=[];
-  for(let i=0;i<lead;i++)cells.push(`<div class="cal-day out"></div>`);
-  for(let d=1;d<=30;d++){const key=`2026-11-${String(d).padStart(2,'0')}`;const de=ev.filter(e=>e[0]===key);
-    cells.push(`<div class="cal-day ${key===tk?'today':''}"><div class="text-xs font-bold ${key===tk?'text-[#E8185A]':'text-slate-500'}">${d}</div>${de.map(item).join('')}</div>`);}
-  while(cells.length%7)cells.push(`<div class="cal-day out"></div>`);
-  document.getElementById('calGrid').innerHTML=cells.join('');
-  const wd=['dom','seg','ter','qua','qui','sex','sáb'];
-  const days=[...new Set(ev.map(e=>e[0]))].sort();
-  document.getElementById('calList').innerHTML=days.map(k=>{const d=new Date(k+'T12:00:00');return `<div class="cal-day ${k===tk?'today':''}" style="min-height:0"><div class="text-xs font-bold text-slate-500">${wd[d.getDay()]} · ${k.slice(8)}/11</div>${ev.filter(e=>e[0]===k).map(item).join('')}</div>`;}).join('')||'<div class="text-sm text-slate-400">Nenhuma ação com os filtros atuais.</div>';
-}
-
 // ── tabs ──────────────────────────────────────────────────────────
-const rMap={consolidado:rConsolidado,financeiro:rFinanceiro,marketing:()=>{const a=document.querySelector('.mkt-tab-btn.active');a?.dataset.mkt==='seguros'?rMktSeguros():rMktSaude();},vendas:()=>{const a=document.querySelector('.vnd-tab-btn.active');a?.dataset.vnd==='seguros'?rVndSeguros():rVndSaude();},cx:rCx,calendario:rCalendario};
+const rMap={consolidado:rConsolidado,financeiro:rFinanceiro,marketing:()=>{const a=document.querySelector('.mkt-tab-btn.active');a?.dataset.mkt==='seguros'?rMktSeguros():rMktSaude();},vendas:()=>{const a=document.querySelector('.vnd-tab-btn.active');a?.dataset.vnd==='seguros'?rVndSeguros():rVndSaude();},cx:rCx};
 
 document.querySelectorAll('.tab-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));btn.classList.add('active');document.querySelector(`[data-panel="${btn.dataset.tab}"]`).classList.remove('hidden');if(rMap[btn.dataset.tab])rMap[btn.dataset.tab]();});});
 document.querySelectorAll('.mkt-tab-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.mkt-tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.mkt-panel').forEach(p=>p.classList.add('hidden'));btn.classList.add('active');document.querySelector(`[data-mkt-panel="${btn.dataset.mkt}"]`).classList.remove('hidden');btn.dataset.mkt==='saude'?rMktSaude():rMktSeguros();});});
